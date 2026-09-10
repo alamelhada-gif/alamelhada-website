@@ -1,6 +1,5 @@
 backend:
   name: github
-  repo: alamelhada-gif/alamelhada-website
   branch: main
 
 locale: ar
