@@ -1,0 +1,8 @@
+---
+layout: base.njk
+title: Alamelhada Apps
+---
+<section class="hero"><div><span class="eyebrow">ALAMELHADA APPS</span><h1>أفكار رقمية<br><em>بتجربة مختلفة.</em></h1><p>{{site.tagline_ar}}</p><div class="actions"><a class="btn" href="#apps">استكشف التطبيقات</a><a class="ghost" href="/articles/">اقرأ المقالات</a></div></div><div class="mark">A</div></section>
+<section class="section" id="apps"><div class="section-head"><span>منتجاتنا</span><h2>تطبيقات صُممت لتُستخدم</h2></div><div class="cards">{% for app in apps.items %}<article class="card"><div class="appicon">{{app.icon}}</div><h3>{{app.name}}</h3><p>{{app.description}}</p><a href="{{app.url}}" target="_blank" rel="noopener">عرض على Google Play ←</a></article>{% endfor %}</div></section>
+<section class="statement"><p>نؤمن أن التقنية الجيدة لا تحتاج إلى ضجيج.</p><h2>وضوح في الفكرة. عناية في التفاصيل.</h2></section>
+<section class="section"><div class="section-head"><span>آخر المقالات</span><h2>من المدونة</h2></div><div class="articles">{% for post in collections.article | reverse | slice(0,3) %}<a class="article" href="{{post.url}}"><small>{{post.data.date | date: "%Y-%m-%d"}}</small><h3>{{post.data.title}}</h3><p>{{post.data.summary}}</p></a>{% else %}<p>ستظهر المقالات هنا بعد إضافتها من لوحة الإدارة.</p>{% endfor %}</div></section>

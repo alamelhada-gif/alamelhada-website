@@ -1,0 +1,1 @@
+IMPORTANT: Before connecting this repository to the live alamelhada.com site, copy the CURRENT production app-ads.txt and ads.txt into the repository root. Do not deploy without them, or ad verification may break. After BIGO provides its required lines, append them to app-ads.txt without deleting existing Yandex/other lines.

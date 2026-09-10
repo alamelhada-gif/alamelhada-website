@@ -1,0 +1,54 @@
+backend:
+  name: github
+  repo: alamelhada-gif/alamelhada-website
+  branch: main
+
+locale: ar
+media_folder: "assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+collections:
+  - name: "articles"
+    label: "المقالات"
+    label_singular: "مقال"
+    folder: "articles"
+    create: true
+    extension: "md"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "العنوان", name: "title", widget: "string" }
+      - { label: "الملخص", name: "summary", widget: "text" }
+      - { label: "التاريخ", name: "date", widget: "datetime", time_format: false }
+      - { label: "صورة", name: "image", widget: "image", required: false }
+      - { label: "المحتوى", name: "body", widget: "markdown" }
+      - { label: "النوع", name: "tags", widget: "hidden", default: "article" }
+  - name: "settings"
+    label: "إعدادات الموقع"
+    files:
+      - label: "الهوية والنصوص"
+        name: "site"
+        file: "_data/site.json"
+        format: "json"
+        fields:
+          - { label: "اسم الموقع", name: "name", widget: "string" }
+          - { label: "الاسم العربي", name: "name_ar", widget: "string" }
+          - { label: "النص الرئيسي بالعربية", name: "tagline_ar", widget: "text" }
+          - { label: "النص الرئيسي بالإنجليزية", name: "tagline_en", widget: "text" }
+          - { label: "البريد", name: "email", widget: "string" }
+          - { label: "الأخضر", name: "primary", widget: "color" }
+          - { label: "الذهبي", name: "accent", widget: "color" }
+          - { label: "الفحمي", name: "dark", widget: "color" }
+          - { label: "الخلفية الفاتحة", name: "light", widget: "color" }
+      - label: "التطبيقات"
+        name: "apps"
+        file: "_data/apps.json"
+        format: "json"
+        fields:
+          - label: "قائمة التطبيقات"
+            name: "items"
+            widget: "list"
+            fields:
+              - { label: "الاسم", name: "name", widget: "string" }
+              - { label: "الوصف", name: "description", widget: "text" }
+              - { label: "رمز/أيقونة", name: "icon", widget: "string" }
+              - { label: "رابط المتجر", name: "url", widget: "string" }
