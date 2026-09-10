@@ -1,9 +1,27 @@
 {
   "name": "Alamelhada Apps",
-  "name_ar": "عالم الهدى للتطبيقات",
+  "name_ar": "علم الهدى للتطبيقات",
+
+  "hero_eyebrow": "ALAMELHADA APPS",
+  "hero_title_line1": "أفكار رقمية",
+  "hero_title_line2": "بتجربة مختلفة.",
   "tagline_ar": "تطبيقات عملية، تجارب ذكية، وأفكار تستحق الاستخدام.",
   "tagline_en": "Useful apps, thoughtful experiences, and ideas worth using.",
+
+  "hero_primary_button": "استكشف التطبيقات",
+  "hero_secondary_button": "اقرأ المقالات",
+
+  "apps_section_label": "منتجاتنا",
+  "apps_section_title": "تطبيقات صُممت لتُستخدم",
+
+  "statement_small": "نؤمن أن التقنية الجيدة لا تحتاج إلى ضجيج.",
+  "statement_title": "وضوح في الفكرة. عناية في التفاصيل.",
+
+  "articles_section_label": "آخر المقالات",
+  "articles_section_title": "من المدونة",
+
   "email": "alamelhada@gmail.com",
+
   "primary": "#3F6547",
   "accent": "#C4A66A",
   "dark": "#111310",
