@@ -1,1 +1,41 @@
-<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="{{ site.dark }}"><title>{{ title or site.name }}</title><meta name="description" content="{{ description or site.tagline_ar }}"><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/assets/css/style.css"></head><body style="--primary:{{site.primary}};--accent:{{site.accent}};--dark:{{site.dark}};--light:{{site.light}}"><header><a class="brand" href="/">{{site.name}}</a><nav><a href="/#apps">التطبيقات</a><a href="/articles/">المقالات</a><a href="/about/">من نحن</a><a href="/contact/">تواصل</a></nav></header><main>{{ content | safe }}</main><footer><strong>{{site.name}}</strong><span>© 2026</span><a href="/privacy/">سياسة الخصوصية</a></footer></body></html>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ site.dark }}">
+
+  <title>{{ title or site.name }}</title>
+  <meta name="description" content="{{ description or site.tagline_ar }}">
+
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+
+<body style="--primary:{{site.primary}};--accent:{{site.accent}};--dark:{{site.dark}};--light:{{site.light}}">
+
+<header>
+  <a class="brand" href="/">{{site.name}}</a>
+
+  <nav>
+    <a href="/#apps">التطبيقات</a>
+    <a href="/articles/">المقالات</a>
+    <a href="/about/">من نحن</a>
+    <a href="/contact/">تواصل</a>
+  </nav>
+</header>
+
+<main>
+  {{ content | safe }}
+</main>
+
+<footer>
+  <strong>{{site.name}}</strong>
+  <span>© 2026</span>
+  <a href="/privacy/">سياسة الخصوصية</a>
+</footer>
+
+</body>
+</html>
