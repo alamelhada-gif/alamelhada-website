@@ -3,4 +3,21 @@ layout: base.njk
 permalink: /articles/index.html
 title: المقالات | Alamelhada Apps
 ---
-<section class="pagehead"><span>المقالات</span><h1>أفكار، تحديثات، وتجارب</h1></section><section class="section"><div class="articles">{% for post in collections.article | reverse %}<a class="article" href="{{post.url}}"><small>{{post.data.date | date: "%Y-%m-%d"}}</small><h3>{{post.data.title}}</h3><p>{{post.data.summary}}</p></a>{% else %}<p>لا توجد مقالات بعد.</p>{% endfor %}</div></section>
+
+<section class="pagehead">
+  <span>المقالات</span>
+  <h1>أفكار، تحديثات، وتجارب</h1>
+</section>
+
+<section class="section">
+  <div class="articles">
+    {% for post in collections.article | reverse %}
+      <a class="article" href="{{ post.url }}">
+        <h3>{{ post.data.title }}</h3>
+        <p>{{ post.data.summary }}</p>
+      </a>
+    {% else %}
+      <p>لا توجد مقالات بعد.</p>
+    {% endfor %}
+  </div>
+</section>
