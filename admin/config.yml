@@ -3,10 +3,12 @@ backend:
   branch: main
 
 locale: ar
+
 media_folder: "assets/images/uploads"
 public_folder: "/assets/images/uploads"
 
 collections:
+
   - name: "articles"
     label: "المقالات"
     label_singular: "مقال"
@@ -14,6 +16,7 @@ collections:
     create: true
     extension: "md"
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+
     fields:
       - { label: "العنوان", name: "title", widget: "string" }
       - { label: "الملخص", name: "summary", widget: "text" }
@@ -21,33 +24,91 @@ collections:
       - { label: "صورة", name: "image", widget: "image", required: false }
       - { label: "المحتوى", name: "body", widget: "markdown" }
       - { label: "النوع", name: "tags", widget: "hidden", default: "article" }
+
+
   - name: "settings"
     label: "إعدادات الموقع"
+
     files:
-      - label: "الهوية والنصوص"
+
+      - label: "الصفحة الرئيسية والهوية"
         name: "site"
         file: "_data/site.json"
         format: "json"
+
         fields:
-          - { label: "اسم الموقع", name: "name", widget: "string" }
-          - { label: "الاسم العربي", name: "name_ar", widget: "string" }
-          - { label: "النص الرئيسي بالعربية", name: "tagline_ar", widget: "text" }
-          - { label: "النص الرئيسي بالإنجليزية", name: "tagline_en", widget: "text" }
-          - { label: "البريد", name: "email", widget: "string" }
-          - { label: "الأخضر", name: "primary", widget: "color" }
-          - { label: "الذهبي", name: "accent", widget: "color" }
-          - { label: "الفحمي", name: "dark", widget: "color" }
-          - { label: "الخلفية الفاتحة", name: "light", widget: "color" }
+
+          - label: "هوية الموقع"
+            name: "identity_section"
+            widget: "object"
+            collapsed: false
+            fields:
+              - { label: "اسم الموقع", name: "name", widget: "string" }
+              - { label: "الاسم العربي", name: "name_ar", widget: "string" }
+              - { label: "البريد الإلكتروني", name: "email", widget: "string" }
+
+          - label: "القسم الرئيسي"
+            name: "hero_section"
+            widget: "object"
+            collapsed: false
+            fields:
+              - { label: "النص الصغير أعلى العنوان", name: "hero_eyebrow", widget: "string" }
+              - { label: "العنوان - السطر الأول", name: "hero_title_line1", widget: "string" }
+              - { label: "العنوان - السطر الثاني", name: "hero_title_line2", widget: "string" }
+              - { label: "الوصف بالعربية", name: "tagline_ar", widget: "text" }
+              - { label: "الوصف بالإنجليزية", name: "tagline_en", widget: "text" }
+              - { label: "نص زر التطبيقات", name: "hero_primary_button", widget: "string" }
+              - { label: "نص زر المقالات", name: "hero_secondary_button", widget: "string" }
+
+          - label: "قسم التطبيقات"
+            name: "apps_section"
+            widget: "object"
+            collapsed: false
+            fields:
+              - { label: "النص الصغير", name: "apps_section_label", widget: "string" }
+              - { label: "عنوان القسم", name: "apps_section_title", widget: "string" }
+
+          - label: "القسم الأسود"
+            name: "statement_section"
+            widget: "object"
+            collapsed: false
+            fields:
+              - { label: "النص الصغير", name: "statement_small", widget: "string" }
+              - { label: "العنوان الكبير", name: "statement_title", widget: "text" }
+
+          - label: "قسم المقالات"
+            name: "articles_section"
+            widget: "object"
+            collapsed: false
+            fields:
+              - { label: "النص الصغير", name: "articles_section_label", widget: "string" }
+              - { label: "عنوان القسم", name: "articles_section_title", widget: "string" }
+
+          - label: "ألوان الموقع"
+            name: "colors_section"
+            widget: "object"
+            collapsed: false
+            fields:
+              - { label: "الأخضر", name: "primary", widget: "color" }
+              - { label: "الذهبي", name: "accent", widget: "color" }
+              - { label: "الفحمي", name: "dark", widget: "color" }
+              - { label: "الخلفية الفاتحة", name: "light", widget: "color" }
+
+
       - label: "التطبيقات"
         name: "apps"
         file: "_data/apps.json"
         format: "json"
+
         fields:
+
           - label: "قائمة التطبيقات"
             name: "items"
             widget: "list"
+            summary: "{{fields.name}}"
+
             fields:
-              - { label: "الاسم", name: "name", widget: "string" }
+              - { label: "اسم التطبيق", name: "name", widget: "string" }
               - { label: "الوصف", name: "description", widget: "text" }
               - { label: "رمز/أيقونة", name: "icon", widget: "string" }
-              - { label: "رابط المتجر", name: "url", widget: "string" }
+              - { label: "رابط Google Play", name: "url", widget: "string" }
