@@ -5,31 +5,40 @@ title: Alamelhada Apps
 
 <section class="hero">
   <div>
-    <span class="eyebrow">ALAMELHADA APPS</span>
-    <h1>أفكار رقمية<br><em>بتجربة مختلفة.</em></h1>
+    <span class="eyebrow">{{ site.hero_eyebrow }}</span>
+
+    <h1>
+      {{ site.hero_title_line1 }}<br>
+      <em>{{ site.hero_title_line2 }}</em>
+    </h1>
+
     <p>{{ site.tagline_ar }}</p>
 
     <div class="actions">
-      <a class="btn" href="#apps">استكشف التطبيقات</a>
-      <a class="ghost" href="/articles/">اقرأ المقالات</a>
+      <a class="btn" href="#apps">{{ site.hero_primary_button }}</a>
+      <a class="ghost" href="/articles/">{{ site.hero_secondary_button }}</a>
     </div>
   </div>
 
   <div class="mark">A</div>
 </section>
 
+
 <section class="section" id="apps">
   <div class="section-head">
-    <span>منتجاتنا</span>
-    <h2>تطبيقات صُممت لتُستخدم</h2>
+    <span>{{ site.apps_section_label }}</span>
+    <h2>{{ site.apps_section_title }}</h2>
   </div>
 
   <div class="cards">
     {% for app in apps.items %}
       <article class="card">
         <div class="appicon">{{ app.icon }}</div>
+
         <h3>{{ app.name }}</h3>
+
         <p>{{ app.description }}</p>
+
         <a href="{{ app.url }}" target="_blank" rel="noopener">
           عرض على Google Play ←
         </a>
@@ -38,15 +47,17 @@ title: Alamelhada Apps
   </div>
 </section>
 
+
 <section class="statement">
-  <p>نؤمن أن التقنية الجيدة لا تحتاج إلى ضجيج.</p>
-  <h2>وضوح في الفكرة. عناية في التفاصيل.</h2>
+  <p>{{ site.statement_small }}</p>
+  <h2>{{ site.statement_title }}</h2>
 </section>
+
 
 <section class="section">
   <div class="section-head">
-    <span>آخر المقالات</span>
-    <h2>من المدونة</h2>
+    <span>{{ site.articles_section_label }}</span>
+    <h2>{{ site.articles_section_title }}</h2>
   </div>
 
   <div class="articles">
