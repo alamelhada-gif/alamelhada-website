@@ -76,7 +76,6 @@ collections:
 
           - label: "القسم الأسود"
             name: "statement_section"
-            name: "statement_section"
             widget: "object"
             collapsed: false
             fields:
