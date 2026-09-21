@@ -1,7 +1,9 @@
 backend:
-  name: turbo-github
-  turbo_site_id: eacc26b0-1de0-477e-8414-2976cb7de05d
+  name: github
+  repo: alamelhada-gif/alamelhada-website
   branch: main
+  base_url: https://alamelhada-cms-oauth.alamelhada.workers.dev
+  auth_endpoint: auth
 
 locale: ar
 
