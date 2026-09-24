@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="{{ lang or 'ar' }}" dir="{% if lang == 'en' %}ltr{% else %}rtl{% endif %}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="{{ site.dark }}">
 
   <title>{{ title or site.name }}</title>
-  <meta name="description" content="{{ description or site.tagline_ar }}">
+  <meta name="description" content="{{ description or summary or site.tagline_ar }}">
 
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/assets/css/style.css">
@@ -20,10 +20,21 @@
   <a class="brand" href="/">{{site.name}}</a>
 
   <nav>
-    <a href="/#apps">التطبيقات</a>
-    <a href="/articles/">المقالات</a>
-    <a href="/about/">من نحن</a>
-    <a href="/contact/">تواصل</a>
+    <a href="/#apps">
+      {% if lang == 'en' %}Apps{% else %}التطبيقات{% endif %}
+    </a>
+
+    <a href="/articles/">
+      {% if lang == 'en' %}Articles{% else %}المقالات{% endif %}
+    </a>
+
+    <a href="/about/">
+      {% if lang == 'en' %}About{% else %}من نحن{% endif %}
+    </a>
+
+    <a href="/contact/">
+      {% if lang == 'en' %}Contact{% else %}تواصل{% endif %}
+    </a>
   </nav>
 </header>
 
@@ -34,7 +45,14 @@
 <footer>
   <strong>{{site.name}}</strong>
   <span>© 2026</span>
-  <a href="/privacy/">سياسة الخصوصية</a>
+
+  <a href="/privacy/">
+    {% if lang == 'en' %}
+      Privacy Policy
+    {% else %}
+      سياسة الخصوصية
+    {% endif %}
+  </a>
 </footer>
 
 </body>
