@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="{{ lang or 'ar' }}" dir="{% if lang == 'en' %}ltr{% else %}rtl{% endif %}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ site.dark }}">
+
+  <title>{{ title }} | {{ site.name }}</title>
+  <meta name="description" content="{{ summary or site.tagline_ar }}">
+
+  <link rel="icon" href="/favicon.svg">
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+  <style>
+    .article-page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 70px 24px 100px;
+    }
+
+    .article-back {
+      display: inline-block;
+      margin-bottom: 35px;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .article-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .article-header h1 {
+      font-size: clamp(2rem, 5vw, 3.7rem);
+      line-height: 1.2;
+      margin: 0 0 20px;
+      color: var(--dark);
+    }
+
+    .article-summary {
+      max-width: 720px;
+      margin: 0 auto 18px;
+      font-size: 1.15rem;
+      line-height: 1.9;
+      opacity: .75;
+    }
+
+    .article-date {
+      font-size: .95rem;
+      opacity: .55;
+    }
+
+    .article-cover {
+      margin: 40px 0;
+      overflow: hidden;
+      border-radius: 24px;
+    }
+
+    .article-cover img {
+      display: block;
+      width: 100%;
+      max-height: 520px;
+      object-fit: cover;
+    }
+
+    .article-content {
+      background: #fff;
+      padding: clamp(25px, 5vw, 55px);
+      border-radius: 24px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, .07);
+      font-size: 1.08rem;
+      line-height: 2;
+    }
+
+    .article-content h2,
+    .article-content h3 {
+      color: var(--dark);
+      margin-top: 2em;
+      margin-bottom: .7em;
+    }
+
+    .article-content p {
+      margin: 0 0 1.4em;
+    }
+
+    .article-content img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 30px auto;
+      border-radius: 16px;
+    }
+
+    .article-content a {
+      color: var(--primary);
+      word-break: break-word;
+    }
+
+    .article-content blockquote {
+      margin: 30px 0;
+      padding: 20px 25px;
+      border-inline-start: 4px solid var(--primary);
+      background: rgba(0, 0, 0, .03);
+      border-radius: 10px;
+    }
+
+    @media (max-width: 600px) {
+      .article-page {
+        padding: 40px 16px 70px;
+      }
+
+      .article-cover {
+        border-radius: 16px;
+      }
+
+      .article-content {
+        border-radius: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body style="--primary:{{site.primary}};--accent:{{site.accent}};--dark:{{site.dark}};--light:{{site.light}}">
+
+<header>
+  <a class="brand" href="/">{{ site.name }}</a>
+
+  <nav>
+    <a href="/#apps">
+      {% if lang == 'en' %}Apps{% else %}التطبيقات{% endif %}
+    </a>
+
+    <a href="/articles/">
+      {% if lang == 'en' %}Articles{% else %}المقالات{% endif %}
+    </a>
+
+    <a href="/about/">
+      {% if lang == 'en' %}About{% else %}من نحن{% endif %}
+    </a>
+
+    <a href="/contact/">
+      {% if lang == 'en' %}Contact{% else %}تواصل{% endif %}
+    </a>
+  </nav>
+</header>
+
+<main class="article-page">
+
+  <a class="article-back" href="/articles/">
+    {% if lang == 'en' %}
+      ← Back to articles
+    {% else %}
+      العودة إلى المقالات ←
+    {% endif %}
+  </a>
+
+  <article>
+
+    <header class="article-header">
+      <h1>{{ title }}</h1>
+
+      {% if summary %}
+        <p class="article-summary">{{ summary }}</p>
+      {% endif %}
+
+      {% if date %}
+        <div class="article-date">
+          {{ date | readableDate }}
+        </div>
+      {% endif %}
+    </header>
+
+    {% if image %}
+      <div class="article-cover">
+        <img
+          src="{{ image }}"
+          alt="{{ title }}"
+          loading="eager"
+        >
+      </div>
+    {% endif %}
+
+    <div class="article-content">
+      {{ content | safe }}
+    </div>
+
+  </article>
+
+</main>
+
+<footer>
+  <strong>{{ site.name }}</strong>
+  <span>© 2026</span>
+
+  <a href="/privacy/">
+    {% if lang == 'en' %}
+      Privacy Policy
+    {% else %}
+      سياسة الخصوصية
+    {% endif %}
+  </a>
+</footer>
+
+</body>
+</html>
