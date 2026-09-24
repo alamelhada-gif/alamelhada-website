@@ -23,15 +23,27 @@ collections:
     fields:
       - { label: "العنوان", name: "title", widget: "string" }
 
+      - label: "لغة المقال"
+        name: "lang"
+        widget: "select"
+        options:
+          - { label: "العربية", value: "ar" }
+          - { label: "English", value: "en" }
+        default: "ar"
+
       - label: "رابط المقال"
         name: "slug"
         widget: "string"
         hint: "اكتب رابطاً قصيراً بالإنجليزية فقط، مثال: riwayati-privacy"
 
       - { label: "الملخص", name: "summary", widget: "text" }
+
       - { label: "التاريخ", name: "date", widget: "datetime", time_format: false }
+
       - { label: "صورة", name: "image", widget: "image", required: false }
+
       - { label: "المحتوى", name: "body", widget: "markdown" }
+
       - { label: "النوع", name: "tags", widget: "hidden", default: "article" }
 
 
