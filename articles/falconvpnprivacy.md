@@ -1,5 +1,6 @@
 ---
 title: "Privacy Policy for Falcon VPN "
+lang: en
 slug: falconvpnprivacy
 summary: Falcon VPN (“we”, “our”, or “the app”) respects your privacy. This
   Privacy Policy explains how Falcon VPN handles information when you use our
