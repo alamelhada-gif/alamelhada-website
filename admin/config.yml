@@ -131,5 +131,11 @@ collections:
             fields:
               - { label: "اسم التطبيق", name: "name", widget: "string" }
               - { label: "الوصف", name: "description", widget: "text" }
-              - { label: "رمز/أيقونة", name: "icon", widget: "string" }
+
+              - label: "صورة اللوغو"
+                name: "icon"
+                widget: "image"
+                choose_url: false
+                required: false
+
               - { label: "رابط Google Play", name: "url", widget: "string" }
