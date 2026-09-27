@@ -58,20 +58,30 @@
       opacity: 0.55;
     }
 
+    /*
+      صورة غلاف المقال:
+      تظهر بالحجم الأصلي الذي تم رفعه.
+      لا يتم تكبير الصور الصغيرة.
+      الصور الكبيرة فقط يتم تصغيرها لتناسب الصفحة.
+    */
     .article-cover {
-      width: 100%;
-      margin: 0 0 35px;
-      overflow: hidden;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto 35px;
+      overflow: visible;
       border-radius: 26px;
-      background: #eee;
+      background: transparent;
       box-shadow: 0 15px 45px rgba(0, 0, 0, 0.08);
     }
 
     .article-cover img {
       display: block;
-      width: 100%;
-      max-height: 520px;
-      object-fit: cover;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: none;
+      object-fit: contain;
+      border-radius: 26px;
     }
 
     .article-content {
@@ -108,8 +118,13 @@
       margin-bottom: 8px;
     }
 
+    /*
+      الصور الموجودة داخل محتوى المقال:
+      تحافظ على أبعادها الأصلية أيضًا.
+    */
     .article-content img {
       display: block;
+      width: auto;
       max-width: 100%;
       height: auto;
       margin: 35px auto;
@@ -141,6 +156,10 @@
 
       .article-cover,
       .article-content {
+        border-radius: 18px;
+      }
+
+      .article-cover img {
         border-radius: 18px;
       }
 
