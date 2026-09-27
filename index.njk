@@ -33,7 +33,16 @@ title: Alamelhada Apps
   <div class="cards">
     {% for app in apps.items %}
       <article class="card">
-        <div class="appicon">{{ app.icon }}</div>
+
+        {% if app.icon %}
+          <div class="appicon">
+            <img
+              src="{{ app.icon }}"
+              alt="{{ app.name }}"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
 
         <h3>{{ app.name }}</h3>
 
