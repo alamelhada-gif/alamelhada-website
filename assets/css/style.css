@@ -124,13 +124,13 @@ h1 em {
 }
 
 /* ============================= */
-/* السلايدر */
+/* سلايدر أيقونات التطبيقات */
 /* ============================= */
 
 .home-slider-section {
   max-width: 1200px;
   margin: auto;
-  padding: 20px 28px 90px;
+  padding: 20px 28px 80px;
 }
 
 .slider-heading {
@@ -142,148 +142,133 @@ h1 em {
   margin: 12px 0 0;
 }
 
-.home-slider {
-  width: 100%;
+.icon-slider {
   position: relative;
-  overflow: hidden;
-  background: #fff;
-  border: 1px solid #0001;
+  width: 100%;
+  padding: 0 55px;
 }
 
-.slider-track {
+.icon-slider-window {
+  width: 100%;
+  overflow: hidden;
+}
+
+.icon-slider-track {
   display: flex;
-  width: 100%;
-  transition: transform .55s ease;
-  direction: ltr;
+  align-items: stretch;
+  direction: rtl;
+  transition: transform .45s ease;
+  will-change: transform;
 }
 
-.slide {
-  flex: 0 0 100%;
-  width: 100%;
-  min-width: 100%;
+.icon-slide {
+  flex: 0 0 20%;
+  min-width: 0;
+  padding: 10px;
+  text-align: center;
 }
 
-.slide > a {
-  display: block;
+.icon-slide-link {
+  width: 100%;
+  height: 100%;
+  min-height: 190px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding: 24px 12px;
+
+  background: rgba(255, 255, 255, .55);
+  border: 1px solid rgba(0, 0, 0, .06);
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    border-color .2s ease;
 }
 
-.slide-image {
-  position: relative;
-  width: 100%;
-  height: 440px;
+a.icon-slide-link:hover {
+  transform: translateY(-4px);
+  background: #fff;
+  border-color: rgba(0, 0, 0, .12);
+}
+
+.slider-app-icon {
+  width: 90px;
+  height: 90px;
+  flex: 0 0 90px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   overflow: hidden;
-  background: #ece9e0;
+
+  border-radius: 20px;
+  background: white;
 }
 
-.slide-image img {
+.slider-app-icon img {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  border-radius: 20px;
 }
 
-.slide-content {
-  position: absolute;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  padding: 70px 42px 34px;
-  color: white;
-  direction: rtl;
-
-  background: linear-gradient(
-    to top,
-    rgba(0, 0, 0, .78),
-    rgba(0, 0, 0, .35),
-    transparent
-  );
+.icon-slide h3 {
+  margin: 18px 0 0;
+  font-size: 17px;
+  line-height: 1.5;
 }
 
-.slide-content h2 {
-  margin: 0 0 8px;
-  font-size: clamp(25px, 4vw, 42px);
-  line-height: 1.4;
+.icon-slide p {
+  margin: 8px 0 0;
+  color: #666;
+  font-size: 11px;
+  line-height: 1.8;
 }
 
-.slide-content p {
-  max-width: 700px;
-  margin: 0;
-  line-height: 1.9;
-  font-size: 14px;
-}
-
-.slider-arrow {
+.icon-slider-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 5;
 
-  width: 48px;
-  height: 48px;
+  width: 42px;
+  height: 42px;
 
-  border: 0;
-  background: rgba(17, 19, 16, .82);
-  color: white;
+  border: 1px solid rgba(0, 0, 0, .12);
+  background: white;
+  color: var(--dark);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 34px;
+  font-size: 28px;
   line-height: 1;
 
   cursor: pointer;
+  z-index: 5;
 
   transition:
     background .2s ease,
-    transform .2s ease;
+    color .2s ease;
 }
 
-.slider-arrow:hover {
-  background: var(--primary);
+.icon-slider-arrow:hover {
+  background: var(--dark);
+  color: white;
 }
 
-.slider-prev {
-  left: 18px;
+.icon-slider-prev {
+  left: 0;
 }
 
-.slider-next {
-  right: 18px;
-}
-
-.slider-dots {
-  position: absolute;
-  left: 50%;
-  bottom: 18px;
-  transform: translateX(-50%);
-  z-index: 6;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-
-  direction: ltr;
-}
-
-.slider-dot {
-  width: 9px;
-  height: 9px;
-  padding: 0;
-
-  border: 1px solid white;
-  border-radius: 50%;
-
-  background: transparent;
-  cursor: pointer;
-
-  transition: .2s ease;
-}
-
-.slider-dot.active {
-  width: 25px;
-  border-radius: 10px;
-  background: white;
+.icon-slider-next {
+  right: 0;
 }
 
 /* ============================= */
@@ -466,56 +451,66 @@ footer strong {
     margin-top: 60px;
   }
 
-  /* السلايدر */
+  /* ============================= */
+  /* سلايدر الأيقونات - الجوال */
+  /* ============================= */
 
   .home-slider-section {
-    padding: 20px 18px 65px;
+    padding: 20px 12px 60px;
   }
 
   .slider-heading {
-    margin-bottom: 24px;
+    padding: 0 16px;
+    margin-bottom: 22px;
   }
 
   .slider-heading h2 {
-    font-size: 30px;
+    font-size: 29px;
   }
 
-  .slide-image {
-    height: 260px;
+  .icon-slider {
+    padding: 0 38px;
   }
 
-  .slide-content {
-    padding: 55px 22px 40px;
+  .icon-slide {
+    padding: 6px;
   }
 
-  .slide-content h2 {
-    font-size: 24px;
+  .icon-slide-link {
+    min-height: 160px;
+    padding: 18px 8px;
   }
 
-  .slide-content p {
-    font-size: 12px;
-    line-height: 1.8;
+  .slider-app-icon {
+    width: 72px;
+    height: 72px;
+    flex-basis: 72px;
+    border-radius: 16px;
   }
 
-  .slider-arrow {
-    width: 38px;
+  .slider-app-icon img {
+    border-radius: 16px;
+  }
+
+  .icon-slide h3 {
+    font-size: 13px;
+    margin-top: 13px;
+  }
+
+  .icon-slide p {
+    font-size: 10px;
+    line-height: 1.7;
+  }
+
+  .icon-slider-arrow {
+    width: 32px;
     height: 38px;
-    font-size: 27px;
+    font-size: 23px;
   }
 
-  .slider-prev {
-    left: 10px;
-  }
-
-  .slider-next {
-    right: 10px;
-  }
-
-  .slider-dots {
-    bottom: 13px;
-  }
-
+  /* ============================= */
   /* البطاقات */
+  /* ============================= */
 
   .cards,
   .articles {
