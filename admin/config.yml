@@ -85,6 +85,16 @@ collections:
         widget: "markdown"
         hint: "اكتب التفاصيل كاملة. هذا النص لن يظهر في السلايدر، وسيظهر فقط داخل صفحة التفاصيل."
 
+      # =========================
+      # رابط التطبيق - اختياري
+      # =========================
+
+      - label: "رابط التطبيق"
+        name: "app_url"
+        widget: "string"
+        required: false
+        hint: "اختياري. ضع رابط Google Play أو App Store، أو اتركه فارغاً."
+
       - label: "النوع"
         name: "tags"
         widget: "hidden"
