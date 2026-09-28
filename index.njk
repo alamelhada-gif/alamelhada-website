@@ -39,117 +39,115 @@ title: Alamelhada Apps
 {# سلايدر الأيقونات                          #}
 {# ========================================= #}
 
-{% if site.show_slider != false and site.slider_items %}
+{% if site.show_slider != false %}
 
-<section class="home-slider-section">
+  {% set featuredItems = collections.featured | reverse %}
 
-  {% if site.slider_title %}
-    <div class="slider-heading">
-      <span>{{ site.slider_label }}</span>
-      <h2>{{ site.slider_title }}</h2>
-    </div>
-  {% endif %}
+  {% if featuredItems | length > 0 %}
 
-  <div class="icon-slider" id="homeSlider">
+    <section class="home-slider-section">
 
-    {% if site.slider_items | length > 1 %}
-      <button
-        class="icon-slider-arrow icon-slider-prev"
-        id="sliderPrev"
-        type="button"
-        aria-label="السابق"
-      >
-        ‹
-      </button>
-    {% endif %}
+      {% if site.slider_title %}
+        <div class="slider-heading">
+
+          {% if site.slider_label %}
+            <span>{{ site.slider_label }}</span>
+          {% endif %}
+
+          <h2>{{ site.slider_title }}</h2>
+
+        </div>
+      {% endif %}
 
 
-    <div class="icon-slider-window">
+      <div class="icon-slider" id="homeSlider">
 
-      <div class="icon-slider-track" id="sliderTrack">
+        {% if featuredItems | length > 1 %}
 
-        {% for slide in site.slider_items %}
+          <button
+            class="icon-slider-arrow icon-slider-prev"
+            id="sliderPrev"
+            type="button"
+            aria-label="السابق"
+          >
+            ‹
+          </button>
 
-          <div class="icon-slide">
+        {% endif %}
 
-            {% if slide.url %}
 
-              <a
-                class="icon-slide-link"
-                href="{{ slide.url }}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+        <div class="icon-slider-window">
 
-                <div class="slider-app-icon">
+          <div class="icon-slider-track" id="sliderTrack">
 
-                  {% if slide.image %}
-                    <img
-                      src="{{ slide.image }}"
-                      alt="{{ slide.title or 'تطبيق' }}"
-                      loading="{% if loop.first %}eager{% else %}lazy{% endif %}"
-                    >
+            {% for item in featuredItems %}
+
+              <div class="icon-slide">
+
+                <a
+                  class="icon-slide-link"
+                  href="{{ item.url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+
+                  {% if item.data.image %}
+
+                    <div class="slider-app-icon">
+
+                      <img
+                        src="{{ item.data.image }}"
+                        alt="{{ item.data.title }}"
+                        loading="{% if loop.first %}eager{% else %}lazy{% endif %}"
+                      >
+
+                    </div>
+
                   {% endif %}
 
-                </div>
 
-                {% if slide.title %}
-                  <h3>{{ slide.title }}</h3>
-                {% endif %}
+                  {% if item.data.title %}
 
-                <span class="slider-details">
-                  عرض التفاصيل ←
-                </span>
+                    <h3>
+                      {{ item.data.title }}
+                    </h3>
 
-              </a>
-
-            {% else %}
-
-              <div class="icon-slide-link">
-
-                <div class="slider-app-icon">
-
-                  {% if slide.image %}
-                    <img
-                      src="{{ slide.image }}"
-                      alt="{{ slide.title or 'تطبيق' }}"
-                      loading="{% if loop.first %}eager{% else %}lazy{% endif %}"
-                    >
                   {% endif %}
 
-                </div>
 
-                {% if slide.title %}
-                  <h3>{{ slide.title }}</h3>
-                {% endif %}
+                  <span class="slider-details">
+                    عرض التفاصيل ←
+                  </span>
+
+                </a>
 
               </div>
 
-            {% endif %}
+            {% endfor %}
 
           </div>
 
-        {% endfor %}
+        </div>
+
+
+        {% if featuredItems | length > 1 %}
+
+          <button
+            class="icon-slider-arrow icon-slider-next"
+            id="sliderNext"
+            type="button"
+            aria-label="التالي"
+          >
+            ›
+          </button>
+
+        {% endif %}
 
       </div>
 
-    </div>
+    </section>
 
-
-    {% if site.slider_items | length > 1 %}
-      <button
-        class="icon-slider-arrow icon-slider-next"
-        id="sliderNext"
-        type="button"
-        aria-label="التالي"
-      >
-        ›
-      </button>
-    {% endif %}
-
-  </div>
-
-</section>
+  {% endif %}
 
 {% endif %}
 
@@ -174,20 +172,27 @@ title: Alamelhada Apps
       <article class="card">
 
         {% if app.icon %}
+
           <div class="appicon">
+
             <img
               src="{{ app.icon }}"
               alt="{{ app.name }}"
               loading="lazy"
             >
+
           </div>
+
         {% endif %}
+
 
         <h3>{{ app.name }}</h3>
 
         <p>{{ app.description }}</p>
 
+
         {% if app.url %}
+
           <a
             href="{{ app.url }}"
             target="_blank"
@@ -195,6 +200,7 @@ title: Alamelhada Apps
           >
             عرض على Google Play ←
           </a>
+
         {% endif %}
 
       </article>
@@ -247,6 +253,7 @@ title: Alamelhada Apps
 
   </div>
 
+
   <div class="articles">
 
     {% for post in collections.article | reverse %}
@@ -289,7 +296,7 @@ title: Alamelhada Apps
 {# تشغيل سلايدر الأيقونات                    #}
 {# ========================================= #}
 
-{% if site.show_slider != false and site.slider_items and site.slider_items | length > 1 %}
+{% if site.show_slider != false and collections.featured and collections.featured | length > 1 %}
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
