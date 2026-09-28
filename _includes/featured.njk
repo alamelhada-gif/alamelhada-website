@@ -1,0 +1,49 @@
+---
+layout: base.njk
+---
+
+<article class="featured-page">
+
+  <a class="featured-back" href="/">
+    ← العودة إلى الرئيسية
+  </a>
+
+
+  <div class="featured-page-head">
+
+    {% if image %}
+
+      <div class="featured-page-icon">
+
+        <img
+          src="{{ image }}"
+          alt="{{ title }}"
+        >
+
+      </div>
+
+    {% endif %}
+
+
+    <div class="featured-page-title">
+
+      <span class="featured-label">
+        ALAMELHADA APPS
+      </span>
+
+      <h1>
+        {{ title }}
+      </h1>
+
+    </div>
+
+  </div>
+
+
+  <div class="featured-page-content">
+
+    {{ content | safe }}
+
+  </div>
+
+</article>
