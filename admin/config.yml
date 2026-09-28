@@ -53,6 +53,50 @@ collections:
 
 
   # =========================
+  # السلايدر
+  # =========================
+
+  - name: "featured"
+    label: "السلايدر"
+    label_singular: "عنصر سلايدر"
+    folder: "featured"
+    create: true
+    extension: "md"
+    slug: "{{fields.slug}}"
+
+    fields:
+
+      - label: "اسم التطبيق أو العنصر"
+        name: "title"
+        widget: "string"
+
+      - label: "رابط الصفحة"
+        name: "slug"
+        widget: "string"
+        hint: "اكتب رابطاً قصيراً بالإنجليزية فقط، مثال: falcon-vpn"
+
+      - label: "الأيقونة"
+        name: "image"
+        widget: "image"
+        choose_url: false
+
+      - label: "النص الكامل"
+        name: "body"
+        widget: "markdown"
+        hint: "اكتب التفاصيل كاملة. هذا النص لن يظهر في السلايدر، وسيظهر فقط داخل صفحة التفاصيل."
+
+      - label: "النوع"
+        name: "tags"
+        widget: "hidden"
+        default: "featured"
+
+      - label: "القالب"
+        name: "layout"
+        widget: "hidden"
+        default: "featured.njk"
+
+
+  # =========================
   # إعدادات الموقع
   # =========================
 
@@ -109,7 +153,7 @@ collections:
 
 
           # =========================
-          # السلايدر
+          # إعدادات السلايدر
           # =========================
 
           - label: "إظهار السلايدر"
@@ -128,42 +172,6 @@ collections:
             widget: "string"
             required: false
             default: "أحدث التطبيقات والأخبار"
-
-          - label: "صور السلايدر"
-            name: "slider_items"
-            widget: "list"
-            required: false
-            summary: "{{fields.title}}"
-            add_to_top: true
-
-            fields:
-
-              - label: "الصورة"
-                name: "image"
-                widget: "image"
-                choose_url: false
-
-              - label: "العنوان"
-                name: "title"
-                widget: "string"
-                required: false
-
-              - label: "الوصف"
-                name: "description"
-                widget: "text"
-                required: false
-
-              - label: "الرابط عند الضغط على الصورة"
-                name: "url"
-                widget: "string"
-                required: false
-                hint: "اختياري. مثال: رابط Google Play أو رابط مقال داخل الموقع."
-
-              - label: "فتح الرابط في نافذة جديدة"
-                name: "new_tab"
-                widget: "boolean"
-                default: false
-                required: false
 
 
           # =========================
