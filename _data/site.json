@@ -14,6 +14,11 @@
   "hero_primary_button": "استكشف التطبيقات",
   "hero_secondary_button": "اقرأ المقالات",
 
+  "show_slider": true,
+  "slider_label": "مختارات",
+  "slider_title": "أحدث التطبيقات والأخبار",
+  "slider_items": [],
+
   "show_apps": true,
   "apps_section_label": "منتجاتنا",
   "apps_section_title": "تطبيقات صُممت لتُستخدم",
