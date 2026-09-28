@@ -35,6 +35,122 @@ title: Alamelhada Apps
 </section>
 
 
+{# ========================================= #}
+{# السلايدر                                  #}
+{# ========================================= #}
+
+{% if site.show_slider != false and site.slider_items %}
+
+<section class="home-slider-section">
+
+  {% if site.slider_title %}
+    <div class="slider-heading">
+      <span>{{ site.slider_label }}</span>
+      <h2>{{ site.slider_title }}</h2>
+    </div>
+  {% endif %}
+
+  <div class="home-slider" id="homeSlider">
+
+    <div class="slider-track" id="sliderTrack">
+
+      {% for slide in site.slider_items %}
+
+        <div class="slide">
+
+          {% if slide.url %}
+            <a
+              href="{{ slide.url }}"
+              {% if slide.new_tab %}
+                target="_blank"
+                rel="noopener"
+              {% endif %}
+            >
+          {% endif %}
+
+          <div class="slide-image">
+
+            <img
+              src="{{ slide.image }}"
+              alt="{{ slide.title or 'Alamelhada' }}"
+              loading="{% if loop.first %}eager{% else %}lazy{% endif %}"
+            >
+
+            {% if slide.title or slide.description %}
+              <div class="slide-content">
+
+                {% if slide.title %}
+                  <h2>{{ slide.title }}</h2>
+                {% endif %}
+
+                {% if slide.description %}
+                  <p>{{ slide.description }}</p>
+                {% endif %}
+
+              </div>
+            {% endif %}
+
+          </div>
+
+          {% if slide.url %}
+            </a>
+          {% endif %}
+
+        </div>
+
+      {% endfor %}
+
+    </div>
+
+
+    {% if site.slider_items | length > 1 %}
+
+      <button
+        class="slider-arrow slider-prev"
+        id="sliderPrev"
+        type="button"
+        aria-label="الصورة السابقة"
+      >
+        ‹
+      </button>
+
+      <button
+        class="slider-arrow slider-next"
+        id="sliderNext"
+        type="button"
+        aria-label="الصورة التالية"
+      >
+        ›
+      </button>
+
+      <div class="slider-dots" id="sliderDots">
+
+        {% for slide in site.slider_items %}
+
+          <button
+            type="button"
+            class="slider-dot {% if loop.first %}active{% endif %}"
+            data-slide="{{ loop.index0 }}"
+            aria-label="الصورة {{ loop.index }}"
+          ></button>
+
+        {% endfor %}
+
+      </div>
+
+    {% endif %}
+
+  </div>
+
+</section>
+
+{% endif %}
+
+
+{# ========================================= #}
+{# التطبيقات                                 #}
+{# ========================================= #}
+
 {% if site.show_apps != false %}
 
 <section class="section" id="apps">
@@ -85,6 +201,10 @@ title: Alamelhada Apps
 {% endif %}
 
 
+{# ========================================= #}
+{# القسم الأسود                              #}
+{# ========================================= #}
+
 {% if site.show_statement != false %}
 
 <section class="statement">
@@ -99,6 +219,10 @@ title: Alamelhada Apps
 
 {% endif %}
 
+
+{# ========================================= #}
+{# المقالات                                  #}
+{# ========================================= #}
 
 {% if site.show_articles != false %}
 
@@ -115,7 +239,6 @@ title: Alamelhada Apps
     </h2>
 
   </div>
-
 
   <div class="articles">
 
@@ -151,5 +274,93 @@ title: Alamelhada Apps
   </div>
 
 </section>
+
+{% endif %}
+
+
+{# ========================================= #}
+{# تشغيل السلايدر                            #}
+{# ========================================= #}
+
+{% if site.show_slider != false and site.slider_items and site.slider_items | length > 1 %}
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const track = document.getElementById("sliderTrack");
+  const slides = document.querySelectorAll("#homeSlider .slide");
+  const dots = document.querySelectorAll("#sliderDots .slider-dot");
+  const prev = document.getElementById("sliderPrev");
+  const next = document.getElementById("sliderNext");
+
+  if (!track || slides.length < 2) {
+    return;
+  }
+
+  let current = 0;
+  let timer;
+
+  function showSlide(index) {
+
+    if (index >= slides.length) {
+      index = 0;
+    }
+
+    if (index < 0) {
+      index = slides.length - 1;
+    }
+
+    current = index;
+
+    track.style.transform =
+      "translateX(" + (current * -100) + "%)";
+
+    dots.forEach(function(dot, i) {
+      dot.classList.toggle("active", i === current);
+    });
+  }
+
+  function startAutoPlay() {
+
+    clearInterval(timer);
+
+    timer = setInterval(function() {
+      showSlide(current + 1);
+    }, 5000);
+  }
+
+  if (next) {
+    next.addEventListener("click", function() {
+      showSlide(current + 1);
+      startAutoPlay();
+    });
+  }
+
+  if (prev) {
+    prev.addEventListener("click", function() {
+      showSlide(current - 1);
+      startAutoPlay();
+    });
+  }
+
+  dots.forEach(function(dot) {
+
+    dot.addEventListener("click", function() {
+
+      const index = Number(
+        this.getAttribute("data-slide")
+      );
+
+      showSlide(index);
+      startAutoPlay();
+
+    });
+
+  });
+
+  startAutoPlay();
+
+});
+</script>
 
 {% endif %}
