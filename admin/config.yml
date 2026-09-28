@@ -1,342 +1,847 @@
-backend:
-  name: github
-  repo: alamelhada-gif/alamelhada-website
-  branch: main
-  base_url: https://alamelhada-cms-oauth.alamelhada.workers.dev
-  auth_endpoint: auth
-
-locale: ar
-
-media_folder: "assets/images/uploads"
-public_folder: "/assets/images/uploads"
-
-collections:
-
-  # =========================
-  # المقالات
-  # =========================
-
-  - name: "articles"
-    label: "المقالات"
-    label_singular: "مقال"
-    folder: "articles"
-    create: true
-    extension: "md"
-    slug: "{{fields.slug}}"
-
-    fields:
-
-      - { label: "العنوان", name: "title", widget: "string" }
-
-      - label: "لغة المقال"
-        name: "lang"
-        widget: "select"
-        options:
-          - { label: "العربية", value: "ar" }
-          - { label: "English", value: "en" }
-        default: "ar"
-
-      - label: "رابط المقال"
-        name: "slug"
-        widget: "string"
-        hint: "اكتب رابطاً قصيراً بالإنجليزية فقط، مثال: riwayati-privacy"
-
-      - { label: "الملخص", name: "summary", widget: "text" }
-
-      - { label: "التاريخ", name: "date", widget: "datetime", time_format: false }
-
-      - { label: "صورة", name: "image", widget: "image", required: false }
-
-      - { label: "المحتوى", name: "body", widget: "markdown" }
-
-      - { label: "النوع", name: "tags", widget: "hidden", default: "article" }
-
-
-  # =========================
-  # السلايدر
-  # =========================
-
-  - name: "featured"
-    label: "السلايدر"
-    label_singular: "عنصر سلايدر"
-    folder: "featured"
-    create: true
-    extension: "md"
-    slug: "{{fields.slug}}"
-
-    fields:
-
-      - label: "اسم التطبيق أو العنصر"
-        name: "title"
-        widget: "string"
-
-      - label: "رابط الصفحة"
-        name: "slug"
-        widget: "string"
-        hint: "اكتب رابطاً قصيراً بالإنجليزية فقط، مثال: falcon-vpn"
-
-      - label: "الأيقونة"
-        name: "image"
-        widget: "image"
-        choose_url: false
-
-      - label: "النص الكامل"
-        name: "body"
-        widget: "markdown"
-        hint: "اكتب التفاصيل كاملة. هذا النص لن يظهر في السلايدر، وسيظهر فقط داخل صفحة التفاصيل."
-
-      # =========================
-      # رابط التطبيق - اختياري
-      # =========================
-
-      - label: "رابط التطبيق"
-        name: "app_url"
-        widget: "string"
-        required: false
-        hint: "اختياري. ضع رابط Google Play أو App Store، أو اتركه فارغاً."
-
-      - label: "النوع"
-        name: "tags"
-        widget: "hidden"
-        default: "featured"
-
-      - label: "القالب"
-        name: "layout"
-        widget: "hidden"
-        default: "featured.njk"
-
-
-  # =========================
-  # إعدادات الموقع
-  # =========================
-
-  - name: "settings"
-    label: "إعدادات الموقع"
-
-    files:
-
-      # =========================
-      # الهوية والصفحة الرئيسية
-      # =========================
-
-      - label: "الصفحة الرئيسية والهوية"
-        name: "site"
-        file: "_data/site.json"
-        format: "json"
-
-        fields:
-
-          # =========================
-          # الهوية
-          # =========================
-
-          - { label: "اسم الموقع", name: "name", widget: "string" }
-
-          - { label: "الاسم العربي", name: "name_ar", widget: "string" }
-
-          - { label: "البريد الإلكتروني", name: "email", widget: "string" }
-
-          - label: "شعار الموقع"
-            name: "logo"
-            widget: "image"
-            required: false
-            choose_url: false
-
-
-          # =========================
-          # القسم الرئيسي
-          # =========================
-
-          - { label: "النص الصغير أعلى العنوان", name: "hero_eyebrow", widget: "string" }
-
-          - { label: "العنوان - السطر الأول", name: "hero_title_line1", widget: "string" }
-
-          - { label: "العنوان - السطر الثاني", name: "hero_title_line2", widget: "string" }
-
-          - { label: "الوصف بالعربية", name: "tagline_ar", widget: "text" }
-
-          - { label: "الوصف بالإنجليزية", name: "tagline_en", widget: "text" }
-
-          - { label: "نص زر التطبيقات", name: "hero_primary_button", widget: "string" }
-
-          - { label: "نص زر المقالات", name: "hero_secondary_button", widget: "string" }
-
-
-          # =========================
-          # إعدادات السلايدر
-          # =========================
-
-          - label: "إظهار السلايدر"
-            name: "show_slider"
-            widget: "boolean"
-            default: true
-
-          - label: "النص الصغير أعلى السلايدر"
-            name: "slider_label"
-            widget: "string"
-            required: false
-            default: "مختارات"
-
-          - label: "عنوان السلايدر"
-            name: "slider_title"
-            widget: "string"
-            required: false
-            default: "أحدث التطبيقات والأخبار"
-
-
-          # =========================
-          # التطبيقات
-          # =========================
-
-          - label: "إظهار قسم التطبيقات"
-            name: "show_apps"
-            widget: "boolean"
-            default: true
-
-          - { label: "النص الصغير لقسم التطبيقات", name: "apps_section_label", widget: "string" }
-
-          - { label: "عنوان قسم التطبيقات", name: "apps_section_title", widget: "string" }
-
-
-          # =========================
-          # القسم الأسود
-          # =========================
-
-          - label: "إظهار القسم الأسود"
-            name: "show_statement"
-            widget: "boolean"
-            default: true
-
-          - { label: "النص الصغير للقسم الأسود", name: "statement_small", widget: "string" }
-
-          - { label: "العنوان الكبير للقسم الأسود", name: "statement_title", widget: "text" }
-
-
-          # =========================
-          # المقالات
-          # =========================
-
-          - label: "إظهار قسم المقالات"
-            name: "show_articles"
-            widget: "boolean"
-            default: true
-
-          - { label: "النص الصغير لقسم المقالات", name: "articles_section_label", widget: "string" }
-
-          - { label: "عنوان قسم المقالات", name: "articles_section_title", widget: "string" }
-
-
-          # =========================
-          # القائمة العلوية
-          # =========================
-
-          - label: "إظهار التطبيقات في القائمة"
-            name: "show_nav_apps"
-            widget: "boolean"
-            default: true
-
-          - { label: "اسم التطبيقات في القائمة", name: "nav_apps", widget: "string", default: "التطبيقات" }
-
-          - { label: "اسم التطبيقات بالإنجليزية", name: "nav_apps_en", widget: "string", default: "Apps" }
-
-
-          - label: "إظهار المقالات في القائمة"
-            name: "show_nav_articles"
-            widget: "boolean"
-            default: true
-
-          - { label: "اسم المقالات في القائمة", name: "nav_articles", widget: "string", default: "المقالات" }
-
-          - { label: "اسم المقالات بالإنجليزية", name: "nav_articles_en", widget: "string", default: "Articles" }
-
-
-          - label: "إظهار من نحن"
-            name: "show_nav_about"
-            widget: "boolean"
-            default: true
-
-          - { label: "اسم من نحن", name: "nav_about", widget: "string", default: "من نحن" }
-
-          - { label: "اسم من نحن بالإنجليزية", name: "nav_about_en", widget: "string", default: "About" }
-
-
-          - label: "إظهار تواصل"
-            name: "show_nav_contact"
-            widget: "boolean"
-            default: true
-
-          - { label: "اسم تواصل", name: "nav_contact", widget: "string", default: "تواصل" }
-
-          - { label: "اسم تواصل بالإنجليزية", name: "nav_contact_en", widget: "string", default: "Contact" }
-
-
-          # =========================
-          # الفوتر
-          # =========================
-
-          - { label: "اسم الموقع في الفوتر", name: "footer_name", widget: "string", required: false }
-
-          - { label: "السنة في الفوتر", name: "footer_year", widget: "string", default: "2026" }
-
-          - { label: "نص سياسة الخصوصية", name: "privacy_text", widget: "string", default: "سياسة الخصوصية" }
-
-          - { label: "نص سياسة الخصوصية بالإنجليزية", name: "privacy_text_en", widget: "string", default: "Privacy Policy" }
-
-
-          # =========================
-          # SEO
-          # =========================
-
-          - { label: "عنوان الموقع لمحركات البحث", name: "seo_title", widget: "string", required: false }
-
-          - { label: "وصف الموقع لمحركات البحث", name: "seo_description", widget: "text", required: false }
-
-          - label: "صورة الموقع عند المشاركة"
-            name: "seo_image"
-            widget: "image"
-            required: false
-            choose_url: false
-
-
-          # =========================
-          # الألوان
-          # =========================
-
-          - { label: "اللون الأساسي", name: "primary", widget: "color" }
-
-          - { label: "اللون الذهبي", name: "accent", widget: "color" }
-
-          - { label: "اللون الداكن", name: "dark", widget: "color" }
-
-          - { label: "لون الخلفية", name: "light", widget: "color" }
-
-
-      # =========================
-      # التطبيقات
-      # =========================
-
-      - label: "التطبيقات"
-        name: "apps"
-        file: "_data/apps.json"
-        format: "json"
-
-        fields:
-
-          - label: "قائمة التطبيقات"
-            name: "items"
-            widget: "list"
-            summary: "{{fields.name}}"
-
-            fields:
-
-              - { label: "اسم التطبيق", name: "name", widget: "string" }
-
-              - { label: "الوصف", name: "description", widget: "text" }
-
-              - label: "صورة اللوغو"
-                name: "icon"
-                widget: "image"
-                choose_url: false
-                required: false
-
-              - { label: "رابط Google Play", name: "url", widget: "string" }
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&family=Manrope:wght@400;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--light);
+  color: var(--dark);
+  font-family: 'Noto Kufi Arabic', sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ============================= */
+/* الهيدر */
+/* ============================= */
+
+header {
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 28px;
+  border-bottom: 1px solid #0001;
+}
+
+.brand {
+  font-family: Manrope, sans-serif;
+  font-weight: 700;
+  letter-spacing: -.04em;
+  font-size: 22px;
+}
+
+nav {
+  display: flex;
+  gap: 28px;
+  font-size: 13px;
+}
+
+/* ============================= */
+/* القسم الرئيسي */
+/* ============================= */
+
+.hero {
+  max-width: 1200px;
+  margin: auto;
+  min-height: 650px;
+  padding: 90px 28px;
+  display: grid;
+  grid-template-columns: 1.4fr .6fr;
+  align-items: center;
+}
+
+.eyebrow,
+.section-head span,
+.pagehead span,
+.slider-heading span {
+  font: 600 12px Manrope, sans-serif;
+  letter-spacing: .18em;
+  color: var(--primary);
+}
+
+h1 {
+  font-size: clamp(48px, 7vw, 92px);
+  line-height: 1.08;
+  margin: 20px 0 24px;
+  letter-spacing: -.05em;
+}
+
+h1 em {
+  font-style: normal;
+  color: var(--primary);
+}
+
+.hero p,
+.pagehead p {
+  max-width: 620px;
+  line-height: 2;
+  color: #43473f;
+}
+
+.actions {
+  display: flex;
+  gap: 14px;
+  margin-top: 34px;
+}
+
+.btn,
+.ghost {
+  padding: 14px 22px;
+  border-radius: 2px;
+  font-size: 13px;
+}
+
+.btn {
+  background: var(--dark);
+  color: white;
+}
+
+.ghost {
+  border: 1px solid #2223;
+}
+
+.mark {
+  width: 240px;
+  height: 240px;
+  border: 1px solid var(--accent);
+  display: grid;
+  place-items: center;
+  font: 700 120px Manrope;
+  color: var(--accent);
+  transform: rotate(-5deg);
+}
+
+/* ============================= */
+/* سلايدر أيقونات التطبيقات */
+/* ============================= */
+
+.home-slider-section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px 28px 80px;
+}
+
+.slider-heading {
+  margin-bottom: 32px;
+}
+
+.slider-heading h2 {
+  font-size: 40px;
+  margin: 12px 0 0;
+}
+
+.icon-slider {
+  position: relative;
+  width: 100%;
+  padding: 0 55px;
+}
+
+.icon-slider-window {
+  width: 100%;
+  overflow: hidden;
+}
+
+.icon-slider-track {
+  display: flex;
+  align-items: stretch;
+  direction: rtl;
+  transition: transform .45s ease;
+  will-change: transform;
+}
+
+.icon-slide {
+  flex: 0 0 20%;
+  min-width: 0;
+  padding: 10px;
+  text-align: center;
+}
+
+.icon-slide-link {
+  width: 100%;
+  height: 100%;
+  min-height: 205px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding: 24px 12px;
+
+  background: rgba(255, 255, 255, .55);
+  border: 1px solid rgba(0, 0, 0, .06);
+
+  transition:
+    transform .2s ease,
+    background .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease;
+}
+
+a.icon-slide-link:hover {
+  transform: translateY(-4px);
+  background: #fff;
+  border-color: rgba(0, 0, 0, .12);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .06);
+}
+
+/* ============================= */
+/* أيقونة السلايدر */
+/* ============================= */
+
+.slider-app-icon {
+  width: 90px;
+  height: 90px;
+  flex: 0 0 90px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+  background: white;
+}
+
+.slider-app-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 20px;
+}
+
+/* ============================= */
+/* اسم العنصر */
+/* ============================= */
+
+.icon-slide h3 {
+  margin: 18px 0 0;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.icon-slide p {
+  display: none;
+}
+
+/* ============================= */
+/* زر عرض التفاصيل */
+/* ============================= */
+
+.slider-details {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 16px;
+  padding: 8px 15px;
+
+  border: 1px solid rgba(0, 0, 0, .12);
+
+  color: var(--primary);
+
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.5;
+
+  transition:
+    background .2s ease,
+    color .2s ease,
+    border-color .2s ease;
+}
+
+a.icon-slide-link:hover .slider-details {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+/* ============================= */
+/* أسهم السلايدر */
+/* ============================= */
+
+.icon-slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 42px;
+  height: 42px;
+
+  border: 1px solid rgba(0, 0, 0, .12);
+  background: white;
+  color: var(--dark);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 28px;
+  line-height: 1;
+
+  cursor: pointer;
+  z-index: 5;
+
+  transition:
+    background .2s ease,
+    color .2s ease;
+}
+
+.icon-slider-arrow:hover {
+  background: var(--dark);
+  color: white;
+}
+
+.icon-slider-prev {
+  left: 0;
+}
+
+.icon-slider-next {
+  right: 0;
+}
+
+/* ============================= */
+/* الأقسام */
+/* ============================= */
+
+.section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 90px 28px;
+}
+
+.section-head h2 {
+  font-size: 40px;
+  margin: 12px 0 40px;
+}
+
+/* ============================= */
+/* التطبيقات */
+/* ============================= */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.card {
+  background: #fff9;
+  padding: 34px;
+  border: 1px solid #0001;
+  min-height: 280px;
+}
+
+/* ============================= */
+/* لوغو التطبيقات */
+/* ============================= */
+
+.appicon {
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.appicon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 20px;
+}
+
+.card h3 {
+  font-size: 24px;
+  margin: 28px 0 12px;
+}
+
+.card p {
+  color: #62655f;
+  line-height: 1.9;
+}
+
+.card a {
+  display: inline-block;
+  margin-top: 22px;
+  color: var(--primary);
+  font-size: 13px;
+}
+
+/* ============================= */
+/* القسم الأسود */
+/* ============================= */
+
+.statement {
+  background: var(--dark);
+  color: white;
+  padding: 110px max(28px, calc((100vw - 1144px)/2));
+}
+
+.statement p {
+  color: var(--accent);
+}
+
+.statement h2 {
+  font-size: clamp(34px, 5vw, 66px);
+  max-width: 900px;
+  line-height: 1.4;
+}
+
+/* ============================= */
+/* المقالات */
+/* ============================= */
+
+.articles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.article {
+  padding: 28px;
+  border-top: 2px solid var(--accent);
+  background: #fff7;
+}
+
+.article small {
+  font-family: Manrope;
+  color: #777;
+}
+
+.article h3 {
+  font-size: 22px;
+}
+
+.article p {
+  color: #666;
+  line-height: 1.8;
+}
+
+/* ============================= */
+/* الصفحات الداخلية */
+/* ============================= */
+
+.pagehead {
+  max-width: 1200px;
+  margin: auto;
+  padding: 110px 28px 60px;
+  min-height: 430px;
+}
+
+.pagehead h1 {
+  font-size: clamp(44px, 6vw, 76px);
+  max-width: 900px;
+}
+
+/* ============================= */
+/* صفحة تفاصيل السلايدر */
+/* ============================= */
+
+.featured-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 70px 28px 120px;
+}
+
+.featured-back {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 45px;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+  transition: opacity .2s ease;
+}
+
+.featured-back:hover {
+  opacity: .65;
+}
+
+.featured-page-head {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+  width: 100%;
+  height: auto;
+  max-width: none;
+
+  margin: 0 0 45px;
+  padding: 0 0 45px;
+
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.featured-page-icon {
+  width: 120px;
+  height: 120px;
+  flex: 0 0 120px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 26px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, .06);
+
+  box-shadow: 0 10px 35px rgba(0, 0, 0, .06);
+}
+
+.featured-page-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.featured-page-title {
+  flex: 1;
+}
+
+.featured-label {
+  display: block;
+  color: var(--primary);
+  font: 600 11px Manrope, sans-serif;
+  letter-spacing: .16em;
+}
+
+.featured-page-head h1 {
+  margin: 12px 0 0;
+  padding: 0;
+
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: 1.35;
+  letter-spacing: -.03em;
+}
+
+.featured-page-content {
+  max-width: 760px;
+  margin: 0 auto;
+
+  color: #444840;
+  font-size: 16px;
+  line-height: 2.2;
+}
+
+.featured-page-content > :first-child {
+  margin-top: 0;
+}
+
+.featured-page-content p {
+  margin: 0 0 24px;
+}
+
+.featured-page-content h2 {
+  margin: 48px 0 18px;
+  color: var(--dark);
+  font-size: 28px;
+  line-height: 1.6;
+}
+
+.featured-page-content h3 {
+  margin: 38px 0 15px;
+  color: var(--dark);
+  font-size: 22px;
+  line-height: 1.6;
+}
+
+.featured-page-content strong {
+  color: var(--dark);
+}
+
+.featured-page-content a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.featured-page-content ul,
+.featured-page-content ol {
+  margin: 22px 0 30px;
+  padding-right: 28px;
+}
+
+.featured-page-content li {
+  margin-bottom: 10px;
+}
+
+.featured-page-content blockquote {
+  margin: 35px 0;
+  padding: 22px 25px;
+
+  background: rgba(255, 255, 255, .55);
+  border-right: 3px solid var(--accent);
+
+  color: #555;
+}
+
+.featured-page-content img {
+  display: block;
+
+  width: auto;
+  max-width: 100%;
+  height: auto;
+
+  margin: 38px auto;
+
+  border-radius: 8px;
+}
+
+.featured-page-content hr {
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, .1);
+  margin: 45px 0;
+}
+
+/* ============================= */
+/* زر تحميل التطبيق */
+/* ============================= */
+
+.featured-app-link {
+  margin-top: 45px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(0, 0, 0, .1);
+}
+
+.featured-app-link a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px 24px;
+
+  background: var(--dark);
+  color: white;
+
+  border: 1px solid var(--dark);
+  border-radius: 3px;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition:
+    background .2s ease,
+    color .2s ease,
+    border-color .2s ease,
+    transform .2s ease;
+}
+
+.featured-app-link a:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* ============================= */
+/* الفوتر */
+/* ============================= */
+
+footer {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 28px;
+  border-top: 1px solid #0002;
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+
+footer strong {
+  margin-left: auto;
+  font-family: Manrope;
+}
+
+/* ============================= */
+/* الجوال */
+/* ============================= */
+
+@media (max-width: 760px) {
+
+  nav {
+    display: none;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: 70px;
+  }
+
+  .mark {
+    width: 150px;
+    height: 150px;
+    font-size: 72px;
+    margin-top: 60px;
+  }
+
+  /* ============================= */
+  /* سلايدر الأيقونات - الجوال */
+  /* ============================= */
+
+  .home-slider-section {
+    padding: 20px 12px 60px;
+  }
+
+  .slider-heading {
+    padding: 0 16px;
+    margin-bottom: 22px;
+  }
+
+  .slider-heading h2 {
+    font-size: 29px;
+  }
+
+  .icon-slider {
+    padding: 0 38px;
+  }
+
+  .icon-slide {
+    padding: 6px;
+  }
+
+  .icon-slide-link {
+    min-height: 175px;
+    padding: 18px 8px;
+  }
+
+  .slider-app-icon {
+    width: 72px;
+    height: 72px;
+    flex: 0 0 72px;
+    border-radius: 16px;
+  }
+
+  .slider-app-icon img {
+    border-radius: 16px;
+  }
+
+  .icon-slide h3 {
+    font-size: 13px;
+    margin-top: 13px;
+  }
+
+  .slider-details {
+    margin-top: 11px;
+    padding: 7px 10px;
+    font-size: 9px;
+  }
+
+  .icon-slider-arrow {
+    width: 32px;
+    height: 38px;
+    font-size: 23px;
+  }
+
+  /* ============================= */
+  /* البطاقات */
+  /* ============================= */
+
+  .cards,
+  .articles {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding-top: 65px;
+  }
+
+  .section-head h2 {
+    font-size: 32px;
+  }
+
+  /* ============================= */
+  /* صفحة تفاصيل السلايدر */
+  /* ============================= */
+
+  .featured-page {
+    padding: 45px 20px 80px;
+  }
+
+  .featured-back {
+    margin-bottom: 35px;
+    font-size: 12px;
+  }
+
+  .featured-page-head {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+  }
+
+  .featured-page-icon {
+    width: 90px;
+    height: 90px;
+    flex: 0 0 90px;
+    border-radius: 20px;
+  }
+
+  .featured-page-head h1 {
+    margin-top: 9px;
+    font-size: 34px;
+  }
+
+  .featured-page-content {
+    font-size: 14px;
+    line-height: 2.1;
+  }
+
+  .featured-page-content h2 {
+    margin-top: 38px;
+    font-size: 23px;
+  }
+
+  .featured-page-content h3 {
+    margin-top: 30px;
+    font-size: 19px;
+  }
+
+  /* ============================= */
+  /* زر تحميل التطبيق - الجوال */
+  /* ============================= */
+
+  .featured-app-link {
+    margin-top: 35px;
+    padding-top: 25px;
+  }
+
+  .featured-app-link a {
+    width: 100%;
+    min-height: 50px;
+    padding: 13px 18px;
+    font-size: 12px;
+  }
+
+  footer strong {
+    width: 100%;
+    margin: 0;
+  }
+}
