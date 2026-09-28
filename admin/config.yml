@@ -12,6 +12,10 @@ public_folder: "/assets/images/uploads"
 
 collections:
 
+  # =========================
+  # المقالات
+  # =========================
+
   - name: "articles"
     label: "المقالات"
     label_singular: "مقال"
@@ -21,6 +25,7 @@ collections:
     slug: "{{fields.slug}}"
 
     fields:
+
       - { label: "العنوان", name: "title", widget: "string" }
 
       - label: "لغة المقال"
@@ -47,10 +52,18 @@ collections:
       - { label: "النوع", name: "tags", widget: "hidden", default: "article" }
 
 
+  # =========================
+  # إعدادات الموقع
+  # =========================
+
   - name: "settings"
     label: "إعدادات الموقع"
 
     files:
+
+      # =========================
+      # الهوية والصفحة الرئيسية
+      # =========================
 
       - label: "الصفحة الرئيسية والهوية"
         name: "site"
@@ -59,62 +72,170 @@ collections:
 
         fields:
 
-          - label: "هوية الموقع"
-            name: "identity_section"
-            widget: "object"
-            collapsed: false
-            fields:
-              - { label: "اسم الموقع", name: "name", widget: "string" }
-              - { label: "الاسم العربي", name: "name_ar", widget: "string" }
-              - { label: "البريد الإلكتروني", name: "email", widget: "string" }
+          # الهوية
 
-          - label: "القسم الرئيسي"
-            name: "hero_section"
-            widget: "object"
-            collapsed: false
-            fields:
-              - { label: "النص الصغير أعلى العنوان", name: "hero_eyebrow", widget: "string" }
-              - { label: "العنوان - السطر الأول", name: "hero_title_line1", widget: "string" }
-              - { label: "العنوان - السطر الثاني", name: "hero_title_line2", widget: "string" }
-              - { label: "الوصف بالعربية", name: "tagline_ar", widget: "text" }
-              - { label: "الوصف بالإنجليزية", name: "tagline_en", widget: "text" }
-              - { label: "نص زر التطبيقات", name: "hero_primary_button", widget: "string" }
-              - { label: "نص زر المقالات", name: "hero_secondary_button", widget: "string" }
+          - { label: "اسم الموقع", name: "name", widget: "string" }
 
-          - label: "قسم التطبيقات"
-            name: "apps_section"
-            widget: "object"
-            collapsed: false
-            fields:
-              - { label: "النص الصغير", name: "apps_section_label", widget: "string" }
-              - { label: "عنوان القسم", name: "apps_section_title", widget: "string" }
+          - { label: "الاسم العربي", name: "name_ar", widget: "string" }
 
-          - label: "القسم الأسود"
-            name: "statement_section"
-            widget: "object"
-            collapsed: false
-            fields:
-              - { label: "النص الصغير", name: "statement_small", widget: "string" }
-              - { label: "العنوان الكبير", name: "statement_title", widget: "text" }
+          - { label: "البريد الإلكتروني", name: "email", widget: "string" }
 
-          - label: "قسم المقالات"
-            name: "articles_section"
-            widget: "object"
-            collapsed: false
-            fields:
-              - { label: "النص الصغير", name: "articles_section_label", widget: "string" }
-              - { label: "عنوان القسم", name: "articles_section_title", widget: "string" }
+          - label: "شعار الموقع"
+            name: "logo"
+            widget: "image"
+            required: false
+            choose_url: false
 
-          - label: "ألوان الموقع"
-            name: "colors_section"
-            widget: "object"
-            collapsed: false
-            fields:
-              - { label: "الأخضر", name: "primary", widget: "color" }
-              - { label: "الذهبي", name: "accent", widget: "color" }
-              - { label: "الفحمي", name: "dark", widget: "color" }
-              - { label: "الخلفية الفاتحة", name: "light", widget: "color" }
 
+          # =========================
+          # القسم الرئيسي
+          # =========================
+
+          - { label: "النص الصغير أعلى العنوان", name: "hero_eyebrow", widget: "string" }
+
+          - { label: "العنوان - السطر الأول", name: "hero_title_line1", widget: "string" }
+
+          - { label: "العنوان - السطر الثاني", name: "hero_title_line2", widget: "string" }
+
+          - { label: "الوصف بالعربية", name: "tagline_ar", widget: "text" }
+
+          - { label: "الوصف بالإنجليزية", name: "tagline_en", widget: "text" }
+
+          - { label: "نص زر التطبيقات", name: "hero_primary_button", widget: "string" }
+
+          - { label: "نص زر المقالات", name: "hero_secondary_button", widget: "string" }
+
+
+          # =========================
+          # التطبيقات
+          # =========================
+
+          - label: "إظهار قسم التطبيقات"
+            name: "show_apps"
+            widget: "boolean"
+            default: true
+
+          - { label: "النص الصغير لقسم التطبيقات", name: "apps_section_label", widget: "string" }
+
+          - { label: "عنوان قسم التطبيقات", name: "apps_section_title", widget: "string" }
+
+
+          # =========================
+          # القسم الأسود
+          # =========================
+
+          - label: "إظهار القسم الأسود"
+            name: "show_statement"
+            widget: "boolean"
+            default: true
+
+          - { label: "النص الصغير للقسم الأسود", name: "statement_small", widget: "string" }
+
+          - { label: "العنوان الكبير للقسم الأسود", name: "statement_title", widget: "text" }
+
+
+          # =========================
+          # المقالات في الرئيسية
+          # =========================
+
+          - label: "إظهار قسم المقالات"
+            name: "show_articles"
+            widget: "boolean"
+            default: true
+
+          - { label: "النص الصغير لقسم المقالات", name: "articles_section_label", widget: "string" }
+
+          - { label: "عنوان قسم المقالات", name: "articles_section_title", widget: "string" }
+
+
+          # =========================
+          # القائمة العلوية
+          # =========================
+
+          - label: "إظهار التطبيقات في القائمة"
+            name: "show_nav_apps"
+            widget: "boolean"
+            default: true
+
+          - { label: "اسم التطبيقات في القائمة", name: "nav_apps", widget: "string", default: "التطبيقات" }
+
+          - { label: "اسم التطبيقات بالإنجليزية", name: "nav_apps_en", widget: "string", default: "Apps" }
+
+
+          - label: "إظهار المقالات في القائمة"
+            name: "show_nav_articles"
+            widget: "boolean"
+            default: true
+
+          - { label: "اسم المقالات في القائمة", name: "nav_articles", widget: "string", default: "المقالات" }
+
+          - { label: "اسم المقالات بالإنجليزية", name: "nav_articles_en", widget: "string", default: "Articles" }
+
+
+          - label: "إظهار من نحن"
+            name: "show_nav_about"
+            widget: "boolean"
+            default: true
+
+          - { label: "اسم من نحن", name: "nav_about", widget: "string", default: "من نحن" }
+
+          - { label: "اسم من نحن بالإنجليزية", name: "nav_about_en", widget: "string", default: "About" }
+
+
+          - label: "إظهار تواصل"
+            name: "show_nav_contact"
+            widget: "boolean"
+            default: true
+
+          - { label: "اسم تواصل", name: "nav_contact", widget: "string", default: "تواصل" }
+
+          - { label: "اسم تواصل بالإنجليزية", name: "nav_contact_en", widget: "string", default: "Contact" }
+
+
+          # =========================
+          # الفوتر
+          # =========================
+
+          - { label: "اسم الموقع في الفوتر", name: "footer_name", widget: "string", required: false }
+
+          - { label: "السنة في الفوتر", name: "footer_year", widget: "string", default: "2026" }
+
+          - { label: "نص سياسة الخصوصية", name: "privacy_text", widget: "string", default: "سياسة الخصوصية" }
+
+          - { label: "نص سياسة الخصوصية بالإنجليزية", name: "privacy_text_en", widget: "string", default: "Privacy Policy" }
+
+
+          # =========================
+          # SEO
+          # =========================
+
+          - { label: "عنوان الموقع لمحركات البحث", name: "seo_title", widget: "string", required: false }
+
+          - { label: "وصف الموقع لمحركات البحث", name: "seo_description", widget: "text", required: false }
+
+          - label: "صورة الموقع عند المشاركة"
+            name: "seo_image"
+            widget: "image"
+            required: false
+            choose_url: false
+
+
+          # =========================
+          # الألوان
+          # =========================
+
+          - { label: "اللون الأساسي", name: "primary", widget: "color" }
+
+          - { label: "اللون الذهبي", name: "accent", widget: "color" }
+
+          - { label: "اللون الداكن", name: "dark", widget: "color" }
+
+          - { label: "لون الخلفية", name: "light", widget: "color" }
+
+
+      # =========================
+      # التطبيقات
+      # =========================
 
       - label: "التطبيقات"
         name: "apps"
@@ -129,7 +250,9 @@ collections:
             summary: "{{fields.name}}"
 
             fields:
+
               - { label: "اسم التطبيق", name: "name", widget: "string" }
+
               - { label: "الوصف", name: "description", widget: "text" }
 
               - label: "صورة اللوغو"
