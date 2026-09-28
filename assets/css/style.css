@@ -346,6 +346,10 @@ a.icon-slide-link:hover .slider-details {
   min-height: 280px;
 }
 
+/* ============================= */
+/* لوغو التطبيقات */
+/* ============================= */
+
 .appicon {
   width: 90px;
   height: 90px;
@@ -611,6 +615,48 @@ a.icon-slide-link:hover .slider-details {
 }
 
 /* ============================= */
+/* زر تحميل التطبيق */
+/* ============================= */
+
+.featured-app-link {
+  margin-top: 45px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(0, 0, 0, .1);
+}
+
+.featured-app-link a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px 24px;
+
+  background: var(--dark);
+  color: white;
+
+  border: 1px solid var(--dark);
+  border-radius: 3px;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition:
+    background .2s ease,
+    color .2s ease,
+    border-color .2s ease,
+    transform .2s ease;
+}
+
+.featured-app-link a:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* ============================= */
 /* الفوتر */
 /* ============================= */
 
@@ -653,7 +699,9 @@ footer strong {
     margin-top: 60px;
   }
 
-  /* السلايدر */
+  /* ============================= */
+  /* سلايدر الأيقونات - الجوال */
+  /* ============================= */
 
   .home-slider-section {
     padding: 20px 12px 60px;
@@ -709,7 +757,9 @@ footer strong {
     font-size: 23px;
   }
 
+  /* ============================= */
   /* البطاقات */
+  /* ============================= */
 
   .cards,
   .articles {
@@ -724,7 +774,9 @@ footer strong {
     font-size: 32px;
   }
 
+  /* ============================= */
   /* صفحة تفاصيل السلايدر */
+  /* ============================= */
 
   .featured-page {
     padding: 45px 20px 80px;
@@ -770,6 +822,22 @@ footer strong {
   .featured-page-content h3 {
     margin-top: 30px;
     font-size: 19px;
+  }
+
+  /* ============================= */
+  /* زر تحميل التطبيق - الجوال */
+  /* ============================= */
+
+  .featured-app-link {
+    margin-top: 35px;
+    padding-top: 25px;
+  }
+
+  .featured-app-link a {
+    width: 100%;
+    min-height: 50px;
+    padding: 13px 18px;
+    font-size: 12px;
   }
 
   footer strong {
