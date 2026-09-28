@@ -8,22 +8,18 @@ layout: base.njk
     ← العودة إلى الرئيسية
   </a>
 
-
   <div class="featured-page-head">
 
     {% if image %}
 
       <div class="featured-page-icon">
-
         <img
           src="{{ image }}"
           alt="{{ title }}"
         >
-
       </div>
 
     {% endif %}
-
 
     <div class="featured-page-title">
 
@@ -43,6 +39,22 @@ layout: base.njk
   <div class="featured-page-content">
 
     {{ content | safe }}
+
+    {% if app_url %}
+
+      <div class="featured-app-link">
+
+        <a
+          href="{{ app_url }}"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          تحميل التطبيق ←
+        </a>
+
+      </div>
+
+    {% endif %}
 
   </div>
 
