@@ -15,8 +15,19 @@ title: Alamelhada Apps
     <p>{{ site.tagline_ar }}</p>
 
     <div class="actions">
-      <a class="btn" href="#apps">{{ site.hero_primary_button }}</a>
-      <a class="ghost" href="/articles/">{{ site.hero_secondary_button }}</a>
+
+      {% if site.show_apps != false %}
+        <a class="btn" href="#apps">
+          {{ site.hero_primary_button }}
+        </a>
+      {% endif %}
+
+      {% if site.show_articles != false %}
+        <a class="ghost" href="/articles/">
+          {{ site.hero_secondary_button }}
+        </a>
+      {% endif %}
+
     </div>
   </div>
 
@@ -24,14 +35,19 @@ title: Alamelhada Apps
 </section>
 
 
+{% if site.show_apps != false %}
+
 <section class="section" id="apps">
+
   <div class="section-head">
     <span>{{ site.apps_section_label }}</span>
     <h2>{{ site.apps_section_title }}</h2>
   </div>
 
   <div class="cards">
+
     {% for app in apps.items %}
+
       <article class="card">
 
         {% if app.icon %}
@@ -48,37 +64,92 @@ title: Alamelhada Apps
 
         <p>{{ app.description }}</p>
 
-        <a href="{{ app.url }}" target="_blank" rel="noopener">
-          عرض على Google Play ←
-        </a>
+        {% if app.url %}
+          <a
+            href="{{ app.url }}"
+            target="_blank"
+            rel="noopener"
+          >
+            عرض على Google Play ←
+          </a>
+        {% endif %}
+
       </article>
+
     {% endfor %}
+
   </div>
+
 </section>
 
+{% endif %}
+
+
+{% if site.show_statement != false %}
 
 <section class="statement">
+
   <p>{{ site.statement_small }}</p>
-  <h2>{{ site.statement_title }}</h2>
+
+  <h2>
+    {{ site.statement_title }}
+  </h2>
+
 </section>
 
+{% endif %}
+
+
+{% if site.show_articles != false %}
 
 <section class="section">
+
   <div class="section-head">
-    <span>{{ site.articles_section_label }}</span>
-    <h2>{{ site.articles_section_title }}</h2>
+
+    <span>
+      {{ site.articles_section_label }}
+    </span>
+
+    <h2>
+      {{ site.articles_section_title }}
+    </h2>
+
   </div>
 
+
   <div class="articles">
+
     {% for post in collections.article | reverse %}
+
       {% if loop.index <= 3 %}
-        <a class="article" href="{{ post.url }}">
-          <h3>{{ post.data.title }}</h3>
-          <p>{{ post.data.summary }}</p>
+
+        <a
+          class="article"
+          href="{{ post.url }}"
+        >
+
+          <h3>
+            {{ post.data.title }}
+          </h3>
+
+          <p>
+            {{ post.data.summary }}
+          </p>
+
         </a>
+
       {% endif %}
+
     {% else %}
-      <p>ستظهر المقالات هنا بعد إضافتها من لوحة الإدارة.</p>
+
+      <p>
+        ستظهر المقالات هنا بعد إضافتها من لوحة الإدارة.
+      </p>
+
     {% endfor %}
+
   </div>
+
 </section>
+
+{% endif %}
