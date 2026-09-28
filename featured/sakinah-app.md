@@ -1,5 +1,5 @@
 ---
-title: "سكينة: القرآن والأذكار"
+title: سكينة القرآن والأذكار
 slug: sakinah-app
 image: /assets/images/uploads/hi_res_icon-2834-1-.png
 app_url: https://play.google.com/store/apps/details?id=com.alam.sakinah.app
