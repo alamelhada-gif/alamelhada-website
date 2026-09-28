@@ -1,62 +1,55 @@
 {
-  "name": "Alamelhada Apps",
-  "name_ar": "علم الهدى للتطبيقات",
-  "email": "alamelhada@gmail.com",
-
-  "logo": "",
-
-  "hero_eyebrow": "ALAMELHADA APPS",
-  "hero_title_line1": "أفكار رقمية",
-  "hero_title_line2": "بتجربة مختلفة.",
-  "tagline_ar": "تطبيقات عملية، تجارب ذكية، وأفكار تستحق الاستخدام.",
-  "tagline_en": "Useful apps, thoughtful experiences, and ideas worth using.",
-
-  "hero_primary_button": "استكشف التطبيقات",
-  "hero_secondary_button": "اقرأ المقالات",
-
-  "show_slider": true,
-  "slider_label": "مختارات",
-  "slider_title": "أحدث التطبيقات والأخبار",
-  "slider_items": [],
-
-  "show_apps": true,
-  "apps_section_label": "منتجاتنا",
-  "apps_section_title": "تطبيقات صُممت لتُستخدم",
-
-  "show_statement": true,
-  "statement_small": "نؤمن أن التقنية الجيدة لا تحتاج إلى ضجيج.",
-  "statement_title": "وضوح في الفكرة. عناية في التفاصيل.",
-
-  "show_articles": true,
-  "articles_section_label": "آخر المقالات",
-  "articles_section_title": "من المدونة",
-
-  "nav_apps": "التطبيقات",
-  "nav_articles": "المقالات",
-  "nav_about": "من نحن",
-  "nav_contact": "تواصل",
-
-  "nav_apps_en": "Apps",
-  "nav_articles_en": "Articles",
-  "nav_about_en": "About",
-  "nav_contact_en": "Contact",
-
-  "show_nav_apps": true,
-  "show_nav_articles": true,
-  "show_nav_about": true,
-  "show_nav_contact": true,
-
-  "footer_name": "Alamelhada Apps",
   "footer_year": "2026",
-  "privacy_text": "سياسة الخصوصية",
-  "privacy_text_en": "Privacy Policy",
-
-  "seo_title": "Alamelhada Apps",
-  "seo_description": "تطبيقات عملية، تجارب ذكية، وأفكار تستحق الاستخدام.",
-  "seo_image": "",
-
   "primary": "#3F6547",
+  "hero_secondary_button": "اقرأ المقالات",
+  "show_nav_contact": true,
+  "slider_items": [
+    {
+      "new_tab": false,
+      "image": "/assets/images/uploads/chatgpt-image-14-سبتمبر-2026،-10_31_12-م.png",
+      "title": "تطبيق رواياتي"
+    }
+  ],
+  "tagline_ar": "تطبيقات عملية، تجارب ذكية، وأفكار تستحق الاستخدام.",
+  "show_slider": true,
+  "hero_eyebrow": "ALAMELHADA APPS",
+  "nav_contact": "تواصل",
+  "nav_contact_en": "Contact",
+  "privacy_text_en": "Privacy Policy",
+  "privacy_text": "سياسة الخصوصية",
+  "name_ar": "علم الهدى للتطبيقات",
+  "statement_title": "وضوح في الفكرة. عناية في التفاصيل.",
   "accent": "#C4A66A",
+  "logo": "",
+  "name": "Alamelhada Apps",
+  "apps_section_label": "منتجاتنا",
+  "show_statement": true,
+  "nav_apps": "التطبيقات",
+  "nav_articles_en": "Articles",
+  "show_nav_about": true,
+  "footer_name": "Alamelhada Apps",
+  "show_nav_apps": true,
+  "hero_title_line1": "أفكار رقمية",
+  "nav_about": "من نحن",
+  "apps_section_title": "تطبيقات صُممت لتُستخدم",
+  "hero_title_line2": "بتجربة مختلفة.",
+  "show_apps": true,
+  "hero_primary_button": "استكشف التطبيقات",
+  "light": "#F5F2EA",
+  "slider_label": "مختارات",
   "dark": "#111310",
-  "light": "#F5F2EA"
+  "seo_title": "Alamelhada Apps",
+  "statement_small": "نؤمن أن التقنية الجيدة لا تحتاج إلى ضجيج.",
+  "nav_about_en": "About",
+  "articles_section_label": "آخر المقالات",
+  "nav_articles": "المقالات",
+  "seo_image": "",
+  "slider_title": "أحدث التطبيقات والأخبار",
+  "nav_apps_en": "Apps",
+  "seo_description": "تطبيقات عملية، تجارب ذكية، وأفكار تستحق الاستخدام.",
+  "tagline_en": "Useful apps, thoughtful experiences, and ideas worth using.",
+  "show_nav_articles": true,
+  "articles_section_title": "من المدونة",
+  "email": "alamelhada@gmail.com",
+  "show_articles": true
 }
