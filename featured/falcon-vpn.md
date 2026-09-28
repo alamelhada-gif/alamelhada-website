@@ -21,3 +21,5 @@ layout: featured.njk
 • واجهة بسيطة وسهلة الاستخدام
 
 يستخدم Falcon VPN خدمة VPN لإنشاء اتصال VPN عندما يطلب المستخدم تشغيل الاتصال.
+
+https://play.google.com/store/apps/details?id=com.falcon1.vpn
