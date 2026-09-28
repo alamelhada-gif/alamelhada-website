@@ -72,7 +72,9 @@ collections:
 
         fields:
 
+          # =========================
           # الهوية
+          # =========================
 
           - { label: "اسم الموقع", name: "name", widget: "string" }
 
@@ -107,6 +109,64 @@ collections:
 
 
           # =========================
+          # السلايدر
+          # =========================
+
+          - label: "إظهار السلايدر"
+            name: "show_slider"
+            widget: "boolean"
+            default: true
+
+          - label: "النص الصغير أعلى السلايدر"
+            name: "slider_label"
+            widget: "string"
+            required: false
+            default: "مختارات"
+
+          - label: "عنوان السلايدر"
+            name: "slider_title"
+            widget: "string"
+            required: false
+            default: "أحدث التطبيقات والأخبار"
+
+          - label: "صور السلايدر"
+            name: "slider_items"
+            widget: "list"
+            required: false
+            summary: "{{fields.title}}"
+            add_to_top: true
+
+            fields:
+
+              - label: "الصورة"
+                name: "image"
+                widget: "image"
+                choose_url: false
+
+              - label: "العنوان"
+                name: "title"
+                widget: "string"
+                required: false
+
+              - label: "الوصف"
+                name: "description"
+                widget: "text"
+                required: false
+
+              - label: "الرابط عند الضغط على الصورة"
+                name: "url"
+                widget: "string"
+                required: false
+                hint: "اختياري. مثال: رابط Google Play أو رابط مقال داخل الموقع."
+
+              - label: "فتح الرابط في نافذة جديدة"
+                name: "new_tab"
+                widget: "boolean"
+                default: false
+                required: false
+
+
+          # =========================
           # التطبيقات
           # =========================
 
@@ -135,7 +195,7 @@ collections:
 
 
           # =========================
-          # المقالات في الرئيسية
+          # المقالات
           # =========================
 
           - label: "إظهار قسم المقالات"
