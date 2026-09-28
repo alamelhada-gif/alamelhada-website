@@ -2,6 +2,7 @@
 title: Falcon VPN
 slug: falcon-vpn
 image: /assets/images/uploads/falconvpn_icon.png
+app_url: https://play.google.com/store/apps/details?id=com.falcon1.vpn
 tags: featured
 layout: featured.njk
 ---
@@ -22,4 +23,4 @@ layout: featured.njk
 
 يستخدم Falcon VPN خدمة VPN لإنشاء اتصال VPN عندما يطلب المستخدم تشغيل الاتصال.
 
-https://play.google.com/store/apps/details?id=com.falcon1.vpn
+
