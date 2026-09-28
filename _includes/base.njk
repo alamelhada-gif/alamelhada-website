@@ -3,10 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <meta name="theme-color" content="{{ site.dark }}">
 
-  <title>{{ title or site.name }}</title>
-  <meta name="description" content="{{ description or summary or site.tagline_ar }}">
+  <title>{{ title or site.seo_title or site.name }}</title>
+
+  <meta
+    name="description"
+    content="{{ description or summary or site.seo_description or site.tagline_ar }}"
+  >
+
+  {% if site.seo_image %}
+    <meta property="og:image" content="{{ site.seo_image }}">
+  {% endif %}
+
+  <meta
+    property="og:title"
+    content="{{ title or site.seo_title or site.name }}"
+  >
+
+  <meta
+    property="og:description"
+    content="{{ description or summary or site.seo_description or site.tagline_ar }}"
+  >
 
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/assets/css/style.css">
@@ -17,42 +36,101 @@
 <body style="--primary:{{site.primary}};--accent:{{site.accent}};--dark:{{site.dark}};--light:{{site.light}}">
 
 <header>
-  <a class="brand" href="/">{{site.name}}</a>
+
+  <a class="brand" href="/">
+
+    {% if site.logo %}
+      <img
+        src="{{ site.logo }}"
+        alt="{{ site.name }}"
+        style="max-height:48px;max-width:180px;object-fit:contain;"
+      >
+    {% else %}
+      {{ site.name }}
+    {% endif %}
+
+  </a>
+
 
   <nav>
-    <a href="/#apps">
-      {% if lang == 'en' %}Apps{% else %}التطبيقات{% endif %}
-    </a>
 
-    <a href="/articles/">
-      {% if lang == 'en' %}Articles{% else %}المقالات{% endif %}
-    </a>
+    {% if site.show_nav_apps %}
+      <a href="/#apps">
+        {% if lang == 'en' %}
+          {{ site.nav_apps_en }}
+        {% else %}
+          {{ site.nav_apps }}
+        {% endif %}
+      </a>
+    {% endif %}
 
-    <a href="/about/">
-      {% if lang == 'en' %}About{% else %}من نحن{% endif %}
-    </a>
 
-    <a href="/contact/">
-      {% if lang == 'en' %}Contact{% else %}تواصل{% endif %}
-    </a>
+    {% if site.show_nav_articles %}
+      <a href="/articles/">
+        {% if lang == 'en' %}
+          {{ site.nav_articles_en }}
+        {% else %}
+          {{ site.nav_articles }}
+        {% endif %}
+      </a>
+    {% endif %}
+
+
+    {% if site.show_nav_about %}
+      <a href="/about/">
+        {% if lang == 'en' %}
+          {{ site.nav_about_en }}
+        {% else %}
+          {{ site.nav_about }}
+        {% endif %}
+      </a>
+    {% endif %}
+
+
+    {% if site.show_nav_contact %}
+      <a href="/contact/">
+        {% if lang == 'en' %}
+          {{ site.nav_contact_en }}
+        {% else %}
+          {{ site.nav_contact }}
+        {% endif %}
+      </a>
+    {% endif %}
+
   </nav>
+
 </header>
+
 
 <main>
   {{ content | safe }}
 </main>
 
+
 <footer>
-  <strong>{{site.name}}</strong>
-  <span>© 2026</span>
+
+  <strong>
+    {{ site.footer_name or site.name }}
+  </strong>
+
+  <span>
+    © {{ site.footer_year }}
+  </span>
 
   <a href="/privacy/">
     {% if lang == 'en' %}
-      Privacy Policy
+      {{ site.privacy_text_en }}
     {% else %}
-      سياسة الخصوصية
+      {{ site.privacy_text }}
     {% endif %}
   </a>
+
+  {% if site.email %}
+    <a href="mailto:{{ site.email }}">
+      {{ site.email }}
+    </a>
+  {% endif %}
+
 </footer>
 
 </body>
