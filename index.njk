@@ -36,7 +36,7 @@ title: Alamelhada Apps
 
 
 {# ========================================= #}
-{# السلايدر                                  #}
+{# سلايدر الأيقونات                          #}
 {# ========================================= #}
 
 {% if site.show_slider != false and site.slider_items %}
@@ -50,94 +50,89 @@ title: Alamelhada Apps
     </div>
   {% endif %}
 
-  <div class="home-slider" id="homeSlider">
+  <div class="icon-slider" id="homeSlider">
 
-    <div class="slider-track" id="sliderTrack">
+    {% if site.slider_items | length > 1 %}
+      <button
+        class="icon-slider-arrow icon-slider-prev"
+        id="sliderPrev"
+        type="button"
+        aria-label="السابق"
+      >
+        ‹
+      </button>
+    {% endif %}
 
-      {% for slide in site.slider_items %}
 
-        <div class="slide">
+    <div class="icon-slider-window">
 
-          {% if slide.url %}
-            <a
-              href="{{ slide.url }}"
-              {% if slide.new_tab %}
-                target="_blank"
-                rel="noopener"
+      <div class="icon-slider-track" id="sliderTrack">
+
+        {% for slide in site.slider_items %}
+
+          <div class="icon-slide">
+
+            {% if slide.url %}
+              <a
+                class="icon-slide-link"
+                href="{{ slide.url }}"
+                {% if slide.new_tab %}
+                  target="_blank"
+                  rel="noopener"
+                {% endif %}
+              >
+            {% else %}
+              <div class="icon-slide-link">
+            {% endif %}
+
+
+              <div class="slider-app-icon">
+
+                {% if slide.image %}
+                  <img
+                    src="{{ slide.image }}"
+                    alt="{{ slide.title or 'تطبيق' }}"
+                    loading="{% if loop.first %}eager{% else %}lazy{% endif %}"
+                  >
+                {% endif %}
+
+              </div>
+
+
+              {% if slide.title %}
+                <h3>{{ slide.title }}</h3>
               {% endif %}
-            >
-          {% endif %}
 
-          <div class="slide-image">
 
-            <img
-              src="{{ slide.image }}"
-              alt="{{ slide.title or 'Alamelhada' }}"
-              loading="{% if loop.first %}eager{% else %}lazy{% endif %}"
-            >
+              {% if slide.description %}
+                <p>{{ slide.description }}</p>
+              {% endif %}
 
-            {% if slide.title or slide.description %}
-              <div class="slide-content">
 
-                {% if slide.title %}
-                  <h2>{{ slide.title }}</h2>
-                {% endif %}
-
-                {% if slide.description %}
-                  <p>{{ slide.description }}</p>
-                {% endif %}
-
+            {% if slide.url %}
+              </a>
+            {% else %}
               </div>
             {% endif %}
 
           </div>
 
-          {% if slide.url %}
-            </a>
-          {% endif %}
+        {% endfor %}
 
-        </div>
-
-      {% endfor %}
+      </div>
 
     </div>
 
 
     {% if site.slider_items | length > 1 %}
-
       <button
-        class="slider-arrow slider-prev"
-        id="sliderPrev"
-        type="button"
-        aria-label="الصورة السابقة"
-      >
-        ‹
-      </button>
-
-      <button
-        class="slider-arrow slider-next"
+        class="icon-slider-arrow icon-slider-next"
         id="sliderNext"
         type="button"
-        aria-label="الصورة التالية"
+        aria-label="التالي"
       >
         ›
       </button>
-
-      <div class="slider-dots" id="sliderDots">
-
-        {% for slide in site.slider_items %}
-
-          <button
-            type="button"
-            class="slider-dot {% if loop.first %}active{% endif %}"
-            data-slide="{{ loop.index0 }}"
-            aria-label="الصورة {{ loop.index }}"
-          ></button>
-
-        {% endfor %}
-
-      </div>
-
     {% endif %}
 
   </div>
@@ -240,6 +235,7 @@ title: Alamelhada Apps
 
   </div>
 
+
   <div class="articles">
 
     {% for post in collections.article | reverse %}
@@ -279,7 +275,7 @@ title: Alamelhada Apps
 
 
 {# ========================================= #}
-{# تشغيل السلايدر                            #}
+{# تشغيل سلايدر الأيقونات                    #}
 {# ========================================= #}
 
 {% if site.show_slider != false and site.slider_items and site.slider_items | length > 1 %}
@@ -288,8 +284,7 @@ title: Alamelhada Apps
 document.addEventListener("DOMContentLoaded", function () {
 
   const track = document.getElementById("sliderTrack");
-  const slides = document.querySelectorAll("#homeSlider .slide");
-  const dots = document.querySelectorAll("#sliderDots .slider-dot");
+  const slides = document.querySelectorAll("#homeSlider .icon-slide");
   const prev = document.getElementById("sliderPrev");
   const next = document.getElementById("sliderNext");
 
@@ -298,66 +293,132 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   let current = 0;
-  let timer;
+  let timer = null;
 
-  function showSlide(index) {
 
-    if (index >= slides.length) {
-      index = 0;
+  function getVisibleItems() {
+
+    if (window.innerWidth <= 560) {
+      return 2;
     }
 
-    if (index < 0) {
-      index = slides.length - 1;
+    if (window.innerWidth <= 850) {
+      return 3;
     }
 
-    current = index;
+    return 5;
+  }
+
+
+  function getMaxIndex() {
+
+    const visible = getVisibleItems();
+
+    return Math.max(
+      0,
+      slides.length - visible
+    );
+  }
+
+
+  function updateSlider() {
+
+    const visible = getVisibleItems();
+
+    const itemWidth = 100 / visible;
+
+    slides.forEach(function(slide) {
+      slide.style.flexBasis = itemWidth + "%";
+    });
+
+    const maxIndex = getMaxIndex();
+
+    if (current > maxIndex) {
+      current = maxIndex;
+    }
 
     track.style.transform =
-      "translateX(" + (current * -100) + "%)";
-
-    dots.forEach(function(dot, i) {
-      dot.classList.toggle("active", i === current);
-    });
+      "translateX(" + (current * itemWidth) + "%)";
   }
+
+
+  function goNext() {
+
+    const maxIndex = getMaxIndex();
+
+    if (maxIndex === 0) {
+      current = 0;
+      updateSlider();
+      return;
+    }
+
+    current++;
+
+    if (current > maxIndex) {
+      current = 0;
+    }
+
+    updateSlider();
+  }
+
+
+  function goPrev() {
+
+    const maxIndex = getMaxIndex();
+
+    if (maxIndex === 0) {
+      current = 0;
+      updateSlider();
+      return;
+    }
+
+    current--;
+
+    if (current < 0) {
+      current = maxIndex;
+    }
+
+    updateSlider();
+  }
+
 
   function startAutoPlay() {
 
     clearInterval(timer);
 
     timer = setInterval(function() {
-      showSlide(current + 1);
-    }, 5000);
+      goNext();
+    }, 3500);
   }
+
 
   if (next) {
+
     next.addEventListener("click", function() {
-      showSlide(current + 1);
+      goNext();
       startAutoPlay();
     });
+
   }
+
 
   if (prev) {
+
     prev.addEventListener("click", function() {
-      showSlide(current - 1);
+      goPrev();
       startAutoPlay();
     });
+
   }
 
-  dots.forEach(function(dot) {
 
-    dot.addEventListener("click", function() {
-
-      const index = Number(
-        this.getAttribute("data-slide")
-      );
-
-      showSlide(index);
-      startAutoPlay();
-
-    });
-
+  window.addEventListener("resize", function() {
+    current = 0;
+    updateSlider();
   });
 
+
+  updateSlider();
   startAutoPlay();
 
 });
