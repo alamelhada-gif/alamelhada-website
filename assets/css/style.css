@@ -234,8 +234,6 @@ a.icon-slide-link:hover {
   line-height: 1.5;
 }
 
-/* الوصف مخفي داخل السلايدر */
-
 .icon-slide p {
   display: none;
 }
@@ -348,10 +346,6 @@ a.icon-slide-link:hover .slider-details {
   min-height: 280px;
 }
 
-/* ============================= */
-/* لوغو التطبيقات */
-/* ============================= */
-
 .appicon {
   width: 90px;
   height: 90px;
@@ -454,6 +448,169 @@ a.icon-slide-link:hover .slider-details {
 }
 
 /* ============================= */
+/* صفحة تفاصيل السلايدر */
+/* ============================= */
+
+.featured-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 70px 28px 120px;
+}
+
+.featured-back {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 45px;
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 600;
+  transition: opacity .2s ease;
+}
+
+.featured-back:hover {
+  opacity: .65;
+}
+
+.featured-page-head {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+  width: 100%;
+  height: auto;
+  max-width: none;
+
+  margin: 0 0 45px;
+  padding: 0 0 45px;
+
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+}
+
+.featured-page-icon {
+  width: 120px;
+  height: 120px;
+  flex: 0 0 120px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 26px;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, .06);
+
+  box-shadow: 0 10px 35px rgba(0, 0, 0, .06);
+}
+
+.featured-page-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.featured-page-title {
+  flex: 1;
+}
+
+.featured-label {
+  display: block;
+  color: var(--primary);
+  font: 600 11px Manrope, sans-serif;
+  letter-spacing: .16em;
+}
+
+.featured-page-head h1 {
+  margin: 12px 0 0;
+  padding: 0;
+
+  font-size: clamp(36px, 5vw, 58px);
+  line-height: 1.35;
+  letter-spacing: -.03em;
+}
+
+.featured-page-content {
+  max-width: 760px;
+  margin: 0 auto;
+
+  color: #444840;
+  font-size: 16px;
+  line-height: 2.2;
+}
+
+.featured-page-content > :first-child {
+  margin-top: 0;
+}
+
+.featured-page-content p {
+  margin: 0 0 24px;
+}
+
+.featured-page-content h2 {
+  margin: 48px 0 18px;
+  color: var(--dark);
+  font-size: 28px;
+  line-height: 1.6;
+}
+
+.featured-page-content h3 {
+  margin: 38px 0 15px;
+  color: var(--dark);
+  font-size: 22px;
+  line-height: 1.6;
+}
+
+.featured-page-content strong {
+  color: var(--dark);
+}
+
+.featured-page-content a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.featured-page-content ul,
+.featured-page-content ol {
+  margin: 22px 0 30px;
+  padding-right: 28px;
+}
+
+.featured-page-content li {
+  margin-bottom: 10px;
+}
+
+.featured-page-content blockquote {
+  margin: 35px 0;
+  padding: 22px 25px;
+
+  background: rgba(255, 255, 255, .55);
+  border-right: 3px solid var(--accent);
+
+  color: #555;
+}
+
+.featured-page-content img {
+  display: block;
+
+  width: auto;
+  max-width: 100%;
+  height: auto;
+
+  margin: 38px auto;
+
+  border-radius: 8px;
+}
+
+.featured-page-content hr {
+  border: 0;
+  border-top: 1px solid rgba(0, 0, 0, .1);
+  margin: 45px 0;
+}
+
+/* ============================= */
 /* الفوتر */
 /* ============================= */
 
@@ -496,9 +653,7 @@ footer strong {
     margin-top: 60px;
   }
 
-  /* ============================= */
-  /* سلايدر الأيقونات - الجوال */
-  /* ============================= */
+  /* السلايدر */
 
   .home-slider-section {
     padding: 20px 12px 60px;
@@ -554,9 +709,7 @@ footer strong {
     font-size: 23px;
   }
 
-  /* ============================= */
   /* البطاقات */
-  /* ============================= */
 
   .cards,
   .articles {
@@ -569,6 +722,54 @@ footer strong {
 
   .section-head h2 {
     font-size: 32px;
+  }
+
+  /* صفحة تفاصيل السلايدر */
+
+  .featured-page {
+    padding: 45px 20px 80px;
+  }
+
+  .featured-back {
+    margin-bottom: 35px;
+    font-size: 12px;
+  }
+
+  .featured-page-head {
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 20px;
+
+    margin-bottom: 32px;
+    padding-bottom: 32px;
+  }
+
+  .featured-page-icon {
+    width: 90px;
+    height: 90px;
+    flex: 0 0 90px;
+    border-radius: 20px;
+  }
+
+  .featured-page-head h1 {
+    margin-top: 9px;
+    font-size: 34px;
+  }
+
+  .featured-page-content {
+    font-size: 14px;
+    line-height: 2.1;
+  }
+
+  .featured-page-content h2 {
+    margin-top: 38px;
+    font-size: 23px;
+  }
+
+  .featured-page-content h3 {
+    margin-top: 30px;
+    font-size: 19px;
   }
 
   footer strong {
