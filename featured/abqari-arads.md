@@ -1,5 +1,5 @@
 ---
-title: عبقري العرب ألغازوذكاء
+title: عبقري العرب
 slug: abqari-arads
 image: /assets/images/uploads/بتصميم-بدون-عنوان.png
 app_url: https://play.google.com/store/apps/details?id=com.alam.abqariarads
