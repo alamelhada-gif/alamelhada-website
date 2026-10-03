@@ -1,0 +1,33 @@
+---
+layout: base.njk
+title: الكتب
+description: تصفح الكتب المتوفرة في مكتبة رواياتي
+---
+
+<section class="section library-page">
+
+  <div class="section-head">
+    <span>مكتبة رواياتي</span>
+    <h1>الكتب</h1>
+    <p>تصفح الكتب حسب التصنيف واختر الكتاب الذي تريد قراءته.</p>
+  </div>
+
+  <div id="libraryCategories" class="library-categories"></div>
+
+  <p id="libraryLoading" class="library-loading">
+    جاري تحميل الكتب...
+  </p>
+
+  <p id="libraryEmpty" class="library-empty" hidden>
+    لا توجد كتب في هذا التصنيف.
+  </p>
+
+  <div id="libraryItems" class="library-grid"></div>
+
+</section>
+
+<script>
+  document.body.dataset.libraryType = "books";
+</script>
+
+<script type="module" src="/assets/js/library.js"></script>
