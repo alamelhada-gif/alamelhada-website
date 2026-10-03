@@ -3603,3 +3603,17 @@ opera.com, pub14613577249152, RESELLER, 55a0c5fd61378de3
 indexexchange.com, 219174, RESELLER, 50b1c356f2c5c8fc
 nativo.com, 6072, RESELLER, 59521ca7cc5e9fee
 freewheel.tv, 535664-r-523319, RESELLER
+openx.com, 540679900, RESELLER
+adyoulike.com, 76375ac0f5abb5a550c87326b9063b59, RESELLER
+appnexus.com, 15774, RESELLER, f5ab79cb980f11d1
+media.net, 8cu132ud6, RESELLER
+inmobi.com, edd282ac8f29464792bf2b7f3df2f9df, RESELLER
+sharethrough.com, bxzzb1br, RESELLER, d53b998a7bd4ecd2
+sharethrough.com, ibazay96, RESELLER, d53b998a7bd4ecd2
+appnexus.com, 13293, RESELLER, f5ab79cb980f11d1
+rubiconproject.com, 27386, RESELLER
+contextweb.com, 562794, RESELLER, 89ff185a4c4e857c
+adform.com, 3016, RESELLER
+spotxchange.com, 307720, RESELLER, 7842df1d2fe2db34
+rubiconproject.com, 17328, RESELLER, 0bfd66d529a55807
+smartadserver.com, 4343, RESELLER, 060d053dcf45cbf3
