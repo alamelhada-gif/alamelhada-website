@@ -1,0 +1,33 @@
+---
+layout: base.njk
+title: الروايات
+description: تصفح الروايات المتوفرة في مكتبة رواياتي
+---
+
+<section class="section library-page">
+
+  <div class="section-head">
+    <span>مكتبة رواياتي</span>
+    <h1>الروايات</h1>
+    <p>اكتشف الروايات المتوفرة واختر التصنيف المناسب لك.</p>
+  </div>
+
+  <div id="libraryCategories" class="library-categories"></div>
+
+  <p id="libraryLoading" class="library-loading">
+    جاري تحميل الروايات...
+  </p>
+
+  <p id="libraryEmpty" class="library-empty" hidden>
+    لا توجد روايات في هذا التصنيف.
+  </p>
+
+  <div id="libraryItems" class="library-grid"></div>
+
+</section>
+
+<script>
+  document.body.dataset.libraryType = "novels";
+</script>
+
+<script type="module" src="/assets/js/library.js"></script>
