@@ -3617,3 +3617,11 @@ adform.com, 3016, RESELLER
 spotxchange.com, 307720, RESELLER, 7842df1d2fe2db34
 rubiconproject.com, 17328, RESELLER, 0bfd66d529a55807
 smartadserver.com, 4343, RESELLER, 060d053dcf45cbf3
+yandex.com, 330901771, DIRECT
+google.com, pub-5533854580432370, RESELLER, f08c47fec0942fa0
+improvedigital.com, 2031, RESELLER
+uis.mobfox.com, 165, RESELLER
+hyperad.tech, 215, RESELLER
+betweendigital.com, 43554, RESELLER
+Contextweb.com, 562899, RESELLER, 89ff185a4c4e857c
+hyperad.tech, 150, RESELLER
