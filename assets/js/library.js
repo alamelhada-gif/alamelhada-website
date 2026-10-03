@@ -5,6 +5,11 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
+
+/* =========================================================
+   Firebase
+   ========================================================= */
+
 const firebaseConfig = {
   apiKey: "AIzaSyB-WlaXld6UzPkvPrktY0gHkmnEJQPTIiE",
   authDomain: "riwayati-app-26720.firebaseapp.com",
@@ -18,15 +23,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const container = document.getElementById("libraryItems");
-const categoryContainer = document.getElementById("libraryCategories");
-const loading = document.getElementById("libraryLoading");
-const empty = document.getElementById("libraryEmpty");
 
-const type = document.body.dataset.libraryType;
-
-let allItems = [];
-let activeCategory = "all";
+/* =========================================================
+   أدوات مساعدة
+   ========================================================= */
 
 function escapeHtml(value = "") {
   return String(value)
@@ -37,23 +37,85 @@ function escapeHtml(value = "") {
     .replaceAll("'", "&#039;");
 }
 
+
 function getCover(item) {
   return item.coverUrl || item.cover || "";
 }
+
+
+function getDateValue(item) {
+  return (
+    item.publishedAt?.seconds ||
+    item.createdAt?.seconds ||
+    item.updatedAt?.seconds ||
+    0
+  );
+}
+
+
+function sortNewest(items) {
+  return [...items].sort(
+    (a, b) => getDateValue(b) - getDateValue(a)
+  );
+}
+
+
+async function getPublishedCollection(collectionName) {
+  const snapshot = await getDocs(
+    collection(db, collectionName)
+  );
+
+  const items = snapshot.docs
+    .map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }))
+    .filter(item => item.status === "published");
+
+  return sortNewest(items);
+}
+
+
+/* =========================================================
+   صفحات /books/ و /novels/
+   ========================================================= */
+
+const libraryContainer =
+  document.getElementById("libraryItems");
+
+const categoryContainer =
+  document.getElementById("libraryCategories");
+
+const libraryLoading =
+  document.getElementById("libraryLoading");
+
+const libraryEmpty =
+  document.getElementById("libraryEmpty");
+
+const libraryType =
+  document.body.dataset.libraryType;
+
+let allLibraryItems = [];
+let activeCategory = "all";
+
 
 function renderCategories() {
   if (!categoryContainer) return;
 
   const categories = [
     ...new Set(
-      allItems
+      allLibraryItems
         .map(item => item.category)
         .filter(Boolean)
     )
   ];
 
   categoryContainer.innerHTML = `
-    <button class="library-category active" data-category="all">
+    <button
+      class="library-category active"
+      data-category="all"
+      type="button"
+    >
       الكل
     </button>
 
@@ -61,6 +123,7 @@ function renderCategories() {
       <button
         class="library-category"
         data-category="${escapeHtml(category)}"
+        type="button"
       >
         ${escapeHtml(category)}
       </button>
@@ -70,176 +133,532 @@ function renderCategories() {
   categoryContainer
     .querySelectorAll(".library-category")
     .forEach(button => {
+
       button.addEventListener("click", () => {
+
         activeCategory = button.dataset.category;
 
         categoryContainer
           .querySelectorAll(".library-category")
-          .forEach(btn => btn.classList.remove("active"));
+          .forEach(btn => {
+            btn.classList.remove("active");
+          });
 
         button.classList.add("active");
 
-        renderItems();
+        renderLibraryItems();
+
       });
+
     });
 }
 
-function renderItems() {
-  if (!container) return;
+
+function renderLibraryItems() {
+  if (!libraryContainer) return;
 
   const items =
     activeCategory === "all"
-      ? allItems
-      : allItems.filter(
+      ? allLibraryItems
+      : allLibraryItems.filter(
           item => item.category === activeCategory
         );
 
   if (!items.length) {
-    container.innerHTML = "";
 
-    if (empty) {
-      empty.hidden = false;
+    libraryContainer.innerHTML = "";
+
+    if (libraryEmpty) {
+      libraryEmpty.hidden = false;
     }
 
     return;
   }
 
-  if (empty) {
-    empty.hidden = true;
+  if (libraryEmpty) {
+    libraryEmpty.hidden = true;
   }
 
-  container.innerHTML = items.map(item => {
-    const cover = getCover(item);
+  libraryContainer.innerHTML =
+    items.map(item => {
 
-    return `
-      <article class="library-card">
+      const cover = getCover(item);
 
-        ${
-          cover
-            ? `
-              <div class="library-cover">
-                <img
-                  src="${escapeHtml(cover)}"
-                  alt="${escapeHtml(item.title || "")}"
-                  loading="lazy"
-                >
-              </div>
-            `
-            : ""
-        }
-
-        <div class="library-card-content">
+      return `
+        <article class="library-card">
 
           ${
-            item.category
+            cover
               ? `
-                <span class="library-card-category">
-                  ${escapeHtml(item.category)}
-                </span>
+                <div class="library-cover">
+                  <img
+                    src="${escapeHtml(cover)}"
+                    alt="${escapeHtml(item.title || "")}"
+                    loading="lazy"
+                  >
+                </div>
               `
               : ""
           }
 
-          <h2>
-            ${escapeHtml(item.title || "بدون عنوان")}
-          </h2>
+          <div class="library-card-content">
 
-          ${
-            item.author
-              ? `
-                <p class="library-author">
-                  المؤلف: ${escapeHtml(item.author)}
-                </p>
-              `
-              : ""
-          }
+            ${
+              item.category
+                ? `
+                  <span class="library-card-category">
+                    ${escapeHtml(item.category)}
+                  </span>
+                `
+                : ""
+            }
 
-          ${
-            item.description
-              ? `
-                <p class="library-description">
-                  ${escapeHtml(item.description)}
-                </p>
-              `
-              : ""
-          }
+            <h2>
+              ${escapeHtml(item.title || "بدون عنوان")}
+            </h2>
 
-          ${
-            item.pdfUrl
-              ? `
-                <a
-                  class="library-read-btn"
-                  href="${escapeHtml(item.pdfUrl)}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  ${
-                    type === "novels"
-                      ? "قراءة الرواية"
-                      : "قراءة الكتاب"
-                  }
-                </a>
-              `
-              : ""
-          }
+            ${
+              item.author
+                ? `
+                  <p class="library-author">
+                    المؤلف: ${escapeHtml(item.author)}
+                  </p>
+                `
+                : ""
+            }
 
-        </div>
+            ${
+              item.description
+                ? `
+                  <p class="library-description">
+                    ${escapeHtml(item.description)}
+                  </p>
+                `
+                : ""
+            }
 
-      </article>
-    `;
-  }).join("");
+            ${
+              item.pdfUrl
+                ? `
+                  <a
+                    class="library-read-btn"
+                    href="${escapeHtml(item.pdfUrl)}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    ${
+                      libraryType === "novels"
+                        ? "قراءة الرواية"
+                        : "قراءة الكتاب"
+                    }
+                  </a>
+                `
+                : ""
+            }
+
+          </div>
+
+        </article>
+      `;
+
+    }).join("");
 }
 
-async function loadLibrary() {
-  if (!container || !type) return;
+
+async function loadLibraryPage() {
+
+  if (!libraryContainer || !libraryType) {
+    return;
+  }
 
   try {
-    if (loading) {
-      loading.hidden = false;
+
+    if (libraryLoading) {
+      libraryLoading.hidden = false;
     }
 
-    const snapshot = await getDocs(
-      collection(db, type)
-    );
-
-    allItems = snapshot.docs
-      .map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }))
-      .filter(item => item.status === "published");
-
-    allItems.sort((a, b) => {
-      const aDate =
-        a.publishedAt?.seconds ||
-        a.createdAt?.seconds ||
-        0;
-
-      const bDate =
-        b.publishedAt?.seconds ||
-        b.createdAt?.seconds ||
-        0;
-
-      return bDate - aDate;
-    });
+    allLibraryItems =
+      await getPublishedCollection(libraryType);
 
     renderCategories();
-    renderItems();
+    renderLibraryItems();
 
   } catch (error) {
-    console.error("Firebase library error:", error);
 
-    container.innerHTML = `
+    console.error(
+      "Firebase library error:",
+      error
+    );
+
+    libraryContainer.innerHTML = `
       <p class="library-error">
-        تعذر تحميل المحتوى حاليًا. حاول مرة أخرى لاحقًا.
+        تعذر تحميل المحتوى حاليًا.
+        حاول مرة أخرى لاحقًا.
       </p>
     `;
 
   } finally {
-    if (loading) {
-      loading.hidden = true;
+
+    if (libraryLoading) {
+      libraryLoading.hidden = true;
     }
+
   }
 }
 
-loadLibrary();
+
+/* =========================================================
+   سلايدر الصفحة الرئيسية
+   ========================================================= */
+
+function createHomeCard(item, type) {
+
+  const cover = getCover(item);
+
+  const label =
+    type === "novel"
+      ? "رواية"
+      : "كتاب";
+
+  const button =
+    type === "novel"
+      ? "قراءة الرواية"
+      : "قراءة الكتاب";
+
+  return `
+    <article class="home-library-card">
+
+      ${
+        cover
+          ? `
+            <div class="home-library-cover">
+              <img
+                src="${escapeHtml(cover)}"
+                alt="${escapeHtml(item.title || "")}"
+                loading="lazy"
+              >
+            </div>
+          `
+          : `
+            <div class="home-library-cover home-library-no-cover">
+              ${label}
+            </div>
+          `
+      }
+
+      <div class="home-library-info">
+
+        ${
+          item.category
+            ? `
+              <span class="home-library-category">
+                ${escapeHtml(item.category)}
+              </span>
+            `
+            : ""
+        }
+
+        <h3>
+          ${escapeHtml(item.title || "بدون عنوان")}
+        </h3>
+
+        ${
+          item.author
+            ? `
+              <p>
+                ${escapeHtml(item.author)}
+              </p>
+            `
+            : ""
+        }
+
+        ${
+          item.pdfUrl
+            ? `
+              <a
+                href="${escapeHtml(item.pdfUrl)}"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ${button}
+              </a>
+            `
+            : ""
+        }
+
+      </div>
+
+    </article>
+  `;
+}
+
+
+function renderHomeSlider(container, items, type) {
+
+  if (!container) return;
+
+  if (!items.length) {
+
+    container.innerHTML = `
+      <p class="home-library-empty">
+        لا يوجد محتوى منشور حاليًا.
+      </p>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+    items.map(item =>
+      createHomeCard(item, type)
+    ).join("");
+}
+
+
+/* =========================================================
+   البحث العام
+   ========================================================= */
+
+const siteSearchInput =
+  document.getElementById("siteSearchInput");
+
+const siteSearchResults =
+  document.getElementById("siteSearchResults");
+
+let searchBooks = [];
+let searchNovels = [];
+
+
+function normalizeText(value = "") {
+  return String(value)
+    .toLowerCase()
+    .trim();
+}
+
+
+function matchesSearch(item, query) {
+
+  const searchable = normalizeText([
+    item.title,
+    item.author,
+    item.category,
+    item.description
+  ]
+    .filter(Boolean)
+    .join(" "));
+
+  return searchable.includes(query);
+}
+
+
+function createSearchResult(item, type) {
+
+  const cover = getCover(item);
+
+  const label =
+    type === "novel"
+      ? "رواية"
+      : "كتاب";
+
+  return `
+    <a
+      class="site-search-result"
+      href="${escapeHtml(item.pdfUrl || "#")}"
+      ${
+        item.pdfUrl
+          ? `target="_blank" rel="noopener noreferrer"`
+          : ""
+      }
+    >
+
+      ${
+        cover
+          ? `
+            <img
+              src="${escapeHtml(cover)}"
+              alt=""
+              loading="lazy"
+            >
+          `
+          : ""
+      }
+
+      <div>
+
+        <span>
+          ${label}
+          ${
+            item.category
+              ? ` • ${escapeHtml(item.category)}`
+              : ""
+          }
+        </span>
+
+        <strong>
+          ${escapeHtml(item.title || "بدون عنوان")}
+        </strong>
+
+        ${
+          item.author
+            ? `
+              <small>
+                ${escapeHtml(item.author)}
+              </small>
+            `
+            : ""
+        }
+
+      </div>
+
+    </a>
+  `;
+}
+
+
+function searchFirebaseContent(query) {
+
+  if (!siteSearchResults) return;
+
+  if (!query) {
+
+    siteSearchResults.innerHTML = "";
+    siteSearchResults.hidden = true;
+
+    return;
+  }
+
+  const bookResults =
+    searchBooks
+      .filter(item => matchesSearch(item, query))
+      .slice(0, 6);
+
+  const novelResults =
+    searchNovels
+      .filter(item => matchesSearch(item, query))
+      .slice(0, 6);
+
+  const html = [
+    ...novelResults.map(
+      item => createSearchResult(item, "novel")
+    ),
+    ...bookResults.map(
+      item => createSearchResult(item, "book")
+    )
+  ].join("");
+
+  if (!html) {
+
+    siteSearchResults.innerHTML = `
+      <div class="site-search-no-results">
+        لا توجد نتائج مطابقة.
+      </div>
+    `;
+
+  } else {
+
+    siteSearchResults.innerHTML = html;
+
+  }
+
+  siteSearchResults.hidden = false;
+}
+
+
+/* =========================================================
+   الصفحة الرئيسية
+   ========================================================= */
+
+async function loadHomeLibrary() {
+
+  const novelsSlider =
+    document.getElementById("homeNovelsTrack");
+
+  const booksSlider =
+    document.getElementById("homeBooksTrack");
+
+  const needsHomeData =
+    novelsSlider ||
+    booksSlider ||
+    siteSearchInput;
+
+  if (!needsHomeData) {
+    return;
+  }
+
+  try {
+
+    const [novels, books] =
+      await Promise.all([
+        getPublishedCollection("novels"),
+        getPublishedCollection("books")
+      ]);
+
+    searchNovels = novels;
+    searchBooks = books;
+
+    renderHomeSlider(
+      novelsSlider,
+      novels.slice(0, 12),
+      "novel"
+    );
+
+    renderHomeSlider(
+      booksSlider,
+      books.slice(0, 12),
+      "book"
+    );
+
+    if (siteSearchInput) {
+
+      siteSearchInput.addEventListener(
+        "input",
+        function () {
+
+          const query =
+            normalizeText(this.value);
+
+          searchFirebaseContent(query);
+
+          window.dispatchEvent(
+            new CustomEvent(
+              "alamelhada-search",
+              {
+                detail: {
+                  query: query
+                }
+              }
+            )
+          );
+
+        }
+      );
+
+    }
+
+  } catch (error) {
+
+    console.error(
+      "Home library error:",
+      error
+    );
+
+    if (novelsSlider) {
+      novelsSlider.innerHTML =
+        `<p>تعذر تحميل الروايات حاليًا.</p>`;
+    }
+
+    if (booksSlider) {
+      booksSlider.innerHTML =
+        `<p>تعذر تحميل الكتب حاليًا.</p>`;
+    }
+
+  }
+}
+
+
+/* =========================================================
+   تشغيل
+   ========================================================= */
+
+loadLibraryPage();
+loadHomeLibrary();
