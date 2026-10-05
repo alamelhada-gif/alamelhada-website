@@ -376,7 +376,7 @@ function createHomeCard(item, type) {
           item.pdfUrl
             ? `
               <a
-                href="${escapeHtml(item.pdfUrl)}"
+                href="/reader/?url=${encodeURIComponent(item.pdfUrl)}&title=${encodeURIComponent(item.title || "")}"
                 target="_blank"
                 rel="noopener noreferrer"
               >
