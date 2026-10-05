@@ -1,0 +1,143 @@
+---
+layout: base.njk
+title: قارئ الكتب والروايات
+description: قراءة الكتب والروايات مباشرة
+permalink: /reader/index.html
+---
+
+<section class="reader-page">
+
+  <div class="reader-header">
+    <a href="javascript:history.back()" class="reader-back">
+      ← رجوع
+    </a>
+
+    <h1 id="readerTitle">جاري فتح الكتاب...</h1>
+  </div>
+
+  <div id="readerLoading" class="reader-loading">
+    جاري تحميل الكتاب...
+  </div>
+
+  <div id="readerError" class="reader-error" hidden>
+    تعذر فتح الكتاب.
+  </div>
+
+  <iframe
+    id="pdfReader"
+    title="قارئ PDF"
+    allow="fullscreen"
+    loading="eager"
+    hidden
+  ></iframe>
+
+</section>
+
+<script>
+(function () {
+
+  const params = new URLSearchParams(window.location.search);
+
+  const pdfUrl = params.get("url");
+  const title = params.get("title");
+
+  const reader = document.getElementById("pdfReader");
+  const loading = document.getElementById("readerLoading");
+  const error = document.getElementById("readerError");
+  const readerTitle = document.getElementById("readerTitle");
+
+  if (title) {
+    readerTitle.textContent = title;
+    document.title = title;
+  } else {
+    readerTitle.textContent = "قراءة الكتاب";
+  }
+
+  if (!pdfUrl) {
+    loading.hidden = true;
+    error.hidden = false;
+    return;
+  }
+
+  try {
+
+    const url = decodeURIComponent(pdfUrl);
+
+    reader.src = url + "#toolbar=1&navpanes=0&scrollbar=1";
+
+    reader.onload = function () {
+      loading.hidden = true;
+      reader.hidden = false;
+    };
+
+    setTimeout(function () {
+      loading.hidden = true;
+      reader.hidden = false;
+    }, 1500);
+
+  } catch (e) {
+
+    loading.hidden = true;
+    error.hidden = false;
+
+  }
+
+})();
+</script>
+
+<style>
+.reader-page {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.reader-header {
+  margin-bottom: 15px;
+}
+
+.reader-header h1 {
+  margin: 15px 0;
+  font-size: 22px;
+}
+
+.reader-back {
+  display: inline-block;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.reader-loading,
+.reader-error {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 18px;
+}
+
+#pdfReader {
+  width: 100%;
+  height: calc(100vh - 180px);
+  min-height: 650px;
+  border: 0;
+  background: #fff;
+}
+
+@media (max-width: 760px) {
+
+  .reader-page {
+    padding: 10px;
+  }
+
+  .reader-header h1 {
+    font-size: 18px;
+  }
+
+  #pdfReader {
+    height: calc(100vh - 130px);
+    min-height: 75vh;
+  }
+
+}
+</style>
