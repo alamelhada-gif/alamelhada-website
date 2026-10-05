@@ -242,7 +242,7 @@ function renderLibraryItems() {
                 ? `
                   <a
                     class="library-read-btn"
-                    href="${escapeHtml(item.pdfUrl)}"
+                    href="/reader/?url=${encodeURIComponent(item.pdfUrl)}&title=${encodeURIComponent(item.title || "")}"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -463,7 +463,9 @@ function createSearchResult(item, type) {
   return `
     <a
       class="site-search-result"
-      href="${escapeHtml(item.pdfUrl || "#")}"
+      href="${item.pdfUrl
+  ? `/reader/?url=${encodeURIComponent(item.pdfUrl)}&title=${encodeURIComponent(item.title || "")}`
+  : "#"}"
       ${
         item.pdfUrl
           ? `target="_blank" rel="noopener noreferrer"`
