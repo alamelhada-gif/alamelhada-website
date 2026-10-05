@@ -244,54 +244,34 @@ title: Alamelhada Apps
 
         {% for app in apps.items %}
 
-         {% for app in apps.items %}
-
-  <div
-    class="icon-slide site-search-local-item"
-    data-search-type="تطبيق"
-    data-search-title="{{ app.name | escape }}"
-    data-search-description="{{ app.description | escape }}"
-    data-search-url="{{ app.url | escape }}"
-  >
-
-    <a
-      class="icon-slide-link"
-      href="{{ app.url }}"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-
-      {% if app.icon %}
-
-        <div class="slider-app-icon">
-
-          <img
-            src="{{ app.icon }}"
-            alt="{{ app.name }}"
-            loading="lazy"
+          <div
+            class="icon-slide site-search-local-item"
+            data-search-type="تطبيق"
+            data-search-title="{{ app.name | escape }}"
+            data-search-description="{{ app.description | escape }}"
+            data-search-url="{{ app.url | escape }}"
           >
 
-        </div>
+            <a
+              class="icon-slide-link"
+              href="{{ app.url }}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
 
-      {% endif %}
+              {% if app.icon %}
 
+                <div class="slider-app-icon">
 
-      <h3>
-        {{ app.name }}
-      </h3>
+                  <img
+                    src="{{ app.icon }}"
+                    alt="{{ app.name }}"
+                    loading="lazy"
+                  >
 
+                </div>
 
-      <span class="slider-details">
-        عرض التفاصيل ←
-      </span>
-
-    </a>
-
-  </div>
-
-{% endfor %}
-
-            
+              {% endif %}
 
 
               <h3>
@@ -299,20 +279,11 @@ title: Alamelhada Apps
               </h3>
 
 
-              {% if app.url %}
+              <span class="slider-details">
+                عرض التفاصيل ←
+              </span>
 
-                <a
-                  class="slider-details"
-                  href="{{ app.url }}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  عرض على Google Play ←
-                </a>
-
-              {% endif %}
-
-            </div>
+            </a>
 
           </div>
 
