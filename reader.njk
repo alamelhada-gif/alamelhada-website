@@ -49,12 +49,26 @@ permalink: /reader/index.html
 
 <script type="module">
 
-import * as pdfjsLib from
-  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs";
+/*
+  PDF.js
+  نستخدم ملفات الحزمة من نفس المصدر حتى تكون
+  ملفات CMap والخطوط متوافقة مع إصدار PDF.js.
+*/
+
+const PDFJS_VERSION = "4.10.38";
+
+const PDFJS_BASE =
+  `https://cdn.jsdelivr.net/npm/pdfjs-dist@${PDFJS_VERSION}/`;
+
+
+const pdfjsLib =
+  await import(
+    `${PDFJS_BASE}build/pdf.min.mjs`
+  );
 
 
 pdfjsLib.GlobalWorkerOptions.workerSrc =
-  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
+  `${PDFJS_BASE}build/pdf.worker.min.mjs`;
 
 
 /* =========================================================
@@ -151,7 +165,9 @@ async function renderPage(
     renderingPages.has(pageNumber) ||
     wrapper.dataset.rendered === "true"
   ) {
+
     return;
+
   }
 
 
@@ -212,9 +228,8 @@ async function renderPage(
 
 
     /*
-      نحد Pixel Ratio على الجوال.
-      هذا يقلل استهلاك الذاكرة بشكل كبير
-      مع الروايات الكبيرة.
+      نحد Pixel Ratio حتى لا تستهلك الروايات
+      الطويلة ذاكرة كبيرة على الجوال.
     */
 
     const pixelRatio =
@@ -248,12 +263,22 @@ async function renderPage(
 
     wrapper.innerHTML = "";
 
+
     wrapper.appendChild(
       canvas
     );
 
 
-    await page.render({
+    /*
+      important:
+      لا نستخدم Text Layer.
+
+      يتم رسم الصفحة الأصلية مباشرة على Canvas
+      للمحافظة قدر الإمكان على شكل الخط العربي
+      الموجود داخل ملف PDF.
+    */
+
+    const renderContext = {
 
       canvasContext:
         context,
@@ -271,9 +296,17 @@ async function renderPage(
               0,
               0
             ]
-          : null
+          : null,
 
-    }).promise;
+      intent:
+        "display"
+
+    };
+
+
+    await page.render(
+      renderContext
+    ).promise;
 
 
     wrapper.dataset.rendered =
@@ -297,7 +330,10 @@ async function renderPage(
 
     wrapper.innerHTML = `
       <div class="pdf-page-error">
-        تعذر تحميل الصفحة ${pageNumber}
+
+        <div>
+          تعذر تحميل الصفحة ${pageNumber}
+        </div>
 
         <button
           type="button"
@@ -305,6 +341,7 @@ async function renderPage(
         >
           إعادة المحاولة
         </button>
+
       </div>
     `;
 
@@ -322,9 +359,12 @@ async function renderPage(
         function () {
 
           wrapper.innerHTML =
-            `<div class="pdf-page-loading">
-              جاري تحميل الصفحة ${pageNumber}...
-            </div>`;
+            `
+              <div class="pdf-page-loading">
+                جاري تحميل الصفحة
+                ${pageNumber}...
+              </div>
+            `;
 
 
           renderPage(
@@ -336,6 +376,7 @@ async function renderPage(
       );
 
     }
+
 
   } finally {
 
@@ -371,7 +412,9 @@ function releaseFarPages() {
         wrapper.dataset.rendered !==
         "true"
       ) {
+
         return;
+
       }
 
 
@@ -380,8 +423,8 @@ function releaseFarPages() {
 
 
       /*
-        نبقي عدة شاشات قبل وبعد
-        موضع المستخدم.
+        نحذف Canvas للصفحات البعيدة جدًا
+        لتقليل استهلاك الذاكرة.
       */
 
       if (
@@ -400,6 +443,7 @@ function releaseFarPages() {
         if (canvas) {
 
           canvas.width = 1;
+
           canvas.height = 1;
 
         }
@@ -526,12 +570,19 @@ function startObserver() {
 
       {
 
-        root: null,
+        root:
+          null,
+
+        /*
+          يبدأ تحميل الصفحات قبل أن يصل إليها
+          المستخدم أثناء التمرير.
+        */
 
         rootMargin:
           "1500px 0px 1500px 0px",
 
-        threshold: 0.01
+        threshold:
+          0.01
 
       }
 
@@ -566,25 +617,78 @@ async function loadPDF() {
     loadingElement.hidden =
       true;
 
+
     errorElement.hidden =
       false;
 
+
     return;
+
   }
 
 
   try {
 
+    /*
+      إعدادات مهمة للملفات العربية.
+
+      cMapUrl:
+      يوفر خرائط الأحرف التي تحتاجها بعض
+      ملفات PDF ذات الترميزات الخاصة.
+
+      standardFontDataUrl:
+      يوفر بيانات الخطوط القياسية لـ PDF.js.
+
+      useSystemFonts:
+      يسمح بالاستفادة من خطوط الجهاز عند
+      الحاجة إلى خط بديل.
+
+      disableFontFace = false:
+      يسمح لـ PDF.js باستخدام الخطوط المضمنة
+      داخل ملف PDF.
+    */
+
     const loadingTask =
       pdfjsLib.getDocument({
 
-        url: pdfUrl,
+        url:
+          pdfUrl,
 
-        disableAutoFetch: false,
 
-        disableStream: false,
+        cMapUrl:
+          `${PDFJS_BASE}cmaps/`,
 
-        disableRange: false
+
+        cMapPacked:
+          true,
+
+
+        standardFontDataUrl:
+          `${PDFJS_BASE}standard_fonts/`,
+
+
+        wasmUrl:
+          `${PDFJS_BASE}wasm/`,
+
+
+        useSystemFonts:
+          true,
+
+
+        disableFontFace:
+          false,
+
+
+        disableAutoFetch:
+          false,
+
+
+        disableStream:
+          false,
+
+
+        disableRange:
+          false
 
       });
 
@@ -630,6 +734,80 @@ async function loadPDF() {
 
 
 /* =========================================================
+   إعادة ضبط الصفحات عند تغيير حجم الشاشة
+   ========================================================= */
+
+let resizeTimer = null;
+
+
+window.addEventListener(
+  "resize",
+  function () {
+
+    clearTimeout(
+      resizeTimer
+    );
+
+
+    resizeTimer =
+      setTimeout(
+        function () {
+
+          document
+            .querySelectorAll(
+              ".pdf-page-wrapper"
+            )
+            .forEach(
+              wrapper => {
+
+                const canvas =
+                  wrapper.querySelector(
+                    "canvas"
+                  );
+
+
+                if (canvas) {
+
+                  canvas.width = 1;
+
+                  canvas.height = 1;
+
+                }
+
+
+                wrapper.dataset.rendered =
+                  "false";
+
+
+                wrapper.innerHTML = `
+                  <div class="pdf-page-loading">
+                    الصفحة
+                    ${wrapper.dataset.page}
+                  </div>
+                `;
+
+              }
+            );
+
+
+          if (observer) {
+
+            observer.disconnect();
+
+          }
+
+
+          startObserver();
+
+        },
+        300
+      );
+
+  }
+);
+
+
+/* =========================================================
    تنظيف الذاكرة عند الخروج
    ========================================================= */
 
@@ -638,7 +816,9 @@ window.addEventListener(
   function () {
 
     if (observer) {
+
       observer.disconnect();
+
     }
 
 
