@@ -199,14 +199,14 @@ title: Alamelhada Apps
 
 
 {# ========================================================= #}
-{# التطبيقات                                                 #}
+{# التطبيقات - سلايدر                                       #}
 {# ========================================================= #}
 
 {% if site.show_apps != false %}
 
-<section class="section" id="apps">
+<section class="home-slider-section" id="apps">
 
-  <div class="section-head">
+  <div class="slider-heading">
 
     <span>
       {{ site.apps_section_label }}
@@ -219,64 +219,103 @@ title: Alamelhada Apps
   </div>
 
 
-  <div class="cards">
+  <div class="icon-slider" id="appsHomeSlider">
 
-    {% for app in apps.items %}
+    {% if apps.items | length > 1 %}
 
-      <article
-        class="card site-search-local-item"
-        data-search-type="تطبيق"
-        data-search-title="{{ app.name | escape }}"
-        data-search-description="{{ app.description | escape }}"
-        data-search-url="{{ app.url | escape }}"
+      <button
+        class="icon-slider-arrow icon-slider-prev"
+        id="appsSliderPrev"
+        type="button"
+        aria-label="السابق"
+      >
+        ‹
+      </button>
+
+    {% endif %}
+
+
+    <div class="icon-slider-window">
+
+      <div
+        class="icon-slider-track"
+        id="appsSliderTrack"
       >
 
-        {% if app.icon %}
+        {% for app in apps.items %}
 
-          <div class="appicon">
+          <div
+            class="icon-slide site-search-local-item"
+            data-search-type="تطبيق"
+            data-search-title="{{ app.name | escape }}"
+            data-search-description="{{ app.description | escape }}"
+            data-search-url="{{ app.url | escape }}"
+          >
 
-            <img
-              src="{{ app.icon }}"
-              alt="{{ app.name }}"
-              loading="lazy"
-            >
+            <div class="icon-slide-link">
+
+              {% if app.icon %}
+
+                <div class="slider-app-icon">
+
+                  <img
+                    src="{{ app.icon }}"
+                    alt="{{ app.name }}"
+                    loading="lazy"
+                  >
+
+                </div>
+
+              {% endif %}
+
+
+              <h3>
+                {{ app.name }}
+              </h3>
+
+
+              {% if app.url %}
+
+                <a
+                  class="slider-details"
+                  href="{{ app.url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  عرض على Google Play ←
+                </a>
+
+              {% endif %}
+
+            </div>
 
           </div>
 
-        {% endif %}
+        {% endfor %}
+
+      </div>
+
+    </div>
 
 
-        <h3>
-          {{ app.name }}
-        </h3>
+    {% if apps.items | length > 1 %}
 
-        <p>
-          {{ app.description }}
-        </p>
+      <button
+        class="icon-slider-arrow icon-slider-next"
+        id="appsSliderNext"
+        type="button"
+        aria-label="التالي"
+      >
+        ›
+      </button>
 
-
-        {% if app.url %}
-
-          <a
-            href="{{ app.url }}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            عرض على Google Play ←
-          </a>
-
-        {% endif %}
-
-      </article>
-
-    {% endfor %}
+    {% endif %}
 
   </div>
 
 </section>
 
 {% endif %}
-
 
 {# ========================================================= #}
 {# الروايات                                                  #}
