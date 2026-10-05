@@ -575,18 +575,20 @@ async function loadPDF() {
 
   try {
 
-    const loadingTask =
-      pdfjsLib.getDocument({
+   const loadingTask =
+  pdfjsLib.getDocument({
 
-        url: pdfUrl,
+    url: pdfUrl,
 
-        disableAutoFetch: false,
+    disableAutoFetch: false,
 
-        disableStream: false,
+    disableStream: false,
 
-        disableRange: false
+    disableRange: false,
 
-      });
+    disableFontFace: true
+
+  });
 
 
     pdfDocument =
