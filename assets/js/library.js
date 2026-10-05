@@ -320,11 +320,6 @@ function createHomeCard(item, type) {
       ? "رواية"
       : "كتاب";
 
-  const button =
-    type === "novel"
-      ? "قراءة الرواية"
-      : "قراءة الكتاب";
-
   return `
     <article class="home-library-card">
 
@@ -346,52 +341,24 @@ function createHomeCard(item, type) {
           `
       }
 
-      <div class="home-library-info">
-
-        ${
-          item.category
-            ? `
-              <span class="home-library-category">
-                ${escapeHtml(item.category)}
-              </span>
-            `
-            : ""
-        }
-
-        <h3>
-          ${escapeHtml(item.title || "بدون عنوان")}
-        </h3>
-
-        ${
-          item.author
-            ? `
-              <p>
-                ${escapeHtml(item.author)}
-              </p>
-            `
-            : ""
-        }
-
-        ${
-          item.pdfUrl
-            ? `
-              <a
-                href="/reader/?url=${encodeURIComponent(item.pdfUrl)}&title=${encodeURIComponent(item.title || "")}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                ${button}
-              </a>
-            `
-            : ""
-        }
-
-      </div>
+      ${
+        item.pdfUrl
+          ? `
+            <a
+              class="home-library-read"
+              href="/reader/?url=${encodeURIComponent(item.pdfUrl)}&title=${encodeURIComponent(item.title || "")}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              اقرأ ←
+            </a>
+          `
+          : ""
+      }
 
     </article>
   `;
 }
-
 
 function renderHomeSlider(container, items, type) {
 
