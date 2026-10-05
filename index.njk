@@ -751,7 +751,188 @@ document.addEventListener("DOMContentLoaded", function () {
     updateSlider();
     startAutoPlay();
   }
+  /* =======================================================
+     سلايدر تطبيقات صُممت لتُستخدم
+     ======================================================= */
 
+  const appsTrack =
+    document.getElementById("appsSliderTrack");
+
+  const appsSlides =
+    document.querySelectorAll(
+      "#appsHomeSlider .icon-slide"
+    );
+
+  const appsPrev =
+    document.getElementById("appsSliderPrev");
+
+  const appsNext =
+    document.getElementById("appsSliderNext");
+
+
+  if (appsTrack && appsSlides.length > 0) {
+
+    let appsCurrent = 0;
+    let appsTimer = null;
+
+
+    function getAppsVisibleItems() {
+
+      if (window.innerWidth <= 560) {
+        return 2;
+      }
+
+      if (window.innerWidth <= 850) {
+        return 3;
+      }
+
+      return 5;
+    }
+
+
+    function getAppsMaxIndex() {
+
+      return Math.max(
+        0,
+        appsSlides.length - getAppsVisibleItems()
+      );
+    }
+
+
+    function updateAppsSlider() {
+
+      const visible =
+        getAppsVisibleItems();
+
+      const itemWidth =
+        100 / visible;
+
+
+      appsSlides.forEach(function(slide) {
+
+        slide.style.flexBasis =
+          itemWidth + "%";
+
+      });
+
+
+      const maxIndex =
+        getAppsMaxIndex();
+
+
+      if (appsCurrent > maxIndex) {
+        appsCurrent = maxIndex;
+      }
+
+
+      appsTrack.style.transform =
+        "translateX(" +
+        (appsCurrent * itemWidth) +
+        "%)";
+    }
+
+
+    function appsGoNext() {
+
+      const maxIndex =
+        getAppsMaxIndex();
+
+      if (maxIndex === 0) {
+        return;
+      }
+
+      appsCurrent++;
+
+      if (appsCurrent > maxIndex) {
+        appsCurrent = 0;
+      }
+
+      updateAppsSlider();
+    }
+
+
+    function appsGoPrev() {
+
+      const maxIndex =
+        getAppsMaxIndex();
+
+      if (maxIndex === 0) {
+        return;
+      }
+
+      appsCurrent--;
+
+      if (appsCurrent < 0) {
+        appsCurrent = maxIndex;
+      }
+
+      updateAppsSlider();
+    }
+
+
+    function startAppsAutoPlay() {
+
+      clearInterval(appsTimer);
+
+      if (
+        appsSlides.length <=
+        getAppsVisibleItems()
+      ) {
+        return;
+      }
+
+      appsTimer =
+        setInterval(
+          appsGoNext,
+          3500
+        );
+    }
+
+
+    if (appsNext) {
+
+      appsNext.addEventListener(
+        "click",
+        function() {
+
+          appsGoNext();
+          startAppsAutoPlay();
+
+        }
+      );
+    }
+
+
+    if (appsPrev) {
+
+      appsPrev.addEventListener(
+        "click",
+        function() {
+
+          appsGoPrev();
+          startAppsAutoPlay();
+
+        }
+      );
+    }
+
+
+    window.addEventListener(
+      "resize",
+      function() {
+
+        appsCurrent = 0;
+
+        updateAppsSlider();
+
+        startAppsAutoPlay();
+      }
+    );
+
+
+    updateAppsSlider();
+    startAppsAutoPlay();
+  }
 
   /* =======================================================
      سلايدر الكتب والروايات
