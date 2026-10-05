@@ -8,10 +8,15 @@ title: Alamelhada Apps
 {# ========================================================= #}
 
 <section class="site-search-section">
+
   <div class="site-search-box">
-    <span class="site-search-label">البحث في الموقع</span>
+
+    <span class="site-search-label">
+      البحث في الموقع
+    </span>
 
     <div class="site-search-input-wrap">
+
       <input
         id="siteSearchInput"
         type="search"
@@ -19,6 +24,7 @@ title: Alamelhada Apps
         autocomplete="off"
         aria-label="البحث في الموقع"
       >
+
     </div>
 
     <div
@@ -26,7 +32,9 @@ title: Alamelhada Apps
       class="site-search-results"
       hidden
     ></div>
+
   </div>
+
 </section>
 
 
@@ -37,6 +45,7 @@ title: Alamelhada Apps
 <section class="hero">
 
   <div>
+
     <span class="eyebrow">
       {{ site.hero_eyebrow }}
     </span>
@@ -53,19 +62,32 @@ title: Alamelhada Apps
     <div class="actions">
 
       {% if site.show_apps != false %}
-        <a class="btn" href="#apps">
+
+        <a
+          class="btn"
+          href="#apps"
+        >
           {{ site.hero_primary_button }}
         </a>
+
       {% endif %}
 
+
       {% if site.show_articles != false %}
-        <a class="ghost" href="/articles/">
+
+        <a
+          class="ghost"
+          href="/articles/"
+        >
           {{ site.hero_secondary_button }}
         </a>
+
       {% endif %}
 
     </div>
+
   </div>
+
 
   <div class="mark">
     A
@@ -75,7 +97,7 @@ title: Alamelhada Apps
 
 
 {# ========================================================= #}
-{# سلايدر المحتوى المميز / التطبيقات                         #}
+{# أحدث التطبيقات والأخبار                                   #}
 {# ========================================================= #}
 
 {% if site.show_slider != false %}
@@ -91,9 +113,11 @@ title: Alamelhada Apps
         <div class="slider-heading">
 
           {% if site.slider_label %}
+
             <span>
               {{ site.slider_label }}
             </span>
+
           {% endif %}
 
           <h2>
@@ -105,7 +129,10 @@ title: Alamelhada Apps
       {% endif %}
 
 
-      <div class="icon-slider" id="homeSlider">
+      <div
+        class="icon-slider"
+        id="homeSlider"
+      >
 
         {% if featuredItems | length > 1 %}
 
@@ -199,14 +226,17 @@ title: Alamelhada Apps
 
 
 {# ========================================================= #}
-{# التطبيقات                                                 #}
+{# تطبيقات صُممت لتُستخدم - سلايدر                          #}
 {# ========================================================= #}
 
 {% if site.show_apps != false %}
 
-<section class="section" id="apps">
+<section
+  class="home-slider-section apps-slider-section"
+  id="apps"
+>
 
-  <div class="section-head">
+  <div class="slider-heading">
 
     <span>
       {{ site.apps_section_label }}
@@ -219,57 +249,100 @@ title: Alamelhada Apps
   </div>
 
 
-  <div class="cards">
+  <div
+    class="icon-slider apps-icon-slider"
+    id="appsHomeSlider"
+  >
 
-    {% for app in apps.items %}
+    {% if apps.items | length > 1 %}
 
-      <article
-        class="card site-search-local-item"
-        data-search-type="تطبيق"
-        data-search-title="{{ app.name | escape }}"
-        data-search-description="{{ app.description | escape }}"
-        data-search-url="{{ app.url | escape }}"
+      <button
+        class="icon-slider-arrow icon-slider-prev"
+        id="appsSliderPrev"
+        type="button"
+        aria-label="التطبيق السابق"
+      >
+        ‹
+      </button>
+
+    {% endif %}
+
+
+    <div class="icon-slider-window">
+
+      <div
+        class="icon-slider-track"
+        id="appsSliderTrack"
       >
 
-        {% if app.icon %}
+        {% for app in apps.items %}
 
-          <div class="appicon">
+          <div
+            class="icon-slide site-search-local-item"
+            data-search-type="تطبيق"
+            data-search-title="{{ app.name | escape }}"
+            data-search-description="{{ app.description | escape }}"
+            data-search-url="{{ app.url | escape }}"
+          >
 
-            <img
-              src="{{ app.icon }}"
-              alt="{{ app.name }}"
-              loading="lazy"
-            >
+            <div class="icon-slide-link">
+
+              {% if app.icon %}
+
+                <div class="slider-app-icon">
+
+                  <img
+                    src="{{ app.icon }}"
+                    alt="{{ app.name }}"
+                    loading="lazy"
+                  >
+
+                </div>
+
+              {% endif %}
+
+
+              <h3>
+                {{ app.name }}
+              </h3>
+
+
+              {% if app.url %}
+
+                <a
+                  class="slider-details"
+                  href="{{ app.url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  عرض على Google Play ←
+                </a>
+
+              {% endif %}
+
+            </div>
 
           </div>
 
-        {% endif %}
+        {% endfor %}
+
+      </div>
+
+    </div>
 
 
-        <h3>
-          {{ app.name }}
-        </h3>
+    {% if apps.items | length > 1 %}
 
-        <p>
-          {{ app.description }}
-        </p>
+      <button
+        class="icon-slider-arrow icon-slider-next"
+        id="appsSliderNext"
+        type="button"
+        aria-label="التطبيق التالي"
+      >
+        ›
+      </button>
 
-
-        {% if app.url %}
-
-          <a
-            href="{{ app.url }}"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            عرض على Google Play ←
-          </a>
-
-        {% endif %}
-
-      </article>
-
-    {% endfor %}
+    {% endif %}
 
   </div>
 
@@ -279,14 +352,18 @@ title: Alamelhada Apps
 
 
 {# ========================================================= #}
-{# الروايات                                                  #}
+{# أحدث الروايات - سلايدر                                   #}
 {# ========================================================= #}
 
-<section class="section home-library-section" id="novels">
+<section
+  class="section home-library-section"
+  id="novels"
+>
 
   <div class="home-library-heading">
 
     <div>
+
       <span class="home-library-label">
         مكتبة رواياتي
       </span>
@@ -294,7 +371,9 @@ title: Alamelhada Apps
       <h2>
         أحدث الروايات
       </h2>
+
     </div>
+
 
     <a
       class="home-library-all"
@@ -306,7 +385,10 @@ title: Alamelhada Apps
   </div>
 
 
-  <div class="home-library-slider">
+  <div
+    class="home-library-slider unified-library-slider"
+    id="novelsHomeSlider"
+  >
 
     <button
       class="home-library-arrow home-library-prev"
@@ -319,13 +401,19 @@ title: Alamelhada Apps
     </button>
 
 
-    <div
-      class="home-library-track"
-      id="homeNovelsTrack"
-    >
-      <p class="home-library-loading">
-        جاري تحميل الروايات...
-      </p>
+    <div class="home-library-window">
+
+      <div
+        class="home-library-track"
+        id="homeNovelsTrack"
+      >
+
+        <p class="home-library-loading">
+          جاري تحميل الروايات...
+        </p>
+
+      </div>
+
     </div>
 
 
@@ -345,14 +433,18 @@ title: Alamelhada Apps
 
 
 {# ========================================================= #}
-{# الكتب                                                     #}
+{# أحدث الكتب - سلايدر                                      #}
 {# ========================================================= #}
 
-<section class="section home-library-section" id="books">
+<section
+  class="section home-library-section"
+  id="books"
+>
 
   <div class="home-library-heading">
 
     <div>
+
       <span class="home-library-label">
         المكتبة
       </span>
@@ -360,7 +452,9 @@ title: Alamelhada Apps
       <h2>
         أحدث الكتب
       </h2>
+
     </div>
+
 
     <a
       class="home-library-all"
@@ -372,7 +466,10 @@ title: Alamelhada Apps
   </div>
 
 
-  <div class="home-library-slider">
+  <div
+    class="home-library-slider unified-library-slider"
+    id="booksHomeSlider"
+  >
 
     <button
       class="home-library-arrow home-library-prev"
@@ -385,13 +482,19 @@ title: Alamelhada Apps
     </button>
 
 
-    <div
-      class="home-library-track"
-      id="homeBooksTrack"
-    >
-      <p class="home-library-loading">
-        جاري تحميل الكتب...
-      </p>
+    <div class="home-library-window">
+
+      <div
+        class="home-library-track"
+        id="homeBooksTrack"
+      >
+
+        <p class="home-library-loading">
+          جاري تحميل الكتب...
+        </p>
+
+      </div>
+
     </div>
 
 
@@ -408,9 +511,7 @@ title: Alamelhada Apps
   </div>
 
 </section>
-
-
-{# ========================================================= #}
+ {# ========================================================= #}
 {# القسم الأسود                                              #}
 {# ========================================================= #}
 
@@ -452,6 +553,7 @@ title: Alamelhada Apps
       </h2>
 
     </div>
+
 
     <a
       class="home-library-all"
@@ -509,7 +611,10 @@ title: Alamelhada Apps
 {# بيانات كل المقالات للبحث                                  #}
 {# ========================================================= #}
 
-<div id="siteSearchArticleData" hidden>
+<div
+  id="siteSearchArticleData"
+  hidden
+>
 
   {% for post in collections.article | reverse %}
 
@@ -541,471 +646,706 @@ title: Alamelhada Apps
 {# ========================================================= #}
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function () {
 
 
-  /* =======================================================
-     سلايدر التطبيقات المميزة
-     ======================================================= */
+    /* =====================================================
+       دالة موحدة لسلايدر التطبيقات
+       ===================================================== */
 
-  const track =
-    document.getElementById("sliderTrack");
+    function createIconSlider(options) {
 
-  const slides =
-    document.querySelectorAll(
-      "#homeSlider .icon-slide"
-    );
+      const track =
+        document.getElementById(
+          options.trackId
+        );
 
-  const prev =
-    document.getElementById("sliderPrev");
+      const slider =
+        document.getElementById(
+          options.sliderId
+        );
 
-  const next =
-    document.getElementById("sliderNext");
+      const prev =
+        document.getElementById(
+          options.prevId
+        );
 
-
-  if (track && slides.length > 1) {
-
-    let current = 0;
-    let timer = null;
-
-
-    function getVisibleItems() {
-
-      if (window.innerWidth <= 560) {
-        return 2;
-      }
-
-      if (window.innerWidth <= 850) {
-        return 3;
-      }
-
-      return 5;
-    }
+      const next =
+        document.getElementById(
+          options.nextId
+        );
 
 
-    function getMaxIndex() {
-
-      return Math.max(
-        0,
-        slides.length - getVisibleItems()
-      );
-    }
-
-
-    function updateSlider() {
-
-      const visible =
-        getVisibleItems();
-
-      const itemWidth =
-        100 / visible;
-
-      slides.forEach(function(slide) {
-
-        slide.style.flexBasis =
-          itemWidth + "%";
-
-      });
-
-
-      const maxIndex =
-        getMaxIndex();
-
-      if (current > maxIndex) {
-        current = maxIndex;
-      }
-
-
-      track.style.transform =
-        "translateX(" +
-        (current * itemWidth) +
-        "%)";
-    }
-
-
-    function goNext() {
-
-      const maxIndex =
-        getMaxIndex();
-
-      if (maxIndex === 0) {
+      if (!track || !slider) {
         return;
       }
 
-      current++;
 
-      if (current > maxIndex) {
-        current = 0;
-      }
-
-      updateSlider();
-    }
+      const slides =
+        track.querySelectorAll(
+          ".icon-slide"
+        );
 
 
-    function goPrev() {
-
-      const maxIndex =
-        getMaxIndex();
-
-      if (maxIndex === 0) {
+      if (!slides.length) {
         return;
       }
 
-      current--;
 
-      if (current < 0) {
-        current = maxIndex;
-      }
+      let current = 0;
 
-      updateSlider();
-    }
+      let timer = null;
 
 
-    function startAutoPlay() {
+      function getVisibleItems() {
 
-      clearInterval(timer);
+        if (window.innerWidth <= 560) {
 
-      timer = setInterval(
-        goNext,
-        3500
-      );
-    }
-
-
-    if (next) {
-
-      next.addEventListener(
-        "click",
-        function () {
-
-          goNext();
-          startAutoPlay();
+          return 2;
 
         }
-      );
-
-    }
 
 
-    if (prev) {
+        if (window.innerWidth <= 850) {
 
-      prev.addEventListener(
-        "click",
-        function () {
-
-          goPrev();
-          startAutoPlay();
+          return 3;
 
         }
-      );
-
-    }
 
 
-    window.addEventListener(
-      "resize",
-      function () {
-
-        current = 0;
-        updateSlider();
-
-      }
-    );
-
-
-    updateSlider();
-    startAutoPlay();
-  }
-
-
-  /* =======================================================
-     سلايدر الكتب والروايات
-     ======================================================= */
-
-  document
-    .querySelectorAll(".home-library-arrow")
-    .forEach(function(button) {
-
-      button.addEventListener(
-        "click",
-        function() {
-
-          const target =
-            document.getElementById(
-              button.dataset.sliderTarget
-            );
-
-          if (!target) {
-            return;
-          }
-
-
-          const direction =
-            button.dataset.direction;
-
-
-          const amount =
-            Math.max(
-              220,
-              target.clientWidth * 0.75
-            );
-
-
-          target.scrollBy({
-            left:
-              direction === "next"
-                ? -amount
-                : amount,
-            behavior: "smooth"
-          });
-
-        }
-      );
-
-    });
-
-
-  /* =======================================================
-     إضافة التطبيقات والمقالات إلى البحث العام
-     ======================================================= */
-
-  const searchInput =
-    document.getElementById(
-      "siteSearchInput"
-    );
-
-  const searchResults =
-    document.getElementById(
-      "siteSearchResults"
-    );
-
-
-  function escapeSearchHtml(value) {
-
-    const div =
-      document.createElement("div");
-
-    div.textContent =
-      value || "";
-
-    return div.innerHTML;
-  }
-
-
-  function normalizeSearchText(value) {
-
-    return String(value || "")
-      .toLowerCase()
-      .trim();
-  }
-
-
-  function getLocalSearchItems() {
-
-    const elements =
-      document.querySelectorAll(
-        ".site-search-local-item"
-      );
-
-    const unique =
-      new Map();
-
-
-    elements.forEach(function(element) {
-
-      const title =
-        element.dataset.searchTitle || "";
-
-      const description =
-        element.dataset.searchDescription || "";
-
-      const type =
-        element.dataset.searchType || "";
-
-      const url =
-        element.dataset.searchUrl || "#";
-
-
-      const key =
-        type + "|" + title + "|" + url;
-
-
-      if (!unique.has(key)) {
-
-        unique.set(key, {
-          title,
-          description,
-          type,
-          url
-        });
+        return 5;
 
       }
 
-    });
 
+      function getMaxIndex() {
 
-    return [...unique.values()];
-  }
-
-
-  function getLocalMatches(query) {
-
-    if (!query) {
-      return [];
-    }
-
-
-    return getLocalSearchItems()
-      .filter(function(item) {
-
-        const text =
-          normalizeSearchText(
-            item.title +
-            " " +
-            item.description +
-            " " +
-            item.type
-          );
-
-
-        return text.includes(query);
-
-      })
-      .slice(0, 10);
-  }
-
-
-  function renderLocalSearchResults(query) {
-
-    if (!searchResults) {
-      return;
-    }
-
-
-    searchResults
-      .querySelectorAll(
-        ".local-search-result"
-      )
-      .forEach(function(element) {
-
-        element.remove();
-
-      });
-
-
-    if (!query) {
-      return;
-    }
-
-
-    const matches =
-      getLocalMatches(query);
-
-
-    matches.forEach(function(item) {
-
-      const link =
-        document.createElement("a");
-
-
-      link.className =
-        "site-search-result local-search-result";
-
-
-      link.href =
-        item.url || "#";
-
-
-      if (
-        item.url &&
-        item.url.startsWith("http")
-      ) {
-
-        link.target = "_blank";
-        link.rel =
-          "noopener noreferrer";
-
-      }
-
-
-      link.innerHTML = `
-        <div class="site-search-local-icon">
-          ${escapeSearchHtml(
-            item.type.substring(0, 1)
-          )}
-        </div>
-
-        <div>
-          <span>
-            ${escapeSearchHtml(item.type)}
-          </span>
-
-          <strong>
-            ${escapeSearchHtml(item.title)}
-          </strong>
-
-          ${
-            item.description
-              ? `
-                <small>
-                  ${escapeSearchHtml(
-                    item.description
-                  )}
-                </small>
-              `
-              : ""
-          }
-        </div>
-      `;
-
-
-      searchResults.appendChild(link);
-
-    });
-
-
-    if (matches.length) {
-
-      searchResults.hidden =
-        false;
-
-    }
-
-  }
-
-
-  if (searchInput) {
-
-    searchInput.addEventListener(
-      "input",
-      function() {
-
-        const query =
-          normalizeSearchText(
-            searchInput.value
-          );
-
-
-        /*
-         ننتظر قليلًا حتى يقوم library.js
-         بإضافة نتائج الكتب والروايات.
-        */
-
-        setTimeout(
-          function() {
-
-            renderLocalSearchResults(
-              query
-            );
-
-          },
-          30
+        return Math.max(
+          0,
+          slides.length -
+          getVisibleItems()
         );
 
       }
-    );
+
+
+      function updateSlider() {
+
+        const visible =
+          getVisibleItems();
+
+
+        const itemWidth =
+          100 / visible;
+
+
+        slides.forEach(
+          function (slide) {
+
+            slide.style.flexBasis =
+              itemWidth + "%";
+
+          }
+        );
+
+
+        const maxIndex =
+          getMaxIndex();
+
+
+        if (current > maxIndex) {
+
+          current =
+            maxIndex;
+
+        }
+
+
+        track.style.transform =
+          "translateX(" +
+          (current * itemWidth) +
+          "%)";
+
+      }
+
+
+      function goNext() {
+
+        const maxIndex =
+          getMaxIndex();
+
+
+        if (maxIndex === 0) {
+          return;
+        }
+
+
+        current++;
+
+
+        if (current > maxIndex) {
+
+          current = 0;
+
+        }
+
+
+        updateSlider();
+
+      }
+
+
+      function goPrev() {
+
+        const maxIndex =
+          getMaxIndex();
+
+
+        if (maxIndex === 0) {
+          return;
+        }
+
+
+        current--;
+
+
+        if (current < 0) {
+
+          current =
+            maxIndex;
+
+        }
+
+
+        updateSlider();
+
+      }
+
+
+      function startAutoPlay() {
+
+        clearInterval(timer);
+
+
+        if (slides.length <= getVisibleItems()) {
+          return;
+        }
+
+
+        timer =
+          setInterval(
+            goNext,
+            3500
+          );
+
+      }
+
+
+      if (next) {
+
+        next.addEventListener(
+          "click",
+          function () {
+
+            goNext();
+
+            startAutoPlay();
+
+          }
+        );
+
+      }
+
+
+      if (prev) {
+
+        prev.addEventListener(
+          "click",
+          function () {
+
+            goPrev();
+
+            startAutoPlay();
+
+          }
+        );
+
+      }
+
+
+      window.addEventListener(
+        "resize",
+        function () {
+
+          current = 0;
+
+          updateSlider();
+
+          startAutoPlay();
+
+        }
+      );
+
+
+      updateSlider();
+
+      startAutoPlay();
+
+    }
+
+
+
+    /* =====================================================
+       أحدث التطبيقات والأخبار
+       ===================================================== */
+
+    createIconSlider({
+
+      sliderId:
+        "homeSlider",
+
+      trackId:
+        "sliderTrack",
+
+      prevId:
+        "sliderPrev",
+
+      nextId:
+        "sliderNext"
+
+    });
+
+
+
+    /* =====================================================
+       تطبيقات صُممت لتُستخدم
+       ===================================================== */
+
+    createIconSlider({
+
+      sliderId:
+        "appsHomeSlider",
+
+      trackId:
+        "appsSliderTrack",
+
+      prevId:
+        "appsSliderPrev",
+
+      nextId:
+        "appsSliderNext"
+
+    });
+
+
+
+    /* =====================================================
+       سلايدر الكتب والروايات
+       ===================================================== */
+
+    document
+      .querySelectorAll(
+        ".home-library-arrow"
+      )
+      .forEach(
+        function (button) {
+
+
+          button.addEventListener(
+            "click",
+            function () {
+
+
+              const target =
+                document.getElementById(
+                  button.dataset.sliderTarget
+                );
+
+
+              if (!target) {
+                return;
+              }
+
+
+              const direction =
+                button.dataset.direction;
+
+
+              const amount =
+                Math.max(
+                  220,
+                  target.clientWidth *
+                  0.75
+                );
+
+
+              target.scrollBy({
+
+                left:
+                  direction === "next"
+                    ? -amount
+                    : amount,
+
+                behavior:
+                  "smooth"
+
+              });
+
+
+            }
+          );
+
+
+        }
+      );
+
+
+
+    /* =====================================================
+       إضافة التطبيقات والمقالات إلى البحث العام
+       ===================================================== */
+
+    const searchInput =
+      document.getElementById(
+        "siteSearchInput"
+      );
+
+
+    const searchResults =
+      document.getElementById(
+        "siteSearchResults"
+      );
+
+
+
+    function escapeSearchHtml(value) {
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.textContent =
+        value || "";
+
+
+      return div.innerHTML;
+
+    }
+
+
+
+    function normalizeSearchText(value) {
+
+      return String(
+        value || ""
+      )
+        .toLowerCase()
+        .trim();
+
+    }
+
+
+
+    function getLocalSearchItems() {
+
+      const elements =
+        document.querySelectorAll(
+          ".site-search-local-item"
+        );
+
+
+      const unique =
+        new Map();
+
+
+      elements.forEach(
+        function (element) {
+
+
+          const title =
+            element.dataset.searchTitle ||
+            "";
+
+
+          const description =
+            element.dataset.searchDescription ||
+            "";
+
+
+          const type =
+            element.dataset.searchType ||
+            "";
+
+
+          const url =
+            element.dataset.searchUrl ||
+            "#";
+
+
+          const key =
+            type +
+            "|" +
+            title +
+            "|" +
+            url;
+
+
+          if (!unique.has(key)) {
+
+            unique.set(
+              key,
+              {
+
+                title,
+                description,
+                type,
+                url
+
+              }
+            );
+
+          }
+
+
+        }
+      );
+
+
+      return [
+        ...unique.values()
+      ];
+
+    }
+
+
+
+    function getLocalMatches(query) {
+
+      if (!query) {
+        return [];
+      }
+
+
+      return getLocalSearchItems()
+        .filter(
+          function (item) {
+
+
+            const text =
+              normalizeSearchText(
+
+                item.title +
+                " " +
+                item.description +
+                " " +
+                item.type
+
+              );
+
+
+            return text.includes(
+              query
+            );
+
+
+          }
+        )
+        .slice(
+          0,
+          10
+        );
+
+    }
+
+
+
+    function renderLocalSearchResults(
+      query
+    ) {
+
+      if (!searchResults) {
+        return;
+      }
+
+
+      searchResults
+        .querySelectorAll(
+          ".local-search-result"
+        )
+        .forEach(
+          function (element) {
+
+            element.remove();
+
+          }
+        );
+
+
+      if (!query) {
+        return;
+      }
+
+
+      const matches =
+        getLocalMatches(
+          query
+        );
+
+
+      matches.forEach(
+        function (item) {
+
+
+          const link =
+            document.createElement(
+              "a"
+            );
+
+
+          link.className =
+            "site-search-result local-search-result";
+
+
+          link.href =
+            item.url || "#";
+
+
+          if (
+            item.url &&
+            item.url.startsWith(
+              "http"
+            )
+          ) {
+
+            link.target =
+              "_blank";
+
+
+            link.rel =
+              "noopener noreferrer";
+
+          }
+
+
+          link.innerHTML = `
+
+            <div class="site-search-local-icon">
+
+              ${escapeSearchHtml(
+                item.type.substring(
+                  0,
+                  1
+                )
+              )}
+
+            </div>
+
+
+            <div>
+
+              <span>
+
+                ${escapeSearchHtml(
+                  item.type
+                )}
+
+              </span>
+
+
+              <strong>
+
+                ${escapeSearchHtml(
+                  item.title
+                )}
+
+              </strong>
+
+
+              ${
+                item.description
+
+                  ? `
+
+                    <small>
+
+                      ${escapeSearchHtml(
+                        item.description
+                      )}
+
+                    </small>
+
+                  `
+
+                  : ""
+              }
+
+            </div>
+
+          `;
+
+
+          searchResults.appendChild(
+            link
+          );
+
+
+        }
+      );
+
+
+      if (matches.length) {
+
+        searchResults.hidden =
+          false;
+
+      }
+
+    }
+
+
+
+    if (searchInput) {
+
+      searchInput.addEventListener(
+        "input",
+        function () {
+
+
+          const query =
+            normalizeSearchText(
+              searchInput.value
+            );
+
+
+          /*
+            ننتظر قليلًا حتى يقوم library.js
+            بإضافة نتائج الكتب والروايات.
+          */
+
+          setTimeout(
+            function () {
+
+              renderLocalSearchResults(
+                query
+              );
+
+            },
+            30
+          );
+
+
+        }
+      );
+
+    }
+
 
   }
+);
 
-});
 </script>
