@@ -1073,3 +1073,73 @@ footer strong {
     grid-template-columns: 1fr;
   }
 }
+/* =========================================================
+   Home Books & Novels Slider
+   ========================================================= */
+
+.home-library-track {
+  display: flex;
+  align-items: stretch;
+  direction: rtl;
+  overflow: hidden;
+  scroll-behavior: smooth;
+}
+
+.home-library-card {
+  flex: 0 0 20%;
+  min-width: 0;
+  padding: 10px;
+  background: transparent;
+  border: 0;
+  text-align: center;
+}
+
+.home-library-cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, .06);
+}
+
+.home-library-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.home-library-read {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px;
+  padding: 8px 15px;
+  border: 1px solid rgba(0, 0, 0, .12);
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.home-library-read:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+
+/* الجوال: 3 عناصر */
+
+@media (max-width: 760px) {
+
+  .home-library-card {
+    flex: 0 0 33.333333%;
+    padding: 6px;
+  }
+
+  .home-library-read {
+    margin-top: 8px;
+    padding: 7px 10px;
+    font-size: 9px;
+  }
+}
