@@ -1096,19 +1096,22 @@ footer strong {
 
 .home-library-cover {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 150px;
   overflow: hidden;
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, .06);
+  background: transparent;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .home-library-cover img {
   display: block;
-  width: 100%;
+  width: auto;
   height: 100%;
+  max-width: 100%;
   object-fit: contain;
 }
-
 .home-library-read {
   display: inline-flex;
   align-items: center;
@@ -1135,6 +1138,10 @@ footer strong {
   .home-library-card {
     flex: 0 0 33.333333%;
     padding: 6px;
+  }
+
+  .home-library-cover {
+    height: 125px;
   }
 
   .home-library-read {
