@@ -244,27 +244,52 @@ title: Alamelhada Apps
 
         {% for app in apps.items %}
 
-          <div
-            class="icon-slide site-search-local-item"
-            data-search-type="تطبيق"
-            data-search-title="{{ app.name | escape }}"
-            data-search-description="{{ app.description | escape }}"
-            data-search-url="{{ app.url | escape }}"
+         {% for app in apps.items %}
+
+  <div
+    class="icon-slide site-search-local-item"
+    data-search-type="تطبيق"
+    data-search-title="{{ app.name | escape }}"
+    data-search-description="{{ app.description | escape }}"
+    data-search-url="{{ app.url | escape }}"
+  >
+
+    <a
+      class="icon-slide-link"
+      href="{{ app.url }}"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      {% if app.icon %}
+
+        <div class="slider-app-icon">
+
+          <img
+            src="{{ app.icon }}"
+            alt="{{ app.name }}"
+            loading="lazy"
           >
 
-            <div class="icon-slide-link">
+        </div>
 
-              {% if app.icon %}
+      {% endif %}
 
-                <div class="slider-app-icon">
 
-                  <img
-                    src="{{ app.icon }}"
-                    alt="{{ app.name }}"
-                    loading="lazy"
-                  >
+      <h3>
+        {{ app.name }}
+      </h3>
 
-                </div>
+
+      <span class="slider-details">
+        عرض التفاصيل ←
+      </span>
+
+    </a>
+
+  </div>
+
+{% endfor %}
 
               {% endif %}
 
