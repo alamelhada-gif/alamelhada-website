@@ -111,46 +111,35 @@ function renderCategories() {
   ];
 
   categoryContainer.innerHTML = `
-    <button
-      class="library-category active"
-      data-category="all"
-      type="button"
+    <select
+      class="library-category-select"
+      id="libraryCategorySelect"
+      aria-label="اختر التصنيف"
     >
-      الكل
-    </button>
+      <option value="all">الكل</option>
 
-    ${categories.map(category => `
-      <button
-        class="library-category"
-        data-category="${escapeHtml(category)}"
-        type="button"
-      >
-        ${escapeHtml(category)}
-      </button>
-    `).join("")}
+      ${categories.map(category => `
+        <option value="${escapeHtml(category)}">
+          ${escapeHtml(category)}
+        </option>
+      `).join("")}
+
+    </select>
   `;
 
-  categoryContainer
-    .querySelectorAll(".library-category")
-    .forEach(button => {
+  const select =
+    document.getElementById("libraryCategorySelect");
 
-      button.addEventListener("click", () => {
+  if (!select) return;
 
-        activeCategory = button.dataset.category;
+  select.addEventListener("change", () => {
 
-        categoryContainer
-          .querySelectorAll(".library-category")
-          .forEach(btn => {
-            btn.classList.remove("active");
-          });
+    activeCategory = select.value;
 
-        button.classList.add("active");
+    renderLibraryItems();
 
-        renderLibraryItems();
-
-      });
-
-    });
+  });
+}
 }
 
 
