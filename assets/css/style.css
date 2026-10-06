@@ -1138,15 +1138,14 @@ footer strong {
   .home-library-track {
     gap: 8px;
   }
+.home-library-track {
+  gap: 0;
+}
 
-  .home-library-card {
-    flex: 0 0 30%;
-    padding: 4px;
-  }
-
-  .home-library-cover {
-    height: 125px;
-  }
+.home-library-card {
+  flex: 0 0 33.333333%;
+  padding: 6px;
+}
 
   .home-library-read {
     margin-top: 8px;
