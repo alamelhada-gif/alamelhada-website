@@ -619,6 +619,9 @@ renderHomeSlider(
   "book"
 );
 
+    startHomeLibraryAutoSlider(novelsSlider);
+startHomeLibraryAutoSlider(booksSlider);
+    
     if (siteSearchInput) {
 
       siteSearchInput.addEventListener(
