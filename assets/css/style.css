@@ -1089,15 +1089,16 @@ footer strong {
 .home-library-track {
   display: flex;
   align-items: stretch;
+  justify-content: center;
   direction: rtl;
   overflow: hidden;
   scroll-behavior: smooth;
 }
 
 .home-library-card {
-  flex: 0 0 20%;
+  flex: 0 0 16%;
   min-width: 0;
-  padding: 10px;
+  padding: 5px;
   background: transparent;
   border: 0;
   text-align: center;
