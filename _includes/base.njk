@@ -52,6 +52,10 @@
   </a>
 
 
+  <!-- =====================================================
+       قائمة الكمبيوتر
+       ===================================================== -->
+
   <nav>
 
     {# ========================= #}
@@ -140,6 +144,144 @@
     {% endif %}
 
   </nav>
+
+
+  <!-- =====================================================
+       زر القائمة - الجوال فقط
+       ===================================================== -->
+
+  <button
+    class="mobile-menu-btn"
+    type="button"
+    aria-label="{% if lang == 'en' %}Open menu{% else %}فتح القائمة{% endif %}"
+    onclick="document.body.classList.add('mobile-menu-open')"
+  >
+    ☰
+  </button>
+
+
+  <!-- =====================================================
+       خلفية القائمة الجانبية
+       ===================================================== -->
+
+  <div
+    class="mobile-menu-overlay"
+    onclick="document.body.classList.remove('mobile-menu-open')"
+  ></div>
+
+
+  <!-- =====================================================
+       القائمة الجانبية للجوال
+       ===================================================== -->
+
+  <aside class="mobile-menu">
+
+    <button
+      class="mobile-menu-close"
+      type="button"
+      aria-label="{% if lang == 'en' %}Close menu{% else %}إغلاق القائمة{% endif %}"
+      onclick="document.body.classList.remove('mobile-menu-open')"
+    >
+      ×
+    </button>
+
+
+    <div class="mobile-menu-links">
+
+      <!-- الكتب -->
+
+      <a
+        href="/books/"
+        onclick="document.body.classList.remove('mobile-menu-open')"
+      >
+        {% if lang == 'en' %}
+          Books
+        {% else %}
+          الكتب
+        {% endif %}
+      </a>
+
+
+      <!-- الروايات -->
+
+      <a
+        href="/novels/"
+        onclick="document.body.classList.remove('mobile-menu-open')"
+      >
+        {% if lang == 'en' %}
+          Novels
+        {% else %}
+          الروايات
+        {% endif %}
+      </a>
+
+
+      <!-- التطبيقات -->
+
+      {% if site.show_nav_apps %}
+        <a
+          href="/#apps"
+          onclick="document.body.classList.remove('mobile-menu-open')"
+        >
+          {% if lang == 'en' %}
+            {{ site.nav_apps_en }}
+          {% else %}
+            {{ site.nav_apps }}
+          {% endif %}
+        </a>
+      {% endif %}
+
+
+      <!-- المقالات -->
+
+      {% if site.show_nav_articles %}
+        <a
+          href="/articles/"
+          onclick="document.body.classList.remove('mobile-menu-open')"
+        >
+          {% if lang == 'en' %}
+            {{ site.nav_articles_en }}
+          {% else %}
+            {{ site.nav_articles }}
+          {% endif %}
+        </a>
+      {% endif %}
+
+
+      <!-- من نحن -->
+
+      {% if site.show_nav_about %}
+        <a
+          href="/about/"
+          onclick="document.body.classList.remove('mobile-menu-open')"
+        >
+          {% if lang == 'en' %}
+            {{ site.nav_about_en }}
+          {% else %}
+            {{ site.nav_about }}
+          {% endif %}
+        </a>
+      {% endif %}
+
+
+      <!-- التواصل -->
+
+      {% if site.show_nav_contact %}
+        <a
+          href="/contact/"
+          onclick="document.body.classList.remove('mobile-menu-open')"
+        >
+          {% if lang == 'en' %}
+            {{ site.nav_contact_en }}
+          {% else %}
+            {{ site.nav_contact }}
+          {% endif %}
+        </a>
+      {% endif %}
+
+    </div>
+
+  </aside>
 
 </header>
 
