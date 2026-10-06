@@ -566,16 +566,16 @@ async function loadHomeLibrary() {
     searchBooks = books;
 
     renderHomeSlider(
-      novelsSlider,
-      novels.slice(0, 12),
-      "novel"
-    );
+  novelsSlider,
+  novels.slice(0, 10),
+  "novel"
+);
 
-    renderHomeSlider(
-      booksSlider,
-      books.slice(0, 12),
-      "book"
-    );
+renderHomeSlider(
+  booksSlider,
+  books.slice(0, 10),
+  "book"
+);
 
     if (siteSearchInput) {
 
