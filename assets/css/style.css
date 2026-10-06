@@ -699,6 +699,15 @@ footer strong {
     margin-top: 60px;
   }
 
+  .home-library-track {
+  gap: 4px;
+}
+
+.home-library-card {
+  flex: 0 0 calc((100% - 8px) / 3);
+  padding: 2px;
+}
+  
   /* ============================= */
   /* سلايدر الأيقونات - الجوال */
   /* ============================= */
