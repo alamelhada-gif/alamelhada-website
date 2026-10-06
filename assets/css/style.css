@@ -1144,16 +1144,14 @@ footer strong {
 
 @media (max-width: 760px) {
 
-  .home-library-track {
-    gap: 8px;
-  }
 .home-library-track {
   gap: 0;
+  justify-content: center;
 }
 
 .home-library-card {
-  flex: 0 0 33.333333%;
-  padding: 6px;
+  flex: 0 0 24%;
+  padding: 2px;
 }
 
   .home-library-read {
