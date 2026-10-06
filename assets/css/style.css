@@ -1135,9 +1135,13 @@ footer strong {
 
 @media (max-width: 760px) {
 
+  .home-library-track {
+    gap: 8px;
+  }
+
   .home-library-card {
-    flex: 0 0 33.333333%;
-    padding: 6px;
+    flex: 0 0 30%;
+    padding: 4px;
   }
 
   .home-library-cover {
@@ -1149,6 +1153,7 @@ footer strong {
     padding: 7px 10px;
     font-size: 9px;
   }
+}
 }
 /* =========================================================
    تقليل الفراغ بين الروايات والكتب في الصفحة الرئيسية
