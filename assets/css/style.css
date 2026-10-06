@@ -1121,17 +1121,12 @@ footer strong {
 
 .home-library-cover img {
   display: block;
-
-  width: 100%;
-  height: 100%;
-
-  object-fit: contain;
-  object-position: center;
-
+  width: 120px;
+  height: 180px;
+  object-fit: fill;
   background: transparent;
   border: 0;
 }
-
 .home-library-read {
   display: inline-flex;
   align-items: center;
