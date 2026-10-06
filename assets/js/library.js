@@ -381,6 +381,48 @@ function renderHomeSlider(container, items, type) {
     ).join("");
 }
 
+/* =========================================================
+   الحركة التلقائية لسلايدر الكتب والروايات
+   كل 4 ثوانٍ
+   ========================================================= */
+
+function startHomeLibraryAutoSlider(container) {
+
+  if (!container) return;
+
+  setInterval(() => {
+
+    const card =
+      container.querySelector(".home-library-card");
+
+    if (!card) return;
+
+    const cardWidth =
+      card.getBoundingClientRect().width;
+
+    const maxScroll =
+      container.scrollWidth - container.clientWidth;
+
+    if (maxScroll <= 0) return;
+
+    if (container.scrollLeft <= -maxScroll + 5) {
+
+      container.scrollTo({
+        left: 0,
+        behavior: "smooth"
+      });
+
+    } else {
+
+      container.scrollBy({
+        left: -cardWidth,
+        behavior: "smooth"
+      });
+
+    }
+
+  }, 4000);
+}
 
 /* =========================================================
    البحث العام
