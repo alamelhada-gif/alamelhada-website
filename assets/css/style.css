@@ -1162,3 +1162,12 @@ footer strong {
 .home-library-section + .home-library-section {
   padding-top: 09px;
 }
+.home-library-track {
+  justify-content: center;
+  gap: 20px;
+}
+
+.home-library-card {
+  flex: 0 0 17%;
+  padding: 5px;
+}
