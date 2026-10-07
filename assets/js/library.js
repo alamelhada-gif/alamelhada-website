@@ -140,7 +140,7 @@ function renderCategories() {
 
   });
 }
-}
+
 
 
 function renderLibraryItems() {
