@@ -111,32 +111,118 @@ function renderCategories() {
   ];
 
   categoryContainer.innerHTML = `
-    <select
-      class="library-category-select"
-      id="libraryCategorySelect"
-      aria-label="اختر التصنيف"
-    >
-      <option value="all">الكل</option>
+    <div class="library-dropdown">
 
-      ${categories.map(category => `
-        <option value="${escapeHtml(category)}">
-          ${escapeHtml(category)}
-        </option>
-      `).join("")}
+      <button
+        class="library-dropdown-button"
+        type="button"
+        aria-expanded="false"
+      >
+        <span class="library-dropdown-label">
+          جميع التصنيفات
+        </span>
 
-    </select>
+        <span class="library-dropdown-arrow">
+          ▼
+        </span>
+      </button>
+
+      <div class="library-dropdown-menu">
+
+        <button
+          class="library-dropdown-item active"
+          type="button"
+          data-category="all"
+        >
+          <span>الكل</span>
+          <span class="library-dropdown-check">✓</span>
+        </button>
+
+        ${categories.map(category => `
+          <button
+            class="library-dropdown-item"
+            type="button"
+            data-category="${escapeHtml(category)}"
+          >
+            <span>${escapeHtml(category)}</span>
+            <span class="library-dropdown-check">✓</span>
+          </button>
+        `).join("")}
+
+      </div>
+
+    </div>
   `;
 
-  const select =
-    document.getElementById("libraryCategorySelect");
+  const dropdown =
+    categoryContainer.querySelector(".library-dropdown");
 
-  if (!select) return;
+  const dropdownButton =
+    categoryContainer.querySelector(".library-dropdown-button");
 
-  select.addEventListener("change", () => {
+  const dropdownLabel =
+    categoryContainer.querySelector(".library-dropdown-label");
 
-    activeCategory = select.value;
+  const dropdownItems =
+    categoryContainer.querySelectorAll(".library-dropdown-item");
 
-    renderLibraryItems();
+  if (!dropdown || !dropdownButton || !dropdownLabel) return;
+
+  dropdownButton.addEventListener("click", () => {
+
+    const isOpen =
+      dropdown.classList.toggle("open");
+
+    dropdownButton.setAttribute(
+      "aria-expanded",
+      isOpen ? "true" : "false"
+    );
+
+  });
+
+  dropdownItems.forEach(item => {
+
+    item.addEventListener("click", () => {
+
+      activeCategory =
+        item.dataset.category;
+
+      dropdownItems.forEach(button => {
+        button.classList.remove("active");
+      });
+
+      item.classList.add("active");
+
+      dropdownLabel.textContent =
+        activeCategory === "all"
+          ? "جميع التصنيفات"
+          : item.querySelector("span").textContent;
+
+      dropdown.classList.remove("open");
+
+      dropdownButton.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      renderLibraryItems();
+
+    });
+
+  });
+
+  document.addEventListener("click", event => {
+
+    if (!dropdown.contains(event.target)) {
+
+      dropdown.classList.remove("open");
+
+      dropdownButton.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+    }
 
   });
 }
