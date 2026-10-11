@@ -3,7 +3,7 @@ title: دفرنت كار
 lang: ar
 slug: diffrentcar
 summary: >
-  مرحبًا بك في تطبيق **دفرنت كار (Diffrent Car)**.
+  مرحبًا بك في تطبيق دفرنت كار Diffrent Car
 
 
 
