@@ -777,3 +777,51 @@
   body.theme-signature .library-author,
   body.theme-signature .library-description { font-size: 11px; }
 }
+
+/* إصلاح ارتفاع واجهة المكتبة على جميع الشاشات */
+
+body.theme-signature .premium-library-hero {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 30px !important;
+
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+
+  padding: 35px !important;
+}
+
+body.theme-signature .premium-library-hero-content {
+  display: block !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+body.theme-signature .premium-library-decoration {
+  flex: 0 0 150px !important;
+  width: 150px !important;
+  height: 180px !important;
+  min-height: 0 !important;
+  margin: 0 auto !important;
+}
+
+@media (max-width: 760px) {
+  body.theme-signature .premium-library-hero {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    padding: 22px 18px !important;
+    gap: 15px !important;
+  }
+
+  body.theme-signature .premium-library-decoration {
+    flex: 0 0 auto !important;
+    width: 90px !important;
+    height: 110px !important;
+    margin: 5px auto !important;
+  }
+}
