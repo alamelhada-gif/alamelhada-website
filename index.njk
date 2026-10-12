@@ -34,27 +34,27 @@ title: Alamelhada Apps
 {# الواجهة الرئيسية                                          #}
 {# ========================================================= #}
 
+
 <section class="hero">
 
-  <div>
+  <div class="signature-hero-content">
+
     <span class="eyebrow">
       {{ site.hero_eyebrow }}
     </span>
 
     <h1>
-      {{ site.hero_title_line1 }}<br>
+      {{ site.hero_title_line1 }}
       <em>{{ site.hero_title_line2 }}</em>
     </h1>
 
-    <p>
-      {{ site.tagline_ar }}
-    </p>
+    <p>{{ site.tagline_ar }}</p>
 
     <div class="actions">
-
       {% if site.show_apps != false %}
         <a class="btn" href="#apps">
           {{ site.hero_primary_button }}
+          <span aria-hidden="true">←</span>
         </a>
       {% endif %}
 
@@ -63,13 +63,21 @@ title: Alamelhada Apps
           {{ site.hero_secondary_button }}
         </a>
       {% endif %}
-
     </div>
+
   </div>
 
-  <div class="mark">
-    A
+  <div class="signature-hero-art" aria-hidden="true">
+    <div class="signature-art-ring"></div>
+    <div class="signature-art-card">
+      <span class="signature-art-symbol">A</span>
+      <span class="signature-art-line"></span>
+      <span class="signature-art-name">ALAMELHADA</span>
+    </div>
+    <div class="signature-art-dot"></div>
   </div>
+
+  <div class="mark" aria-hidden="true">A</div>
 
 </section>
 
