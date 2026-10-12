@@ -1637,3 +1637,46 @@ footer strong {
   }
 
 }
+/* تصغير القسم الأسود */
+.statement {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 35px 24px !important;
+}
+
+.statement h2 {
+  margin: 10px 0 0 !important;
+  line-height: 1.35 !important;
+}
+
+.statement p {
+  margin: 0 !important;
+}
+
+/* إصلاح بطاقات المقالات على الجوال */
+@media (max-width: 760px) {
+
+  #articles .article {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    padding: 10px 7px !important;
+  }
+
+  #articles .article-excerpt {
+    display: block !important;
+    -webkit-line-clamp: unset !important;
+    line-clamp: unset !important;
+    overflow: visible !important;
+    margin: 0 !important;
+  }
+
+  #articles .article-read-more {
+    display: block !important;
+    margin-top: 8px !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    color: var(--primary) !important;
+    white-space: nowrap;
+  }
+}
