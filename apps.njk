@@ -1,0 +1,225 @@
+
+---
+layout: base.njk
+title: التطبيقات
+description: اكتشف تطبيقات عالم الهدى
+permalink: /apps/index.html
+---
+
+{% set visibleApps = [] %}
+
+{% for app in apps.items %}
+  {% if app.visible != false %}
+    {% set visibleApps = (visibleApps.push(app), visibleApps) %}
+  {% endif %}
+{% endfor %}
+
+{% set visibleApps = visibleApps | sort(false, false, "order") %}
+
+<section class="section library-page premium-library">
+
+  <!-- الواجهة الرئيسية -->
+  <div class="premium-library-hero">
+
+    <div class="premium-library-hero-content">
+
+      <span class="premium-library-eyebrow">
+        عالم الهدى / التطبيقات الرقمية
+      </span>
+
+      <h1>اكتشف تطبيقاتنا</h1>
+
+      <p>
+        مجموعة من التطبيقات المصممة لتجعل
+        تجربتك الرقمية أسهل وأكثر فائدة.
+        استكشف التطبيقات واختر ما يناسبك.
+      </p>
+
+    </div>
+
+    <div class="premium-library-decoration" aria-hidden="true">
+      <span class="premium-library-decoration-small">
+        ALAMELHADA
+      </span>
+      <span class="premium-library-decoration-icon">✦</span>
+      <span class="premium-library-decoration-text">
+        APPS
+      </span>
+    </div>
+
+  </div>
+
+  <!-- عنوان القسم -->
+  <div class="premium-library-toolbar">
+
+    <div class="premium-library-toolbar-heading">
+      <span>تطبيقات عالم الهدى</span>
+      <h2>جميع التطبيقات</h2>
+    </div>
+
+  </div>
+
+  <!-- بطاقات التطبيقات -->
+  <div class="apps-page-grid">
+
+    {% for app in visibleApps %}
+
+      <article class="apps-page-card">
+
+        <div class="apps-page-card-top">
+
+          {% if app.icon %}
+            <img
+              class="apps-page-icon"
+              src="{{ app.icon | escape }}"
+              alt="{{ app.name | escape }}"
+              loading="lazy"
+            >
+          {% else %}
+            <div class="apps-page-icon apps-page-icon-placeholder">
+              ✦
+            </div>
+          {% endif %}
+
+          <h3>{{ app.name }}</h3>
+
+        </div>
+
+        {% if app.description %}
+          <p class="apps-page-description">
+            {{ app.description }}
+          </p>
+        {% endif %}
+
+        {% if app.url %}
+          <a
+            class="apps-page-link"
+            href="{{ app.url | escape }}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            عرض التطبيق
+            <span aria-hidden="true">←</span>
+          </a>
+        {% endif %}
+
+      </article>
+
+    {% else %}
+
+      <p class="library-empty">
+        لا توجد تطبيقات متاحة حاليًا.
+      </p>
+
+    {% endfor %}
+
+  </div>
+
+</section>
+
+<style>
+  .apps-page-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+    margin-top: 28px;
+  }
+
+  .apps-page-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+    padding: 28px;
+    border: 1px solid #e6ebe7;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.035);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .apps-page-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.08);
+  }
+
+  .apps-page-card-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .apps-page-icon {
+    display: block;
+    width: 88px;
+    height: 88px;
+    object-fit: contain;
+    border-radius: 19px;
+  }
+
+  .apps-page-icon-placeholder {
+    display: grid;
+    place-items: center;
+    background: #edf3ee;
+    color: #234c38;
+    font-size: 38px;
+  }
+
+  .apps-page-card h3 {
+    margin: 0;
+    font-size: 21px;
+    line-height: 1.5;
+    color: #20382c;
+  }
+
+  .apps-page-description {
+    margin: 0;
+    color: #647269;
+    font-size: 15px;
+    line-height: 1.9;
+    flex-grow: 1;
+  }
+
+  .apps-page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    align-self: flex-start;
+    padding: 12px 22px;
+    border-radius: 11px;
+    background: #1b342c;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    transition: background 0.2s ease;
+  }
+
+  .apps-page-link:hover {
+    background: #315c47;
+    color: #ffffff;
+  }
+
+  @media (max-width: 900px) {
+    .apps-page-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 600px) {
+    .apps-page-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .apps-page-card {
+      padding: 22px;
+    }
+
+    .apps-page-icon {
+      width: 76px;
+      height: 76px;
+    }
+  }
+</style>
