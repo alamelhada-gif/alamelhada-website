@@ -204,45 +204,38 @@ title: Alamelhada Apps
 
 {% if site.show_apps != false %}
 
+{% set visibleApps = [] %}
+
+{% for app in apps.items %}
+  {% if app.visible != false %}
+    {% set visibleApps = (visibleApps.push(app), visibleApps) %}
+  {% endif %}
+{% endfor %}
+
+{% set visibleApps = visibleApps | sort(false, false, "order") %}
+
 <section class="home-slider-section" id="apps">
 
   <div class="slider-heading">
-
-    <span>
-      {{ site.apps_section_label }}
-    </span>
-
-    <h2>
-      {{ site.apps_section_title }}
-    </h2>
-
+    <span>{{ site.apps_section_label }}</span>
+    <h2>{{ site.apps_section_title }}</h2>
   </div>
-
 
   <div class="icon-slider" id="appsHomeSlider">
 
-    {% if apps.items | length > 1 %}
-
+    {% if visibleApps | length > 1 %}
       <button
         class="icon-slider-arrow icon-slider-prev"
         id="appsSliderPrev"
         type="button"
         aria-label="السابق"
-      >
-        ‹
-      </button>
-
+      >‹</button>
     {% endif %}
 
-
     <div class="icon-slider-window">
+      <div class="icon-slider-track" id="appsSliderTrack">
 
-      <div
-        class="icon-slider-track"
-        id="appsSliderTrack"
-      >
-
-        {% for app in apps.items %}
+        {% for app in visibleApps %}
 
           <div
             class="icon-slide site-search-local-item"
@@ -260,24 +253,16 @@ title: Alamelhada Apps
             >
 
               {% if app.icon %}
-
                 <div class="slider-app-icon">
-
                   <img
                     src="{{ app.icon }}"
                     alt="{{ app.name }}"
                     loading="lazy"
                   >
-
                 </div>
-
               {% endif %}
 
-
-              <h3>
-                {{ app.name }}
-              </h3>
-
+              <h3>{{ app.name }}</h3>
 
               <span class="slider-details">
                 عرض التفاصيل ←
@@ -290,21 +275,15 @@ title: Alamelhada Apps
         {% endfor %}
 
       </div>
-
     </div>
 
-
-    {% if apps.items | length > 1 %}
-
+    {% if visibleApps | length > 1 %}
       <button
         class="icon-slider-arrow icon-slider-next"
         id="appsSliderNext"
         type="button"
         aria-label="التالي"
-      >
-        ›
-      </button>
-
+      >›</button>
     {% endif %}
 
   </div>
