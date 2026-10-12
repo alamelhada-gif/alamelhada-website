@@ -751,3 +751,42 @@
     font-size: 11px;
   }
 }
+
+/* تصغير واجهة الكتب على الجوال فقط */
+@media (max-width: 760px) {
+
+  .theme-signature .premium-library-hero {
+    min-height: 0 !important;
+    padding: 24px 20px !important;
+    gap: 14px !important;
+  }
+
+  .theme-signature .premium-library-hero h1 {
+    font-size: 28px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .theme-signature .premium-library-hero p {
+    font-size: 12px !important;
+    line-height: 1.8 !important;
+  }
+
+  .theme-signature .premium-library-decoration {
+    width: 100px !important;
+    min-height: 120px !important;
+    padding: 12px !important;
+    margin: 5px auto !important;
+  }
+
+  .theme-signature .premium-library-decoration-icon {
+    font-size: 30px !important;
+  }
+
+  .theme-signature .premium-library-decoration-text {
+    font-size: 8px !important;
+  }
+
+  .theme-signature .premium-library-toolbar {
+    margin-top: 25px !important;
+  }
+}
