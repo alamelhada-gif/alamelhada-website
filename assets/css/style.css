@@ -1680,3 +1680,38 @@ footer strong {
     white-space: nowrap;
   }
 }
+/* توسيط نص اللوحة السوداء في سطر واحد */
+.statement {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: 25px 15px !important;
+  text-align: center !important;
+}
+
+.statement h2 {
+  font-size: clamp(14px, 2.8vw, 36px) !important;
+  line-height: 1.5 !important;
+  margin: 8px 0 0 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+.statement p {
+  font-size: 12px !important;
+  text-align: center !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 760px) {
+  .statement {
+    padding: 20px 8px !important;
+  }
+
+  .statement h2 {
+    font-size: clamp(9px, 2.5vw, 18px) !important;
+  }
+
+  .statement p {
+    font-size: 10px !important;
+  }
+}
