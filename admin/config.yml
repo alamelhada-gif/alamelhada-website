@@ -13,6 +13,51 @@ public_folder: "/assets/images/uploads"
 collections:
 
   # =========================
+  # إدارة الثيمات
+  # =========================
+
+  - name: "themes"
+    label: "إدارة الثيمات"
+
+    files:
+      - label: "اختيار ثيم الموقع"
+        name: "appearance"
+        file: "_data/appearance.json"
+        format: "json"
+
+        fields:
+          - label: "الثيم المعتمد"
+            name: "active_theme"
+            widget: "select"
+            default: "classic"
+            options:
+              - label: "التصميم الحالي - Classic"
+                value: "classic"
+              - label: "Signature - الهوية الفاخرة"
+                value: "signature"
+              - label: "Studio - التصميم العصري"
+                value: "studio"
+              - label: "Noir - التصميم الليلي"
+                value: "noir"
+
+          - label: "تفعيل تخصيص الألوان"
+            name: "custom_colors"
+            widget: "boolean"
+            default: false
+
+          - label: "اللون الأساسي المخصص"
+            name: "primary_color"
+            widget: "color"
+            default: "#173F35"
+            required: false
+
+          - label: "لون التفاصيل"
+            name: "accent_color"
+            widget: "color"
+            default: "#B99A5B"
+            required: false
+
+  # =========================
   # المقالات
   # =========================
 
