@@ -80,7 +80,11 @@
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 
-<body style="--primary:{{site.primary}};--accent:{{site.accent}};--dark:{{site.dark}};--light:{{site.light}}">
+
+<body
+  class="theme-{{ activeTheme }}"
+  style="{% if activeTheme == 'classic' %}--primary:{{ site.primary }};--accent:{{ site.accent }};--dark:{{ site.dark }};--light:{{ site.light }};{% elif appearance.custom_colors and (activeTheme == 'signature' or activeTheme == 'studio' or activeTheme == 'noir') %}--primary:{{ appearance.primary_color }};--accent:{{ appearance.accent_color }};{% endif %}"
+>
 
 <header>
 
