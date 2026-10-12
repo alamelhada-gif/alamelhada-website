@@ -1588,3 +1588,52 @@ footer strong {
 .article:hover .article-read-more {
   text-decoration: underline;
 }
+/* عرض 3 مقالات في صف واحد على الجوال */
+@media (max-width: 760px) {
+
+  #articles .articles {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    align-items: stretch !important;
+  }
+
+  #articles .article {
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 10px 6px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  #articles .article h3 {
+    font-size: 11px !important;
+    line-height: 1.4 !important;
+    margin: 0 0 7px !important;
+    overflow-wrap: anywhere;
+  }
+
+  #articles .article p {
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    overflow-wrap: anywhere;
+  }
+
+  #articles .article-excerpt {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    overflow: hidden !important;
+  }
+
+  #articles .article-read-more {
+    display: block !important;
+    font-size: 10px !important;
+    margin-top: 6px !important;
+  }
+
+}
