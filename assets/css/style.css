@@ -1746,3 +1746,195 @@ footer strong {
   }
 
 }
+
+/* =========================================
+   SIGNATURE — EDITORIAL HERO V2
+   ========================================= */
+
+.theme-signature .hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  align-items: center;
+  gap: 60px;
+  min-height: 660px;
+  padding-block: 85px;
+  overflow: hidden;
+}
+
+.theme-signature .hero > .mark {
+  display: none;
+}
+
+.theme-signature .signature-hero-content {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+}
+
+.theme-signature .hero .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  letter-spacing: .05em;
+}
+
+.theme-signature .hero .eyebrow::before {
+  content: "";
+  width: 35px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.theme-signature .hero h1 {
+  max-width: 690px;
+  margin: 25px 0;
+  font-size: clamp(44px, 5.4vw, 76px);
+  line-height: 1.4;
+  letter-spacing: -.035em;
+}
+
+.theme-signature .hero h1 em {
+  display: block;
+  color: var(--primary);
+}
+
+.theme-signature .hero p {
+  max-width: 510px;
+  font-size: 15px;
+  line-height: 2.2;
+}
+
+.theme-signature .hero .actions {
+  margin-top: 35px;
+}
+
+.theme-signature .hero .btn {
+  gap: 22px;
+}
+
+/* Artwork */
+
+.theme-signature .signature-hero-art {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  aspect-ratio: 1;
+  margin-inline: auto;
+  display: grid;
+  place-items: center;
+}
+
+.theme-signature .signature-art-ring {
+  position: absolute;
+  inset: 3%;
+  border: 1px solid rgba(182, 154, 97, .38);
+  border-radius: 50%;
+}
+
+.theme-signature .signature-art-ring::after {
+  content: "";
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(36, 87, 73, .16);
+  border-radius: 50%;
+}
+
+.theme-signature .signature-art-card {
+  position: relative;
+  z-index: 1;
+  width: 65%;
+  aspect-ratio: 4 / 5;
+  background: #1b342c;
+  border: 1px solid rgba(210, 187, 133, .45);
+  border-radius: 4px;
+  box-shadow: 24px 30px 55px rgba(21, 47, 37, .17);
+  transform: rotate(-7deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.theme-signature .signature-art-card::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(210, 187, 133, .28);
+  pointer-events: none;
+}
+
+.theme-signature .signature-art-symbol {
+  font-family: Georgia, serif;
+  font-size: clamp(90px, 13vw, 165px);
+  line-height: 1;
+  color: #d0b47c;
+}
+
+.theme-signature .signature-art-line {
+  width: 45px;
+  height: 1px;
+  background: #d0b47c;
+}
+
+.theme-signature .signature-art-name {
+  font-family: Manrope, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .24em;
+  color: #eee3c9;
+}
+
+.theme-signature .signature-art-dot {
+  position: absolute;
+  top: 9%;
+  inset-inline-end: 8%;
+  width: 15px;
+  height: 15px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+/* إخفاء عناصر Signature في الثيمات الأخرى */
+
+body:not(.theme-signature) .signature-hero-art {
+  display: none;
+}
+
+body:not(.theme-signature) .signature-hero-content {
+  min-width: 0;
+}
+
+/* Responsive */
+
+@media (max-width: 760px) {
+  .theme-signature .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 30px;
+    min-height: 0;
+    padding: 55px 20px 65px;
+  }
+
+  .theme-signature .hero h1 {
+    font-size: clamp(34px, 8vw, 46px);
+    line-height: 1.5;
+  }
+
+  .theme-signature .hero p {
+    font-size: 13px;
+  }
+
+  .theme-signature .signature-hero-art {
+    max-width: 265px;
+  }
+
+  .theme-signature .signature-art-symbol {
+    font-size: 95px;
+  }
+
+  .theme-signature .signature-art-name {
+    font-size: 8px;
+  }
+}
