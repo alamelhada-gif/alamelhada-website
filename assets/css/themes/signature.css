@@ -679,126 +679,17 @@
   justify-content: center;
 }
 
-/* Mobile */
-
-@media (max-width: 760px) {
-
-  .theme-signature .premium-library {
-    padding: 20px 12px 55px;
-  }
-
-  .theme-signature .premium-library-hero {
-    grid-template-columns: 1fr;
-    gap: 25px;
-    min-height: 0;
-    padding: 30px 22px;
-    border-radius: 16px;
-  }
-
-  .theme-signature .premium-library-hero h1 {
-    font-size: 31px;
-  }
-
-  .theme-signature .premium-library-hero p {
-    font-size: 12px;
-  }
-
-  .theme-signature .premium-library-decoration {
-    width: 130px;
-    min-height: 155px;
-    padding: 15px;
-  }
-
-  .theme-signature .premium-library-decoration-icon {
-    font-size: 38px;
-  }
-
-  .theme-signature .premium-library-decoration-text {
-    font-size: 10px;
-  }
-
-  .theme-signature .premium-library-toolbar {
-    margin-top: 35px;
-  }
-
-  .theme-signature .premium-library-filter {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .theme-signature .premium-library-filter .library-categories {
-    width: 100%;
-    max-width: none;
-    margin: 0;
-  }
-
-  .theme-signature .library-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-
-  .theme-signature .library-card-content {
-    padding: 12px;
-  }
-
-  .theme-signature .library-card h2 {
-    font-size: 14px;
-  }
-
-  .theme-signature .library-author,
-  .theme-signature .library-description {
-    font-size: 11px;
-  }
-}
-
-/* تصغير واجهة الكتب على الجوال فقط */
-@media (max-width: 760px) {
-
-  .theme-signature .premium-library-hero {
-    min-height: 0 !important;
-    padding: 24px 20px !important;
-    gap: 14px !important;
-  }
-
-  .theme-signature .premium-library-hero h1 {
-    font-size: 28px !important;
-    margin-bottom: 10px !important;
-  }
-
-  .theme-signature .premium-library-hero p {
-    font-size: 12px !important;
-    line-height: 1.8 !important;
-  }
-
-  .theme-signature .premium-library-decoration {
-    width: 100px !important;
-    min-height: 120px !important;
-    padding: 12px !important;
-    margin: 5px auto !important;
-  }
-
-  .theme-signature .premium-library-decoration-icon {
-    font-size: 30px !important;
-  }
-
-  .theme-signature .premium-library-decoration-text {
-    font-size: 8px !important;
-  }
-
-  .theme-signature .premium-library-toolbar {
-    margin-top: 25px !important;
-  }
-}
 
 /* ==========================================
-   FIX — Library mobile layout
+   SIGNATURE — LIBRARY MOBILE FINAL
    ========================================== */
 
 @media (max-width: 760px) {
 
   body.theme-signature .library-page.premium-library {
     display: block !important;
+    width: 100%;
+    max-width: 100%;
     height: auto !important;
     min-height: 0 !important;
     padding: 16px 12px 45px !important;
@@ -810,45 +701,50 @@
     align-items: stretch !important;
     justify-content: flex-start !important;
 
-    width: 100% !important;
+    width: 100%;
     height: auto !important;
     min-height: 0 !important;
     max-height: none !important;
 
-    padding: 24px 20px !important;
+    padding: 22px 18px !important;
+    gap: 14px !important;
     margin: 0 !important;
-    gap: 18px !important;
 
-    border-radius: 16px !important;
+    border-radius: 16px;
+    overflow: hidden;
   }
 
   body.theme-signature .premium-library-hero-content {
     display: block !important;
-    position: relative !important;
-    width: 100% !important;
+    position: relative;
+    width: 100%;
     height: auto !important;
     min-height: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
-    text-align: right !important;
+    text-align: right;
   }
 
   body.theme-signature .premium-library-eyebrow {
-    display: block !important;
-    margin: 0 0 8px !important;
-    font-size: 11px !important;
+    display: block;
+    font-size: 10px;
+    margin: 0 0 7px;
   }
 
   body.theme-signature .premium-library-hero h1 {
-    margin: 0 0 10px !important;
-    font-size: 28px !important;
-    line-height: 1.5 !important;
+    font-size: 26px !important;
+    line-height: 1.5;
+    margin: 0 0 8px !important;
   }
 
   body.theme-signature .premium-library-hero p {
-    margin: 0 !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
     line-height: 1.9 !important;
+    margin: 0 !important;
+  }
+
+  body.theme-signature .premium-library-hero-actions {
+    display: none !important;
   }
 
   body.theme-signature .premium-library-decoration {
@@ -856,21 +752,68 @@
     flex: none !important;
     align-self: center !important;
 
-    width: 100px !important;
-    height: 125px !important;
+    width: 88px !important;
+    height: 108px !important;
     min-height: 0 !important;
-    max-height: 125px !important;
+    max-height: 108px !important;
 
-    margin: 8px auto 4px !important;
     padding: 10px !important;
+    margin: 8px auto 5px !important;
+  }
+
+  body.theme-signature .premium-library-decoration-icon {
+    font-size: 28px !important;
+  }
+
+  body.theme-signature .premium-library-decoration-text {
+    font-size: 8px !important;
   }
 
   body.theme-signature .premium-library-toolbar {
-    margin: 26px 0 0 !important;
-    padding-bottom: 16px !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 24px 0 0 !important;
+    padding-bottom: 15px !important;
+  }
+
+  body.theme-signature .premium-library-toolbar h2 {
+    font-size: 24px !important;
+  }
+
+  body.theme-signature .premium-library-other-link {
+    display: none !important;
   }
 
   body.theme-signature .premium-library-filter {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
     margin: 18px 0 24px !important;
+  }
+
+  body.theme-signature .premium-library-filter .library-categories {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  body.theme-signature .library-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  body.theme-signature .library-card-content {
+    padding: 12px;
+  }
+
+  body.theme-signature .library-card h2 {
+    font-size: 14px;
+  }
+
+  body.theme-signature .library-author,
+  body.theme-signature .library-description {
+    font-size: 11px;
   }
 }
