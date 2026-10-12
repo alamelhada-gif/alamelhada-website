@@ -364,7 +364,7 @@ collections:
             default: "Privacy Policy"
 
 
-          # =========================
+                    # =========================
           # SEO
           # =========================
 
@@ -378,11 +378,38 @@ collections:
             widget: "text"
             required: false
 
-          - label: "صورة الموقع عند المشاركة"
+          - label: "الكلمات المفتاحية"
+            name: "seo_keywords"
+            widget: "string"
+            required: false
+
+          - label: "صورة المشاركة"
             name: "seo_image"
             widget: "image"
             required: false
             choose_url: false
+
+          - label: "السماح بأرشفة الموقع"
+            name: "seo_index"
+            widget: "boolean"
+            default: true
+            required: false
+
+          - label: "الرابط الأساسي للموقع"
+            name: "seo_canonical"
+            widget: "string"
+            required: false
+            default: "https://alamelhada.com/"
+
+          - label: "عنوان المشاركة"
+            name: "seo_og_title"
+            widget: "string"
+            required: false
+
+          - label: "وصف المشاركة"
+            name: "seo_og_description"
+            widget: "text"
+            required: false
 
 
           # =========================
