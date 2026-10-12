@@ -4,30 +4,66 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <meta name="theme-color" content="{{ site.dark }}">
 
-  <title>{{ title or site.seo_title or site.name }}</title>
+  {# ========================= #}
+  {# إعدادات SEO               #}
+  {# ========================= #}
 
-  <meta
-    name="description"
-    content="{{ description or summary or site.seo_description or site.tagline_ar }}"
-  >
+  {% set seoTitle = title or site.seo_title or site.name %}
+  {% set seoDescription = description or summary or site.seo_description or site.tagline_ar %}
+  {% set seoOgTitle = title or site.seo_og_title or site.seo_title or site.name %}
+  {% set seoOgDescription = description or summary or site.seo_og_description or site.seo_description or site.tagline_ar %}
 
-  {% if site.seo_image %}
-    <meta property="og:image" content="{{ site.seo_image }}">
+  {% set seoCanonical = "https://alamelhada.com" + (page.url or "/") %}
+
+  {% if page.url == "/" and site.seo_canonical %}
+    {% set seoCanonical = site.seo_canonical %}
   {% endif %}
 
-  <meta
-    property="og:title"
-    content="{{ title or site.seo_title or site.name }}"
-  >
+  {% set seoImage = site.seo_image %}
 
-  <meta
-    property="og:description"
-    content="{{ description or summary or site.seo_description or site.tagline_ar }}"
-  >
+  {% if seoImage and seoImage.startsWith("/") %}
+    {% set seoImage = "https://alamelhada.com" + seoImage %}
+  {% endif %}
+
+  <meta name="theme-color" content="{{ site.dark | escape }}">
+
+  <title>{{ seoTitle | escape }}</title>
+
+  <meta name="description" content="{{ seoDescription | striptags | escape }}">
+
+  {% if site.seo_keywords %}
+    <meta name="keywords" content="{{ site.seo_keywords | escape }}">
+  {% endif %}
+
+  {% if site.seo_index == false %}
+    <meta name="robots" content="noindex, nofollow">
+  {% else %}
+    <meta name="robots" content="index, follow">
+  {% endif %}
+
+  <link rel="canonical" href="{{ seoCanonical | escape }}">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site.name | escape }}">
+  <meta property="og:title" content="{{ seoOgTitle | escape }}">
+  <meta property="og:description" content="{{ seoOgDescription | striptags | escape }}">
+  <meta property="og:url" content="{{ seoCanonical | escape }}">
+
+  {% if seoImage %}
+    <meta property="og:image" content="{{ seoImage | escape }}">
+  {% endif %}
+
+  <meta name="twitter:card" content="{% if seoImage %}summary_large_image{% else %}summary{% endif %}">
+  <meta name="twitter:title" content="{{ seoOgTitle | escape }}">
+  <meta name="twitter:description" content="{{ seoOgDescription | striptags | escape }}">
+
+  {% if seoImage %}
+    <meta name="twitter:image" content="{{ seoImage | escape }}">
+  {% endif %}
 
   <link rel="icon" href="/favicon.svg">
+
   <link rel="stylesheet" href="/assets/css/style.css">
 
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
