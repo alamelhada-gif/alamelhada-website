@@ -1079,7 +1079,8 @@ footer strong {
 
 @media (max-width: 400px) {
   .library-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
   }
 }
 /* =========================================================
@@ -1299,103 +1300,6 @@ footer strong {
 
   .mobile-menu-links a:hover {
     color: var(--primary);
-  }
-
-  .mobile-menu-open {
-    overflow: hidden;
-  }
-}
-/* إخفاء قائمة الجوال تماماً على الكمبيوتر */
-.mobile-menu-btn,
-.mobile-menu,
-.mobile-menu-overlay {
-  display: none !important;
-}
-
-@media (max-width: 760px) {
-
-  header nav {
-    display: none !important;
-  }
-
-  .mobile-menu-btn {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-
-    width: 42px;
-    height: 42px;
-    padding: 0;
-
-    border: 1px solid rgba(0, 0, 0, .12);
-    background: transparent;
-    color: var(--dark);
-
-    font-size: 27px;
-    cursor: pointer;
-  }
-
-  .mobile-menu {
-    display: block !important;
-    position: fixed;
-    top: 0;
-    right: 0;
-
-    width: 280px;
-    max-width: 82vw;
-    height: 100vh;
-    padding: 25px;
-
-    background: var(--light);
-    z-index: 1001;
-
-    transform: translateX(100%);
-    transition: transform .3s ease;
-
-    box-shadow: -10px 0 30px rgba(0, 0, 0, .08);
-  }
-
-  .mobile-menu-open .mobile-menu {
-    transform: translateX(0);
-  }
-
-  .mobile-menu-overlay {
-    position: fixed;
-    inset: 0;
-
-    background: rgba(0, 0, 0, .35);
-    z-index: 1000;
-  }
-
-  .mobile-menu-open .mobile-menu-overlay {
-    display: block !important;
-  }
-
-  .mobile-menu-close {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 40px;
-    height: 40px;
-    margin: 0 0 35px auto;
-
-    border: 0;
-    background: transparent;
-
-    font-size: 32px;
-    cursor: pointer;
-  }
-
-  .mobile-menu-links {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .mobile-menu-links a {
-    padding: 17px 4px;
-    border-bottom: 1px solid rgba(0, 0, 0, .08);
-    font-size: 15px;
   }
 
   .mobile-menu-open {
@@ -1637,22 +1541,6 @@ footer strong {
   }
 
 }
-/* تصغير القسم الأسود */
-.statement {
-  min-height: 0 !important;
-  height: auto !important;
-  padding: 35px 24px !important;
-}
-
-.statement h2 {
-  margin: 10px 0 0 !important;
-  line-height: 1.35 !important;
-}
-
-.statement p {
-  margin: 0 !important;
-}
-
 /* إصلاح بطاقات المقالات على الجوال */
 @media (max-width: 760px) {
 
@@ -1680,71 +1568,30 @@ footer strong {
     white-space: nowrap;
   }
 }
-/* توسيط نص اللوحة السوداء في سطر واحد */
+/* لوحة العبارة — تنسيق موحد */
 .statement {
-  min-height: 0 !important;
-  height: auto !important;
-  padding: 25px 15px !important;
-  text-align: center !important;
+  min-height: 0;
+  height: auto;
+  padding: 25px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-
 .statement h2 {
-  font-size: clamp(14px, 2.8vw, 36px) !important;
-  line-height: 1.5 !important;
-  margin: 8px 0 0 !important;
-  text-align: center !important;
-  white-space: nowrap !important;
+  width: 100%;
+  max-width: none;
+  margin: 8px 0 0;
+  font-size: clamp(20px, 2.4vw, 36px);
+  line-height: 1.5;
+  text-align: center;
 }
-
-.statement p {
-  font-size: 12px !important;
-  text-align: center !important;
-  margin: 0 !important;
-}
-
+.statement p { margin: 0; font-size: 12px; text-align: center; }
 @media (max-width: 760px) {
-  .statement {
-    padding: 20px 8px !important;
-  }
-
-  .statement h2 {
-    font-size: clamp(9px, 2.5vw, 18px) !important;
-  }
-
-  .statement p {
-    font-size: 10px !important;
-  }
-}
-
-/* توسيط اللوحة السوداء على الكمبيوتر فقط */
-@media (min-width: 761px) {
-
-  .statement {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    padding: 25px 20px !important;
-    min-height: 0 !important;
-    height: auto !important;
-  }
-
-  .statement h2 {
-    width: 100% !important;
-    max-width: none !important;
-    margin: 8px auto 0 !important;
-    text-align: center !important;
-    font-size: clamp(20px, 2.4vw, 36px) !important;
-    white-space: nowrap !important;
-  }
-
-  .statement p {
-    width: 100% !important;
-    margin: 0 auto !important;
-    text-align: center !important;
-  }
-
+  .statement { padding: 20px 8px; }
+  .statement h2 { font-size: clamp(9px, 2.5vw, 18px); white-space: nowrap; }
+  .statement p { font-size: 10px; }
 }
 
 /* =========================================
