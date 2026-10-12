@@ -1,1 +1,466 @@
 
+/* ==========================================
+   ALAMELHADA SIGNATURE
+   Premium Editorial Theme
+   ========================================== */
+
+.theme-signature {
+  --primary: #245749;
+  --accent: #b69a61;
+  --dark: #1b2925;
+  --light: #f7f5ef;
+
+  --signature-surface: #fffefa;
+  --signature-muted: #5e6b63;
+  --signature-border: rgba(27, 41, 37, .12);
+  --signature-shadow: 0 16px 45px rgba(28, 48, 39, .07);
+
+  background: var(--light);
+  color: var(--dark);
+  font-family: "Noto Kufi Arabic", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* القوائم والهيدر */
+
+.theme-signature header {
+  max-width: 1280px;
+  height: 88px;
+  padding-inline: clamp(18px, 3.5vw, 48px);
+  border-bottom: 1px solid var(--signature-border);
+}
+
+.theme-signature .brand {
+  color: var(--dark);
+  font-weight: 700;
+}
+
+.theme-signature header nav {
+  align-items: center;
+  gap: clamp(14px, 2vw, 30px);
+}
+
+.theme-signature header nav a {
+  position: relative;
+  padding-block: 10px;
+  font-weight: 600;
+  transition: color .2s ease;
+}
+
+.theme-signature header nav a:hover {
+  color: var(--primary);
+}
+
+.theme-signature header nav a::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  inset-inline-start: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width .2s ease;
+}
+
+.theme-signature header nav a:hover::after {
+  width: 100%;
+}
+
+/* الواجهة الرئيسية */
+
+.theme-signature .hero {
+  max-width: 1280px;
+  min-height: 570px;
+  padding: clamp(64px, 7vw, 105px)
+           clamp(18px, 3.5vw, 48px);
+  gap: clamp(25px, 5vw, 70px);
+  grid-template-columns:
+    minmax(0, 1.3fr) minmax(220px, .7fr);
+}
+
+.theme-signature .eyebrow,
+.theme-signature .section-head span,
+.theme-signature .pagehead span,
+.theme-signature .slider-heading span {
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+.theme-signature .hero h1 {
+  font-size: clamp(42px, 5.5vw, 76px);
+  line-height: 1.35;
+  letter-spacing: -.025em;
+  margin: 16px 0 22px;
+}
+
+.theme-signature .hero h1 em {
+  color: var(--primary);
+}
+
+.theme-signature .hero p,
+.theme-signature .pagehead p {
+  color: var(--signature-muted);
+  line-height: 2.05;
+}
+
+.theme-signature .actions {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.theme-signature .btn,
+.theme-signature .ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 22px;
+  border-radius: 12px;
+  font-weight: 700;
+  transition: transform .2s ease,
+              box-shadow .2s ease;
+}
+
+.theme-signature .btn {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(27, 66, 54, .15);
+}
+
+.theme-signature .ghost {
+  background: var(--signature-surface);
+  border: 1px solid var(--signature-border);
+}
+
+.theme-signature .btn:hover,
+.theme-signature .ghost:hover {
+  transform: translateY(-2px);
+}
+
+.theme-signature .mark {
+  width: min(100%, 250px);
+  height: auto;
+  aspect-ratio: 1;
+  margin-inline: auto;
+  border: 1px solid var(--accent);
+  border-radius: 28px;
+  color: var(--primary);
+  background: radial-gradient(
+    circle at 30% 20%,
+    #fff,
+    #f1efe6
+  );
+  box-shadow: var(--signature-shadow);
+  transform: rotate(-3deg);
+}
+
+/* عناوين الأقسام */
+
+.theme-signature .section,
+.theme-signature .home-slider-section {
+  max-width: 1280px;
+  padding-inline: clamp(18px, 3.5vw, 48px);
+}
+
+.theme-signature .section {
+  padding-block: 70px;
+}
+
+.theme-signature .section-head h2,
+.theme-signature .slider-heading h2 {
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.5;
+  color: var(--dark);
+}
+
+.theme-signature .section-head h2 {
+  margin-bottom: 28px;
+}
+
+/* بطاقات التطبيقات */
+
+.theme-signature .icon-slide-link,
+.theme-signature .card {
+  background: var(--signature-surface);
+  border: 1px solid var(--signature-border);
+  border-radius: 20px;
+  box-shadow: 0 5px 18px rgba(28, 48, 39, .035);
+}
+
+.theme-signature .icon-slide-link {
+  padding: 24px 12px;
+}
+
+.theme-signature a.icon-slide-link:hover,
+.theme-signature .card:hover {
+  background: #fff;
+  border-color: rgba(36, 87, 73, .25);
+  box-shadow: var(--signature-shadow);
+  transform: translateY(-3px);
+}
+
+.theme-signature .slider-app-icon,
+.theme-signature .appicon {
+  border-radius: 22px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .055);
+}
+
+.theme-signature .slider-app-icon img,
+.theme-signature .appicon img {
+  border-radius: inherit;
+}
+
+.theme-signature .slider-details,
+.theme-signature .home-library-read {
+  border-radius: 9px;
+  border: 1px solid rgba(36, 87, 73, .22);
+  color: var(--primary);
+  background: transparent;
+}
+
+.theme-signature .icon-slider-arrow {
+  border-radius: 12px;
+  border-color: var(--signature-border);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .05);
+}
+
+.theme-signature .card {
+  transition: transform .2s ease,
+              box-shadow .2s ease;
+}
+
+.theme-signature .card p {
+  color: var(--signature-muted);
+}
+
+/* اللوحة السوداء */
+
+.theme-signature .statement {
+  background: var(--dark);
+  color: #fff;
+  border-top: 1px solid rgba(182, 154, 97, .25);
+  border-bottom: 1px solid rgba(182, 154, 97, .25);
+  padding: 27px 18px !important;
+  text-align: center;
+}
+
+.theme-signature .statement p {
+  color: var(--accent);
+}
+
+.theme-signature .statement h2 {
+  color: #fff;
+}
+
+/* بطاقات المقالات */
+
+.theme-signature .article {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--signature-surface);
+  border: 1px solid var(--signature-border);
+  border-top: 3px solid var(--accent);
+  border-radius: 16px;
+  transition: transform .2s ease,
+              box-shadow .2s ease;
+}
+
+.theme-signature .article:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--signature-shadow);
+}
+
+.theme-signature .article h3 {
+  color: var(--dark);
+  line-height: 1.6;
+}
+
+.theme-signature .article p {
+  color: var(--signature-muted);
+}
+
+.theme-signature .article-read-more {
+  color: var(--primary);
+}
+
+/* الكتب والروايات */
+
+.theme-signature .library-card {
+  background: var(--signature-surface);
+  border-color: var(--signature-border);
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(28, 48, 39, .035);
+}
+
+.theme-signature .library-card:hover {
+  box-shadow: var(--signature-shadow);
+}
+
+.theme-signature .library-read-btn {
+  background: var(--primary);
+  border-radius: 10px;
+}
+
+.theme-signature .library-dropdown-button,
+.theme-signature .library-dropdown-menu {
+  background: var(--signature-surface);
+  border-color: var(--signature-border);
+}
+
+.theme-signature .library-category.active {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.theme-signature .home-library-read:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* الصفحات الداخلية */
+
+.theme-signature .pagehead {
+  min-height: 330px;
+  padding-block: 75px 45px;
+}
+
+.theme-signature .featured-page-content {
+  color: var(--signature-muted);
+}
+
+.theme-signature .featured-app-link a {
+  background: var(--primary);
+  border-color: var(--primary);
+  border-radius: 10px;
+}
+
+/* الفوتر */
+
+.theme-signature footer {
+  max-width: 1280px;
+  padding: 38px clamp(18px, 3.5vw, 48px);
+  border-top: 1px solid var(--signature-border);
+  color: var(--signature-muted);
+}
+
+.theme-signature footer a:hover {
+  color: var(--primary);
+}
+
+/* تحسين الوصول */
+
+.theme-signature a:focus-visible,
+.theme-signature button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ==========================================
+   الجوال
+   ========================================== */
+
+@media (max-width: 760px) {
+
+  .theme-signature header {
+    height: 72px;
+    padding-inline: 16px;
+  }
+
+  .theme-signature .mobile-menu-btn {
+    border-radius: 11px;
+    border-color: var(--signature-border);
+  }
+
+  .theme-signature .mobile-menu {
+    background: var(--light);
+  }
+
+  .theme-signature .mobile-menu-links a {
+    border-bottom-color: var(--signature-border);
+  }
+
+  .theme-signature .hero {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+    padding: 55px 18px 48px;
+    gap: 25px;
+  }
+
+  .theme-signature .hero h1 {
+    font-size: clamp(34px, 8.5vw, 48px);
+    line-height: 1.45;
+  }
+
+  .theme-signature .hero p {
+    font-size: 13px;
+  }
+
+  .theme-signature .mark {
+    width: 145px;
+    margin-top: 8px;
+    border-radius: 20px;
+  }
+
+  .theme-signature .section {
+    padding: 48px 14px;
+  }
+
+  .theme-signature .home-library-section {
+    padding-block: 20px;
+  }
+
+  .theme-signature .home-slider-section {
+    padding: 18px 12px 55px;
+  }
+
+  .theme-signature .slider-heading h2,
+  .theme-signature .section-head h2 {
+    font-size: 25px;
+  }
+
+  .theme-signature .icon-slide-link {
+    border-radius: 14px;
+    padding: 18px 8px;
+  }
+
+  .theme-signature .icon-slider-arrow {
+    border-radius: 9px;
+  }
+
+  .theme-signature .article {
+    border-radius: 11px;
+  }
+
+  .theme-signature #articles .articles {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .theme-signature .statement {
+    padding: 20px 8px !important;
+  }
+
+  .theme-signature .pagehead {
+    min-height: 0;
+    padding: 65px 18px 40px;
+  }
+
+  .theme-signature footer {
+    padding: 30px 18px;
+  }
+}
+
+/* تقليل الحركة عند طلب المستخدم */
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-signature *,
+  .theme-signature *::before,
+  .theme-signature *::after {
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
