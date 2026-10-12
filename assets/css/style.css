@@ -1715,3 +1715,34 @@ footer strong {
     font-size: 10px !important;
   }
 }
+
+/* توسيط اللوحة السوداء على الكمبيوتر فقط */
+@media (min-width: 761px) {
+
+  .statement {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 25px 20px !important;
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .statement h2 {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 8px auto 0 !important;
+    text-align: center !important;
+    font-size: clamp(20px, 2.4vw, 36px) !important;
+    white-space: nowrap !important;
+  }
+
+  .statement p {
+    width: 100% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+
+}
