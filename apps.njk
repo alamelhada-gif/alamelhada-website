@@ -1,7 +1,7 @@
 ---
 layout: base.njk
 title: التطبيقات
-description: اكتشف تطبيقات عالم الهدى
+description: اكتشف تطبيقات علم الهدى
 permalink: /apps/index.html
 ---
 
@@ -173,12 +173,19 @@ permalink: /apps/index.html
   }
 
   .apps-page-description {
-    margin: 0;
-    color: #647269;
-    font-size: 15px;
-    line-height: 1.9;
-    flex-grow: 1;
-  }
+  margin: 0;
+  color: #647269;
+  font-size: 15px;
+  line-height: 1.8;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
 
   .apps-page-link {
     display: inline-flex;
