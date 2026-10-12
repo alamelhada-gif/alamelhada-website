@@ -1,9 +1,9 @@
+
 <!doctype html>
 <html lang="{{ lang or 'ar' }}" dir="{% if lang == 'en' %}ltr{% else %}rtl{% endif %}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-
 
   {# ========================= #}
   {# إعدادات SEO               #}
@@ -64,22 +64,22 @@
 
   <link rel="icon" href="/favicon.svg">
 
+  <!-- CSS الأساسي -->
+  <link rel="stylesheet" href="/assets/css/style.css">
 
-<link rel="stylesheet" href="/assets/css/style.css">
+  <!-- اختيار الثيم -->
+  {% set activeTheme = appearance.active_theme or "classic" %}
 
-{% set activeTheme = appearance.active_theme or "classic" %}
-
-{% if activeTheme == "signature" %}
-  <link rel="stylesheet" href="/assets/css/themes/signature.css">
-{% elif activeTheme == "studio" %}
-  <link rel="stylesheet" href="/assets/css/themes/studio.css">
-{% elif activeTheme == "noir" %}
-  <link rel="stylesheet" href="/assets/css/themes/noir.css">
-{% endif %}
+  {% if activeTheme == "signature" %}
+    <link rel="stylesheet" href="/assets/css/themes/signature.css">
+  {% elif activeTheme == "studio" %}
+    <link rel="stylesheet" href="/assets/css/themes/studio.css">
+  {% elif activeTheme == "noir" %}
+    <link rel="stylesheet" href="/assets/css/themes/noir.css">
+  {% endif %}
 
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
-
 
 <body
   class="theme-{{ activeTheme }}"
@@ -88,8 +88,8 @@
 
 <header>
 
+  <!-- الشعار -->
   <a class="brand" href="/">
-
     {% if site.logo %}
       <img
         src="{{ site.logo }}"
@@ -99,20 +99,15 @@
     {% else %}
       {{ site.name }}
     {% endif %}
-
   </a>
 
-
-  <!-- =====================================================
-       قائمة الكمبيوتر
-       ===================================================== -->
+  <!-- ====================================== -->
+  <!-- قائمة الكمبيوتر                        -->
+  <!-- ====================================== -->
 
   <nav>
 
-    {# ========================= #}
-    {# الكتب                     #}
-    {# ========================= #}
-
+    <!-- الكتب -->
     <a href="/books/">
       {% if lang == 'en' %}
         Books
@@ -121,11 +116,7 @@
       {% endif %}
     </a>
 
-
-    {# ========================= #}
-    {# الروايات                  #}
-    {# ========================= #}
-
+    <!-- الروايات -->
     <a href="/novels/">
       {% if lang == 'en' %}
         Novels
@@ -134,13 +125,9 @@
       {% endif %}
     </a>
 
-
-    {# ========================= #}
-    {# التطبيقات                 #}
-    {# ========================= #}
-
+    <!-- التطبيقات: صفحة مستقلة -->
     {% if site.show_nav_apps %}
-      <a href="/#apps">
+      <a href="/apps/">
         {% if lang == 'en' %}
           {{ site.nav_apps_en }}
         {% else %}
@@ -149,11 +136,7 @@
       </a>
     {% endif %}
 
-
-    {# ========================= #}
-    {# المقالات                  #}
-    {# ========================= #}
-
+    <!-- المقالات -->
     {% if site.show_nav_articles %}
       <a href="/articles/">
         {% if lang == 'en' %}
@@ -164,11 +147,7 @@
       </a>
     {% endif %}
 
-
-    {# ========================= #}
-    {# من نحن                    #}
-    {# ========================= #}
-
+    <!-- من نحن -->
     {% if site.show_nav_about %}
       <a href="/about/">
         {% if lang == 'en' %}
@@ -179,11 +158,7 @@
       </a>
     {% endif %}
 
-
-    {# ========================= #}
-    {# التواصل                   #}
-    {# ========================= #}
-
+    <!-- التواصل -->
     {% if site.show_nav_contact %}
       <a href="/contact/">
         {% if lang == 'en' %}
@@ -196,10 +171,9 @@
 
   </nav>
 
-
-  <!-- =====================================================
-       زر القائمة - الجوال فقط
-       ===================================================== -->
+  <!-- ====================================== -->
+  <!-- زر القائمة للجوال                     -->
+  <!-- ====================================== -->
 
   <button
     class="mobile-menu-btn"
@@ -210,20 +184,15 @@
     ☰
   </button>
 
-
-  <!-- =====================================================
-       خلفية القائمة الجانبية
-       ===================================================== -->
-
+  <!-- خلفية القائمة -->
   <div
     class="mobile-menu-overlay"
     onclick="document.body.classList.remove('mobile-menu-open')"
   ></div>
 
-
-  <!-- =====================================================
-       القائمة الجانبية للجوال
-       ===================================================== -->
+  <!-- ====================================== -->
+  <!-- القائمة الجانبية للجوال                -->
+  <!-- ====================================== -->
 
   <aside class="mobile-menu">
 
@@ -236,11 +205,9 @@
       ×
     </button>
 
-
     <div class="mobile-menu-links">
 
       <!-- الكتب -->
-
       <a
         href="/books/"
         onclick="document.body.classList.remove('mobile-menu-open')"
@@ -252,9 +219,7 @@
         {% endif %}
       </a>
 
-
       <!-- الروايات -->
-
       <a
         href="/novels/"
         onclick="document.body.classList.remove('mobile-menu-open')"
@@ -266,12 +231,10 @@
         {% endif %}
       </a>
 
-
-      <!-- التطبيقات -->
-
+      <!-- التطبيقات: صفحة مستقلة -->
       {% if site.show_nav_apps %}
         <a
-          href="/#apps"
+          href="/apps/"
           onclick="document.body.classList.remove('mobile-menu-open')"
         >
           {% if lang == 'en' %}
@@ -282,9 +245,7 @@
         </a>
       {% endif %}
 
-
       <!-- المقالات -->
-
       {% if site.show_nav_articles %}
         <a
           href="/articles/"
@@ -298,9 +259,7 @@
         </a>
       {% endif %}
 
-
       <!-- من نحن -->
-
       {% if site.show_nav_about %}
         <a
           href="/about/"
@@ -314,9 +273,7 @@
         </a>
       {% endif %}
 
-
       <!-- التواصل -->
-
       {% if site.show_nav_contact %}
         <a
           href="/contact/"
@@ -336,11 +293,17 @@
 
 </header>
 
+<!-- ====================================== -->
+<!-- محتوى الصفحات                          -->
+<!-- ====================================== -->
 
 <main>
   {{ content | safe }}
 </main>
 
+<!-- ====================================== -->
+<!-- الفوتر                                 -->
+<!-- ====================================== -->
 
 <footer>
 
