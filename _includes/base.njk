@@ -64,7 +64,18 @@
 
   <link rel="icon" href="/favicon.svg">
 
-  <link rel="stylesheet" href="/assets/css/style.css">
+
+<link rel="stylesheet" href="/assets/css/style.css">
+
+{% set activeTheme = appearance.active_theme or "classic" %}
+
+{% if activeTheme == "signature" %}
+  <link rel="stylesheet" href="/assets/css/themes/signature.css">
+{% elif activeTheme == "studio" %}
+  <link rel="stylesheet" href="/assets/css/themes/studio.css">
+{% elif activeTheme == "noir" %}
+  <link rel="stylesheet" href="/assets/css/themes/noir.css">
+{% endif %}
 
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
