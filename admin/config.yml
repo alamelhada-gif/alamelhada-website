@@ -410,7 +410,11 @@ collections:
       # التطبيقات
       # =========================
 
-      - label: "التطبيقات"
+            # =========================
+      # إدارة التطبيقات
+      # =========================
+
+      - label: "إدارة التطبيقات"
         name: "apps"
         file: "_data/apps.json"
         format: "json"
@@ -421,6 +425,7 @@ collections:
             name: "items"
             widget: "list"
             summary: "{{fields.name}}"
+            collapsed: true
 
             fields:
 
@@ -428,16 +433,31 @@ collections:
                 name: "name"
                 widget: "string"
 
-              - label: "الوصف"
+              - label: "وصف التطبيق"
                 name: "description"
                 widget: "text"
 
-              - label: "صورة اللوغو"
+              - label: "أيقونة التطبيق"
                 name: "icon"
                 widget: "image"
                 choose_url: false
                 required: false
 
-              - label: "رابط Google Play"
+              - label: "رابط التطبيق"
                 name: "url"
                 widget: "string"
+                required: false
+
+              - label: "إظهار التطبيق"
+                name: "visible"
+                widget: "boolean"
+                default: true
+                required: false
+
+              - label: "ترتيب الظهور"
+                name: "order"
+                widget: "number"
+                value_type: "int"
+                min: 1
+                default: 1
+                required: false
