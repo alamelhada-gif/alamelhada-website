@@ -496,9 +496,10 @@ title: Alamelhada Apps
             {{ post.data.title }}
           </h3>
 
-          <p>
-            {{ post.data.summary }}
-          </p>
+         <p class="article-excerpt">
+  {{ (post.data.summary or post.templateContent or "") | striptags | truncate(110, true, "...") }}
+  <span class="article-read-more">عرض المزيد ←</span>
+</p>
 
         </a>
 
