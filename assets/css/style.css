@@ -1785,3 +1785,153 @@ body:not(.theme-signature) .signature-hero-content {
     font-size: 8px;
   }
 }
+
+/* ==========================================
+   ALAMELHADA - PROFESSIONAL SEARCH
+   ========================================== */
+
+/* منطقة البحث تحت الهيدر */
+.site-search-section {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 1100px;
+  margin: 28px auto 38px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  z-index: 20;
+}
+
+/* حاوية البحث */
+.site-search-box {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+/* مربع البحث */
+.site-search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 66px;
+  padding: 0;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 8px 25px rgba(15,23,42,.06);
+  overflow: hidden;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.site-search-input-wrap:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 8px 28px rgba(37,99,235,.12);
+}
+
+/* أيقونة البحث */
+.site-search-icon {
+  position: absolute;
+  inset-inline-start: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* حقل البحث */
+.site-search-input-wrap input,
+.site-search-input-wrap input[type="search"] {
+  display: block;
+  width: 100%;
+  height: 66px;
+  min-height: 66px;
+  padding: 0 62px 0 20px;
+  padding-inline-start: 62px;
+  padding-inline-end: 20px;
+  margin: 0;
+  box-sizing: border-box;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #111827;
+  font-family: inherit;
+  font-size: 17px;
+  text-align: start;
+  box-shadow: none;
+}
+
+.site-search-input-wrap input::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+/* إخفاء عنوان البحث القديم */
+.site-search-label {
+  display: none;
+}
+
+/* نتائج البحث */
+.site-search-results:not([hidden]) {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-height: 420px;
+  overflow-y: auto;
+  padding: 12px;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(15,23,42,.12);
+  z-index: 30;
+}
+
+.site-search-results[hidden] {
+  display: none !important;
+}
+
+/* الجوال */
+@media (max-width: 600px) {
+
+  .site-search-section {
+    margin: 18px auto 26px;
+    padding: 0 14px;
+  }
+
+  .site-search-input-wrap {
+    min-height: 56px;
+    border-radius: 12px;
+  }
+
+  .site-search-input-wrap input,
+  .site-search-input-wrap input[type="search"] {
+    height: 56px;
+    min-height: 56px;
+    font-size: 14px;
+    padding-inline-start: 52px;
+    padding-inline-end: 12px;
+  }
+
+  .site-search-icon {
+    inset-inline-start: 17px;
+  }
+
+  .site-search-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+}
