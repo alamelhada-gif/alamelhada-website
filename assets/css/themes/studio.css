@@ -711,3 +711,37 @@ body.theme-studio .articles-page-card:first-child .articles-page-image img {
   }
 }
 
+/* =====================================
+   STUDIO - إزالة القائمة العائمة
+   ===================================== */
+
+/* إخفاء قائمة الكمبيوتر */
+body.theme-studio .site-header .site-nav {
+  display: none !important;
+}
+
+/* إخفاء القائمة الجانبية وزر فتحها */
+body.theme-studio .mobile-menu,
+body.theme-studio .mobile-menu-btn,
+body.theme-studio .mobile-menu-overlay {
+  display: none !important;
+}
+
+/* إزالة الهيدر العائم */
+body.theme-studio .site-header {
+  position: relative !important;
+  top: auto !important;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: center;
+  padding: 15px 20px;
+  box-shadow: none !important;
+  backdrop-filter: none;
+}
+
+/* توسيط الشعار */
+body.theme-studio .site-header .brand {
+  margin: 0 auto;
+}
+
