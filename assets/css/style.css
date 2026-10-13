@@ -1935,3 +1935,76 @@ body:not(.theme-signature) .signature-hero-content {
   }
 
 }
+
+/* ======================================
+   نتائج البحث - الأسماء فقط
+   ====================================== */
+
+/* إخفاء الصور والأيقونات */
+.site-search-results img,
+.site-search-results .site-search-local-icon,
+.site-search-results .site-search-result-icon {
+  display: none !important;
+}
+
+/* إخفاء الوصف ونوع المحتوى */
+.site-search-results small,
+.site-search-results p,
+.site-search-results .site-search-result span {
+  display: none !important;
+}
+
+/* عرض النتائج كقائمة أسماء */
+.site-search-results .site-search-result {
+  display: flex !important;
+  align-items: center !important;
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 16px !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+  border: 0 !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  border-radius: 0 !important;
+  background: #ffffff !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+/* تنسيق اسم النتيجة */
+.site-search-results .site-search-result strong {
+  display: block;
+  color: #111827;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+/* تأثير المرور */
+.site-search-results .site-search-result:hover {
+  background: #eff6ff !important;
+}
+
+/* منع عرض الصور الكبيرة داخل النتائج */
+.site-search-results .site-search-result > div:not(:last-child) {
+  display: none !important;
+}
+
+/* صندوق النتائج */
+.site-search-results:not([hidden]) {
+  max-height: 320px !important;
+  overflow-y: auto !important;
+  padding: 5px !important;
+}
+
+/* الجوال */
+@media (max-width: 600px) {
+  .site-search-results .site-search-result {
+    min-height: 42px;
+    padding: 10px 12px !important;
+  }
+
+  .site-search-results .site-search-result strong {
+    font-size: 13px;
+  }
+}
