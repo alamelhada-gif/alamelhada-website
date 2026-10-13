@@ -206,6 +206,13 @@ collections:
             required: false
             choose_url: false
 
+          - label: "صورة الواجهة الرئيسية - جميع الثيمات"
+            name: "hero_image"
+            widget: "image"
+            required: false
+            choose_url: false
+            hint: "تظهر بدل حرف A في الصفحة الرئيسية لجميع الثيمات. اتركها فارغة لإظهار الحرف الافتراضي."
+
 
           # =========================
           # القسم الرئيسي
