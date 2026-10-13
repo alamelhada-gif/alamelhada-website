@@ -535,70 +535,26 @@ function matchesSearch(item, query) {
 }
 
 
+
 function createSearchResult(item, type) {
 
-  const cover = getCover(item);
+  const title = item.title || "بدون عنوان";
 
-  const label =
-    type === "novel"
-      ? "رواية"
-      : "كتاب";
+  const url = item.pdfUrl
+    ? `/reader/?url=${encodeURIComponent(item.pdfUrl)}&title=${encodeURIComponent(title)}`
+    : "#";
 
   return `
     <a
       class="site-search-result"
-      href="${item.pdfUrl
-  ? `/reader/?url=${encodeURIComponent(item.pdfUrl)}&title=${encodeURIComponent(item.title || "")}`
-  : "#"}"
-      ${
-        item.pdfUrl
-          ? `target="_blank" rel="noopener noreferrer"`
-          : ""
-      }
+      href="${url}"
+      ${item.pdfUrl ? 'target="_blank" rel="noopener noreferrer"' : ""}
     >
-
-      ${
-        cover
-          ? `
-            <img
-              src="${escapeHtml(cover)}"
-              alt=""
-              loading="lazy"
-            >
-          `
-          : ""
-      }
-
-      <div>
-
-        <span>
-          ${label}
-          ${
-            item.category
-              ? ` • ${escapeHtml(item.category)}`
-              : ""
-          }
-        </span>
-
-        <strong>
-          ${escapeHtml(item.title || "بدون عنوان")}
-        </strong>
-
-        ${
-          item.author
-            ? `
-              <small>
-                ${escapeHtml(item.author)}
-              </small>
-            `
-            : ""
-        }
-
-      </div>
-
+      <strong>${escapeHtml(title)}</strong>
     </a>
   `;
 }
+
 
 
 function searchFirebaseContent(query) {
