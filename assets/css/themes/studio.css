@@ -1050,3 +1050,62 @@ body.theme-studio .mobile-menu-links a {
     padding: 6px 8px !important;
   }
 }
+
+/* ==========================================
+   STUDIO - Center Logo & Left Menu
+   ========================================== */
+
+body.theme-studio .site-header {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 76px;
+  padding: 12px 20px !important;
+  box-sizing: border-box;
+}
+
+/* الاسم في منتصف الشاشة تمامًا */
+body.theme-studio .site-header .brand {
+  position: absolute !important;
+  left: 50% !important;
+  right: auto !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  max-width: calc(100% - 130px);
+  text-align: center !important;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+/* زر الثلاثة خطوط في الجهة اليسرى */
+body.theme-studio .site-header .mobile-menu-btn {
+  position: absolute !important;
+  left: 16px !important;
+  right: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin: 0 !important;
+  width: 44px !important;
+  height: 44px !important;
+  z-index: 2;
+}
+
+/* ضبط الهيدر للجوال */
+@media (max-width: 600px) {
+  body.theme-studio .site-header {
+    min-height: 72px;
+    padding: 10px 14px !important;
+  }
+
+  body.theme-studio .site-header .brand {
+    font-size: 22px;
+  }
+
+  body.theme-studio .site-header .mobile-menu-btn {
+    left: 14px !important;
+    width: 42px !important;
+    height: 42px !important;
+  }
+}
