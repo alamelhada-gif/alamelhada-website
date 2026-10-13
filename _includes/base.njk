@@ -86,7 +86,11 @@
   style="{% if activeTheme == 'classic' %}--primary:{{ site.primary }};--accent:{{ site.accent }};--dark:{{ site.dark }};--light:{{ site.light }};{% elif appearance.custom_colors and (activeTheme == 'signature' or activeTheme == 'studio' or activeTheme == 'noir') %}--primary:{{ appearance.primary_color }};--accent:{{ appearance.accent_color }};{% endif %}"
 >
 
-<header>
+<!-- ====================================== -->
+<!-- الهيدر                                 -->
+<!-- ====================================== -->
+
+<header class="site-header">
 
   <!-- الشعار -->
   <a class="brand" href="/">
@@ -105,7 +109,7 @@
   <!-- قائمة الكمبيوتر                        -->
   <!-- ====================================== -->
 
-  <nav>
+  <nav class="site-nav" aria-label="{% if lang == 'en' %}Main navigation{% else %}القائمة الرئيسية{% endif %}">
 
     <!-- الكتب -->
     <a href="/books/">
@@ -125,7 +129,7 @@
       {% endif %}
     </a>
 
-    <!-- التطبيقات: صفحة مستقلة -->
+    <!-- التطبيقات -->
     {% if site.show_nav_apps %}
       <a href="/apps/">
         {% if lang == 'en' %}
@@ -179,7 +183,9 @@
     class="mobile-menu-btn"
     type="button"
     aria-label="{% if lang == 'en' %}Open menu{% else %}فتح القائمة{% endif %}"
-    onclick="document.body.classList.add('mobile-menu-open')"
+    aria-controls="site-mobile-menu"
+    aria-expanded="false"
+    onclick="document.body.classList.add('mobile-menu-open');this.setAttribute('aria-expanded','true')"
   >
     ☰
   </button>
@@ -187,20 +193,20 @@
   <!-- خلفية القائمة -->
   <div
     class="mobile-menu-overlay"
-    onclick="document.body.classList.remove('mobile-menu-open')"
+    onclick="document.body.classList.remove('mobile-menu-open');document.querySelector('.mobile-menu-btn').setAttribute('aria-expanded','false')"
   ></div>
 
   <!-- ====================================== -->
   <!-- القائمة الجانبية للجوال                -->
   <!-- ====================================== -->
 
-  <aside class="mobile-menu">
+  <aside class="mobile-menu" id="site-mobile-menu" aria-label="{% if lang == 'en' %}Mobile navigation{% else %}قائمة الجوال{% endif %}">
 
     <button
       class="mobile-menu-close"
       type="button"
       aria-label="{% if lang == 'en' %}Close menu{% else %}إغلاق القائمة{% endif %}"
-      onclick="document.body.classList.remove('mobile-menu-open')"
+      onclick="document.body.classList.remove('mobile-menu-open');document.querySelector('.mobile-menu-btn').setAttribute('aria-expanded','false')"
     >
       ×
     </button>
@@ -231,7 +237,7 @@
         {% endif %}
       </a>
 
-      <!-- التطبيقات: صفحة مستقلة -->
+      <!-- التطبيقات -->
       {% if site.show_nav_apps %}
         <a
           href="/apps/"
@@ -297,7 +303,7 @@
 <!-- محتوى الصفحات                          -->
 <!-- ====================================== -->
 
-<main>
+<main class="site-main">
   {{ content | safe }}
 </main>
 
@@ -305,7 +311,7 @@
 <!-- الفوتر                                 -->
 <!-- ====================================== -->
 
-<footer>
+<footer class="site-footer">
 
   <strong>
     {{ site.footer_name or site.name }}
