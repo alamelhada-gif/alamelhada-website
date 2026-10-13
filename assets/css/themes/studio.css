@@ -1109,3 +1109,52 @@ body.theme-studio .site-header .mobile-menu-btn {
     height: 42px !important;
   }
 }
+
+/* =========================================
+   Studio - موضع الشعار على الجوال
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  body.theme-studio .hero {
+    position: relative !important;
+    display: block !important;
+    padding-bottom: 25px !important;
+  }
+
+  body.theme-studio .signature-hero-content {
+    position: relative !important;
+    z-index: 2;
+  }
+
+  body.theme-studio .hero .mark {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 25px !important;
+    left: 16px !important;
+    right: auto !important;
+    width: 85px !important;
+    height: 85px !important;
+    max-width: 85px !important;
+    max-height: 85px !important;
+    margin: 0 !important;
+    transform: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+    z-index: 3;
+  }
+
+  body.theme-studio .hero .mark img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+  }
+
+  body.theme-studio .signature-hero-art {
+    display: none !important;
+  }
+
+}
