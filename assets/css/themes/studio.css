@@ -975,3 +975,78 @@ body.theme-studio.mobile-menu-open .mobile-menu-overlay {
   opacity: 1 !important;
   pointer-events: auto !important;
 }
+
+/* ==========================================
+   STUDIO - Compact Side Menu
+   ========================================== */
+
+/* تصغير القائمة الجانبية */
+body.theme-studio .mobile-menu {
+  width: 220px !important;
+  max-width: 80vw !important;
+
+  height: auto !important;
+  max-height: 75vh !important;
+
+  top: 12px !important;
+  left: 12px !important;
+  right: auto !important;
+  bottom: auto !important;
+
+  padding: 48px 12px 14px !important;
+  border-radius: 14px !important;
+
+  overflow-y: auto !important;
+  background: #ffffff !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.15) !important;
+}
+
+/* تصغير زر الإغلاق */
+body.theme-studio .mobile-menu-close {
+  position: absolute !important;
+  top: 10px !important;
+  right: 10px !important;
+  left: auto !important;
+
+  width: 26px !important;
+  height: 26px !important;
+  padding: 0 !important;
+
+  font-size: 18px !important;
+  border-radius: 6px !important;
+}
+
+/* تصغير المسافات بين الروابط */
+body.theme-studio .mobile-menu-links {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+}
+
+/* تصغير أزرار القائمة */
+body.theme-studio .mobile-menu-links a {
+  min-height: 32px !important;
+  padding: 7px 10px !important;
+
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+
+  border-radius: 7px !important;
+}
+
+/* تصغير إضافي للجوال */
+@media (max-width: 600px) {
+  body.theme-studio .mobile-menu {
+    width: 195px !important;
+    max-height: 70vh !important;
+    top: 8px !important;
+    left: 8px !important;
+    padding: 42px 10px 12px !important;
+  }
+
+  body.theme-studio .mobile-menu-links a {
+    min-height: 30px !important;
+    font-size: 11px !important;
+    padding: 6px 8px !important;
+  }
+}
