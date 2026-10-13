@@ -70,14 +70,38 @@ title: Alamelhada Apps
   <div class="signature-hero-art" aria-hidden="true">
     <div class="signature-art-ring"></div>
     <div class="signature-art-card">
-      <span class="signature-art-symbol">A</span>
+
+<span class="signature-art-symbol">
+  {% if site.hero_image %}
+    <img
+      class="site-hero-custom-image"
+      src="{{ site.hero_image | escape }}"
+      alt="{{ site.name | escape }}"
+      loading="eager"
+    >
+  {% else %}
+    A
+  {% endif %}
+</span>
       <span class="signature-art-line"></span>
       <span class="signature-art-name">ALAMELHADA</span>
     </div>
     <div class="signature-art-dot"></div>
   </div>
 
-  <div class="mark" aria-hidden="true">A</div>
+
+<div class="mark" aria-hidden="true">
+  {% if site.hero_image %}
+    <img
+      class="site-hero-custom-image"
+      src="{{ site.hero_image | escape }}"
+      alt=""
+      loading="eager"
+    >
+  {% else %}
+    A
+  {% endif %}
+</div>
 
 </section>
 
