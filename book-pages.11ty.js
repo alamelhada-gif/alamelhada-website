@@ -30,12 +30,12 @@ function arabicSlug(value = "") {
     .toLowerCase();
 }
 
+
 function bookPath(book) {
   const slug = arabicSlug(book.title || "كتاب");
-  const id = encodeURIComponent(book.id);
-
-  return `/books/${encodeURIComponent(slug)}-${id}/`;
+  return `/books/${encodeURIComponent(slug)}/`;
 }
+
 
 class BookPages {
   data() {
