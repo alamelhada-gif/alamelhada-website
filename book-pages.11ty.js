@@ -21,6 +21,22 @@ function safeUrl(value) {
   }
 }
 
+function arabicSlug(value = "") {
+  return String(value)
+    .normalize("NFKC")
+    .trim()
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+}
+
+function bookPath(book) {
+  const slug = arabicSlug(book.title || "كتاب");
+  const id = encodeURIComponent(book.id);
+
+  return `/books/${encodeURIComponent(slug)}-${id}/`;
+}
+
 class BookPages {
   data() {
     return {
@@ -29,8 +45,10 @@ class BookPages {
         size: 1,
         alias: "book"
       },
+
       permalink: data =>
-        `/books/${encodeURIComponent(data.book.id)}/index.html`,
+        `${bookPath(data.book)}index.html`,
+
       eleventyComputed: {
         title: data => data.book.title
       }
@@ -45,8 +63,7 @@ class BookPages {
     const cover = safeUrl(book.cover);
     const pdf = safeUrl(book.pdfUrl);
 
-    const pageUrl =
-      `${SITE}/books/${encodeURIComponent(book.id)}/`;
+    const pageUrl = `${SITE}${bookPath(book)}`;
 
     const readerUrl = pdf
       ? `/reader/?url=${encodeURIComponent(pdf)}&title=${encodeURIComponent(title)}`
@@ -55,18 +72,20 @@ class BookPages {
     const schema = {
       "@context": "https://schema.org",
       "@type": "Book",
-      "name": title,
-      "url": pageUrl,
-      "inLanguage": "ar"
+      name: title,
+      url: pageUrl,
+      inLanguage: "ar"
     };
 
     if (description) schema.description = description;
+
     if (author) {
       schema.author = {
         "@type": "Person",
-        "name": author
+        name: author
       };
     }
+
     if (cover) schema.image = cover;
 
     const jsonLd = JSON.stringify(schema)
