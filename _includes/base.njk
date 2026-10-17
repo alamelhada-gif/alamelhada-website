@@ -62,6 +62,22 @@
     <meta name="twitter:image" content="{{ seoImage | escape }}">
   {% endif %}
 
+  {# بيانات منظمة لتعريف الموقع #}
+  {% set schemaData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://alamelhada.com/#website",
+    "url": "https://alamelhada.com/",
+    "name": site.name or "Alam Elhada",
+    "description": seoDescription | striptags,
+    "inLanguage": lang or "ar"
+  } %}
+
+  <script type="application/ld+json">
+    {{ schemaData | dump | safe }}
+  </script>
+
+
   <link rel="icon" href="/favicon.svg">
 
   <!-- CSS الأساسي -->
