@@ -31,10 +31,12 @@ function arabicSlug(value = "") {
 }
 
 
+
 function bookPath(book) {
   const slug = arabicSlug(book.title || "كتاب");
-  return `/books/${encodeURIComponent(slug)}/`;
+  return `/books/${slug}/`;
 }
+
 
 
 class BookPages {
