@@ -5,8 +5,58 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{{ title }} | {{ site.name }}</title>
-  <meta name="description" content="{{ summary or site.tagline_ar }}">
+ 
+  {# إعدادات SEO #}
+  {% set seoTitle = title or site.name %}
+  {% set seoDescription = summary or site.tagline_ar or "" %}
+  {% set seoUrl = "https://alamelhada.com" + (page.url or "/") %}
+  {% set seoImage = image or "" %}
+
+  {% if seoImage and seoImage.startsWith("/") %}
+    {% set seoImage = "https://alamelhada.com" + seoImage %}
+  {% endif %}
+
+  <title>{{ seoTitle | escape }} | {{ site.name | escape }}</title>
+  <meta name="description" content="{{ seoDescription | striptags | escape }}">
+  <link rel="canonical" href="{{ seoUrl | escape }}">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="{{ seoTitle | escape }}">
+  <meta property="og:description" content="{{ seoDescription | striptags | escape }}">
+  <meta property="og:url" content="{{ seoUrl | escape }}">
+
+  {% if seoImage %}
+    <meta property="og:image" content="{{ seoImage | escape }}">
+  {% endif %}
+
+  {# تصنيف صفحات السياسات وصفحات المقالات #}
+  {% set isPolicyPage = "privacy" in (page.fileSlug or "") or "delete-account" in (page.fileSlug or "") %}
+
+  {% if isPolicyPage %}
+    {% set schemaType = "WebPage" %}
+  {% else %}
+    {% set schemaType = "BlogPosting" %}
+  {% endif %}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "{{ schemaType }}",
+    "@id": "{{ seoUrl | escape }}#webpage",
+    "url": "{{ seoUrl | escape }}",
+    "name": {{ seoTitle | dump | safe }},
+    "description": {{ (seoDescription | striptags) | dump | safe }},
+    "inLanguage": {{ (lang or "ar") | dump | safe }}
+    {% if not isPolicyPage and date %},
+    "datePublished": "{{ date.toISOString().slice(0, 10) }}"
+    {% endif %}
+    {% if seoImage %},
+    "image": {{ seoImage | dump | safe }}
+    {% endif %}
+  }
+  </script>
+
 
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/assets/css/style.css">
