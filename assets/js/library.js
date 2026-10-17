@@ -1,10 +1,11 @@
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
 import {
   getFirestore,
   collection,
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
 
 /* =========================================================
    Firebase
@@ -23,13 +24,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-
 /* =========================================================
    أدوات مساعدة
    ========================================================= */
 
 function escapeHtml(value = "") {
-  return String(value)
+  return String(value ?? "")
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
@@ -37,11 +37,9 @@ function escapeHtml(value = "") {
     .replaceAll("'", "&#039;");
 }
 
-
 function getCover(item) {
   return item.coverUrl || item.cover || "";
 }
-
 
 function getDateValue(item) {
   return (
@@ -52,13 +50,11 @@ function getDateValue(item) {
   );
 }
 
-
 function sortNewest(items) {
   return [...items].sort(
     (a, b) => getDateValue(b) - getDateValue(a)
   );
 }
-
 
 async function getPublishedCollection(collectionName) {
   const snapshot = await getDocs(
@@ -67,14 +63,52 @@ async function getPublishedCollection(collectionName) {
 
   const items = snapshot.docs
     .map(doc => ({
-      id: doc.id,
-      ...doc.data()
+      ...doc.data(),
+      id: doc.id
     }))
     .filter(item => item.status === "published");
 
   return sortNewest(items);
 }
 
+/* =========================================================
+   روابط الكتب والروايات
+
+   الكتب: صفحات HTML مستقلة
+   الروايات: القارئ القديم مؤقتًا
+   ========================================================= */
+
+function getReaderUrl(item) {
+  if (!item.pdfUrl) return "#";
+
+  return (
+    `/reader/?url=${encodeURIComponent(item.pdfUrl)}` +
+    `&title=${encodeURIComponent(item.title || "")}`
+  );
+}
+
+function getContentUrl(item, type) {
+  if (!item) return "#";
+
+  if (type === "books" || type === "book") {
+    if (!item.id) return getReaderUrl(item);
+
+    return `/books/${encodeURIComponent(item.id)}/`;
+  }
+
+  if (type === "novels" || type === "novel") {
+    return getReaderUrl(item);
+  }
+
+  return getReaderUrl(item);
+}
+
+function isExternalReaderLink(item, type) {
+  return (
+    (type === "novels" || type === "novel") &&
+    Boolean(item.pdfUrl)
+  );
+}
 
 /* =========================================================
    صفحات /books/ و /novels/
@@ -98,6 +132,9 @@ const libraryType =
 let allLibraryItems = [];
 let activeCategory = "all";
 
+/* =========================================================
+   التصنيفات
+   ========================================================= */
 
 function renderCategories() {
   if (!categoryContainer) return;
@@ -169,23 +206,17 @@ function renderCategories() {
   if (!dropdown || !dropdownButton || !dropdownLabel) return;
 
   dropdownButton.addEventListener("click", () => {
-
-    const isOpen =
-      dropdown.classList.toggle("open");
+    const isOpen = dropdown.classList.toggle("open");
 
     dropdownButton.setAttribute(
       "aria-expanded",
       isOpen ? "true" : "false"
     );
-
   });
 
   dropdownItems.forEach(item => {
-
     item.addEventListener("click", () => {
-
-      activeCategory =
-        item.dataset.category;
+      activeCategory = item.dataset.category;
 
       dropdownItems.forEach(button => {
         button.classList.remove("active");
@@ -206,28 +237,24 @@ function renderCategories() {
       );
 
       renderLibraryItems();
-
     });
-
   });
 
   document.addEventListener("click", event => {
-
     if (!dropdown.contains(event.target)) {
-
       dropdown.classList.remove("open");
 
       dropdownButton.setAttribute(
         "aria-expanded",
         "false"
       );
-
     }
-
   });
 }
 
-
+/* =========================================================
+   عرض بطاقات الكتب والروايات
+   ========================================================= */
 
 function renderLibraryItems() {
   if (!libraryContainer) return;
@@ -240,7 +267,6 @@ function renderLibraryItems() {
         );
 
   if (!items.length) {
-
     libraryContainer.innerHTML = "";
 
     if (libraryEmpty) {
@@ -256,8 +282,13 @@ function renderLibraryItems() {
 
   libraryContainer.innerHTML =
     items.map(item => {
-
       const cover = getCover(item);
+
+      const contentUrl =
+        getContentUrl(item, libraryType);
+
+      const openNewTab =
+        isExternalReaderLink(item, libraryType);
 
       return `
         <article class="library-card">
@@ -317,9 +348,8 @@ function renderLibraryItems() {
                 ? `
                   <a
                     class="library-read-btn"
-                    href="/reader/?url=${encodeURIComponent(item.pdfUrl)}&title=${encodeURIComponent(item.title || "")}"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="${escapeHtml(contentUrl)}"
+                    ${openNewTab ? 'target="_blank" rel="noopener noreferrer"' : ""}
                   >
                     ${
                       libraryType === "novels"
@@ -335,19 +365,19 @@ function renderLibraryItems() {
 
         </article>
       `;
-
     }).join("");
 }
 
+/* =========================================================
+   تحميل صفحة المكتبة
+   ========================================================= */
 
 async function loadLibraryPage() {
-
   if (!libraryContainer || !libraryType) {
     return;
   }
 
   try {
-
     if (libraryLoading) {
       libraryLoading.hidden = false;
     }
@@ -359,7 +389,6 @@ async function loadLibraryPage() {
     renderLibraryItems();
 
   } catch (error) {
-
     console.error(
       "Firebase library error:",
       error
@@ -373,27 +402,29 @@ async function loadLibraryPage() {
     `;
 
   } finally {
-
     if (libraryLoading) {
       libraryLoading.hidden = true;
     }
-
   }
 }
-
 
 /* =========================================================
    سلايدر الصفحة الرئيسية
    ========================================================= */
 
 function createHomeCard(item, type) {
-
   const cover = getCover(item);
 
   const label =
     type === "novel"
       ? "رواية"
       : "كتاب";
+
+  const contentUrl =
+    getContentUrl(item, type);
+
+  const openNewTab =
+    isExternalReaderLink(item, type);
 
   return `
     <article class="home-library-card">
@@ -421,9 +452,8 @@ function createHomeCard(item, type) {
           ? `
             <a
               class="home-library-read"
-              href="/reader/?url=${encodeURIComponent(item.pdfUrl)}&title=${encodeURIComponent(item.title || "")}"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="${escapeHtml(contentUrl)}"
+              ${openNewTab ? 'target="_blank" rel="noopener noreferrer"' : ""}
             >
               اقرأ ←
             </a>
@@ -436,11 +466,9 @@ function createHomeCard(item, type) {
 }
 
 function renderHomeSlider(container, items, type) {
-
   if (!container) return;
 
   if (!items.length) {
-
     container.innerHTML = `
       <p class="home-library-empty">
         لا يوجد محتوى منشور حاليًا.
@@ -457,16 +485,14 @@ function renderHomeSlider(container, items, type) {
 }
 
 /* =========================================================
-   الحركة التلقائية لسلايدر الكتب والروايات
+   الحركة التلقائية للسلايدر
    كل 4 ثوانٍ
    ========================================================= */
 
 function startHomeLibraryAutoSlider(container) {
-
   if (!container) return;
 
   setInterval(() => {
-
     const card =
       container.querySelector(".home-library-card");
 
@@ -481,21 +507,16 @@ function startHomeLibraryAutoSlider(container) {
     if (maxScroll <= 0) return;
 
     if (container.scrollLeft <= -maxScroll + 5) {
-
       container.scrollTo({
         left: 0,
         behavior: "smooth"
       });
-
     } else {
-
       container.scrollBy({
         left: -cardWidth,
         behavior: "smooth"
       });
-
     }
-
   }, 4000);
 }
 
@@ -512,16 +533,13 @@ const siteSearchResults =
 let searchBooks = [];
 let searchNovels = [];
 
-
 function normalizeText(value = "") {
   return String(value)
     .toLowerCase()
     .trim();
 }
 
-
 function matchesSearch(item, query) {
-
   const searchable = normalizeText([
     item.title,
     item.author,
@@ -534,38 +552,31 @@ function matchesSearch(item, query) {
   return searchable.includes(query);
 }
 
-
-
 function createSearchResult(item, type) {
-
   const title = item.title || "بدون عنوان";
 
-  const url = item.pdfUrl
-    ? `/reader/?url=${encodeURIComponent(item.pdfUrl)}&title=${encodeURIComponent(title)}`
-    : "#";
+  const url = getContentUrl(item, type);
+
+  const openNewTab =
+    isExternalReaderLink(item, type);
 
   return `
     <a
       class="site-search-result"
-      href="${url}"
-      ${item.pdfUrl ? 'target="_blank" rel="noopener noreferrer"' : ""}
+      href="${escapeHtml(url)}"
+      ${openNewTab ? 'target="_blank" rel="noopener noreferrer"' : ""}
     >
       <strong>${escapeHtml(title)}</strong>
     </a>
   `;
 }
 
-
-
 function searchFirebaseContent(query) {
-
   if (!siteSearchResults) return;
 
   if (!query) {
-
     siteSearchResults.innerHTML = "";
     siteSearchResults.hidden = true;
-
     return;
   }
 
@@ -589,29 +600,23 @@ function searchFirebaseContent(query) {
   ].join("");
 
   if (!html) {
-
     siteSearchResults.innerHTML = `
       <div class="site-search-no-results">
         لا توجد نتائج مطابقة.
       </div>
     `;
-
   } else {
-
     siteSearchResults.innerHTML = html;
-
   }
 
   siteSearchResults.hidden = false;
 }
-
 
 /* =========================================================
    الصفحة الرئيسية
    ========================================================= */
 
 async function loadHomeLibrary() {
-
   const novelsSlider =
     document.getElementById("homeNovelsTrack");
 
@@ -628,7 +633,6 @@ async function loadHomeLibrary() {
   }
 
   try {
-
     const [novels, books] =
       await Promise.all([
         getPublishedCollection("novels"),
@@ -639,26 +643,24 @@ async function loadHomeLibrary() {
     searchBooks = books;
 
     renderHomeSlider(
-  novelsSlider,
-  novels.slice(0, 10),
-  "novel"
-);
+      novelsSlider,
+      novels.slice(0, 10),
+      "novel"
+    );
 
-renderHomeSlider(
-  booksSlider,
-  books.slice(0, 10),
-  "book"
-);
+    renderHomeSlider(
+      booksSlider,
+      books.slice(0, 10),
+      "book"
+    );
 
     startHomeLibraryAutoSlider(novelsSlider);
-startHomeLibraryAutoSlider(booksSlider);
-    
-    if (siteSearchInput) {
+    startHomeLibraryAutoSlider(booksSlider);
 
+    if (siteSearchInput) {
       siteSearchInput.addEventListener(
         "input",
         function () {
-
           const query =
             normalizeText(this.value);
 
@@ -674,14 +676,11 @@ startHomeLibraryAutoSlider(booksSlider);
               }
             )
           );
-
         }
       );
-
     }
 
   } catch (error) {
-
     console.error(
       "Home library error:",
       error
@@ -696,10 +695,8 @@ startHomeLibraryAutoSlider(booksSlider);
       booksSlider.innerHTML =
         `<p>تعذر تحميل الكتب حاليًا.</p>`;
     }
-
   }
 }
-
 
 /* =========================================================
    تشغيل
