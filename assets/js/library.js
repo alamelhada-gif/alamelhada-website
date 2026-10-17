@@ -87,13 +87,26 @@ function getReaderUrl(item) {
   );
 }
 
+
+function arabicSlug(value = "") {
+  return String(value)
+    .normalize("NFKC")
+    .trim()
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+}
+
 function getContentUrl(item, type) {
   if (!item) return "#";
 
   if (type === "books" || type === "book") {
     if (!item.id) return getReaderUrl(item);
 
-    return `/books/${encodeURIComponent(item.id)}/`;
+    const slug = arabicSlug(item.title || "كتاب");
+    const id = encodeURIComponent(item.id);
+
+    return `/books/${encodeURIComponent(slug)}-${id}/`;
   }
 
   if (type === "novels" || type === "novel") {
