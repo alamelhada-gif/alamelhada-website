@@ -97,16 +97,13 @@ function arabicSlug(value = "") {
     .toLowerCase();
 }
 
+
 function getContentUrl(item, type) {
   if (!item) return "#";
 
   if (type === "books" || type === "book") {
-    if (!item.id) return getReaderUrl(item);
-
     const slug = arabicSlug(item.title || "كتاب");
-    const id = encodeURIComponent(item.id);
-
-    return `/books/${encodeURIComponent(slug)}-${id}/`;
+    return `/books/${encodeURIComponent(slug)}/`;
   }
 
   if (type === "novels" || type === "novel") {
@@ -115,6 +112,7 @@ function getContentUrl(item, type) {
 
   return getReaderUrl(item);
 }
+
 
 function isExternalReaderLink(item, type) {
   return (
