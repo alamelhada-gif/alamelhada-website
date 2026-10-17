@@ -1,3 +1,4 @@
+
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy("admin");
@@ -5,6 +6,16 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("app-ads.txt");
   eleventyConfig.addPassthroughCopy("favicon.svg");
   eleventyConfig.addPassthroughCopy("robots.txt");
+
+  // إنشاء خريطة الموقع تلقائيًا
+  eleventyConfig.addCollection("sitemapPages", function(collectionApi) {
+    return collectionApi.getAll().filter(item => {
+      return item.url &&
+        item.url !== false &&
+        !item.url.startsWith("/admin/") &&
+        !item.url.endsWith(".xml");
+    });
+  });
 
   return {
     dir: {
