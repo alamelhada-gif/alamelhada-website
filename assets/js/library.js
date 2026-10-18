@@ -645,30 +645,51 @@ async function loadHomeLibrary() {
     return;
   }
 
-  try {
-    const [novels, books] =
-      await Promise.all([
-        getPublishedCollection("novels"),
-        getPublishedCollection("books")
-      ]);
+const [novelsResult, booksResult] =
+  await Promise.allSettled([
+    getPublishedCollection("novels").then(novels => {
+      searchNovels = novels;
 
-    searchNovels = novels;
-    searchBooks = books;
+      renderHomeSlider(
+        novelsSlider,
+        novels.slice(0, 10),
+        "novel"
+      );
 
-    renderHomeSlider(
-      novelsSlider,
-      novels.slice(0, 10),
-      "novel"
-    );
+      startHomeLibraryAutoSlider(novelsSlider);
+      return novels;
+    }),
 
-    renderHomeSlider(
-      booksSlider,
-      books.slice(0, 10),
-      "book"
-    );
+    getPublishedCollection("books").then(books => {
+      searchBooks = books;
 
-    startHomeLibraryAutoSlider(novelsSlider);
-    startHomeLibraryAutoSlider(booksSlider);
+      renderHomeSlider(
+        booksSlider,
+        books.slice(0, 10),
+        "book"
+      );
+
+      startHomeLibraryAutoSlider(booksSlider);
+      return books;
+    })
+  ]);
+
+if (novelsResult.status === "rejected") {
+  console.error("Novels loading error:", novelsResult.reason);
+  if (novelsSlider) {
+    novelsSlider.innerHTML =
+      "<p>تعذر تحميل الروايات حاليًا.</p>";
+  }
+}
+
+if (booksResult.status === "rejected") {
+  console.error("Books loading error:", booksResult.reason);
+  if (booksSlider) {
+    booksSlider.innerHTML =
+      "<p>تعذر تحميل الكتب حاليًا.</p>";
+  }
+}
+
 
     if (siteSearchInput) {
       siteSearchInput.addEventListener(
