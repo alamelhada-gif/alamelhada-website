@@ -206,7 +206,8 @@ src="{{ site.hero_image | optimizedImage | escape }}"
                     <div class="slider-app-icon">
 
                       <img
-                        src="{{ item.data.image }}"
+                        
+                        src="{{ item.data.image | optimizedImage | escape }}"
                         alt="{{ item.data.title }}"
                         loading="{% if loop.first %}eager{% else %}lazy{% endif %}"
                       >
