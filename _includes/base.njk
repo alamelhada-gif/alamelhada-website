@@ -77,6 +77,24 @@
     {{ schemaData | dump | safe }}
   </script>
 
+  {# بيانات منظمة لتعريف كل صفحة #}
+  {% set webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": seoCanonical + "#webpage",
+    "url": seoCanonical,
+    "name": seoTitle,
+    "description": seoDescription | striptags,
+    "inLanguage": lang or "ar",
+    "isPartOf": {
+      "@id": "https://alamelhada.com/#website"
+    }
+  } %}
+
+  <script type="application/ld+json">
+    {{ webPageSchema | dump | safe }}
+  </script>
+
 
   <link rel="icon" href="/favicon.svg">
 
