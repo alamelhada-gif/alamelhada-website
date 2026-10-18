@@ -13,6 +13,12 @@ const outputDir = path.join(
   "_site/assets/images/optimized"
 );
 
+const sizes = [
+  { suffix: "", width: 1200 },
+  { suffix: "-600", width: 600 },
+  { suffix: "-300", width: 300 }
+];
+
 async function optimizeImages() {
   await fs.mkdir(outputDir, { recursive: true });
 
@@ -33,31 +39,38 @@ async function optimizeImages() {
 
     const source = path.join(sourceDir, file.name);
 
-    const target = path.join(
-      outputDir,
-      `${file.name}.webp`
-    );
-
     try {
-      await sharp(source)
-        .rotate()
-        .resize({
-          width: 1200,
-          height: 1200,
-          fit: "inside",
-          withoutEnlargement: true
-        })
-        .webp({ quality: 78, effort: 4 })
-        .toFile(target);
+      for (const size of sizes) {
+        const target = path.join(
+          outputDir,
+          `${file.name}${size.suffix}.webp`
+        );
+
+        await sharp(source)
+          .rotate()
+          .resize({
+            width: size.width,
+            height: size.width,
+            fit: "inside",
+            withoutEnlargement: true
+          })
+          .webp({
+            quality: 76,
+            effort: 4
+          })
+          .toFile(target);
+      }
 
       count++;
+
       console.log(`Optimized: ${file.name}`);
     } catch (error) {
       console.error(`Failed: ${file.name}`, error);
+      throw error;
     }
   }
 
-  console.log(`Optimized ${count} images.`);
+  console.log(`Optimized ${count} images in 3 sizes.`);
 }
 
 optimizeImages().catch(error => {
