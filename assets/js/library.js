@@ -120,8 +120,6 @@ if (type === "novels" || type === "novel") {
 function isExternalReaderLink(item, type) {
   return false;
 }
-;
-}
 
 /* =========================================================
    صفحات /books/ و /novels/
@@ -644,7 +642,7 @@ async function loadHomeLibrary() {
   if (!needsHomeData) {
     return;
   }
-
+try {
 const [novelsResult, booksResult] =
   await Promise.allSettled([
     getPublishedCollection("novels").then(novels => {
