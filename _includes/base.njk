@@ -101,20 +101,23 @@
 </noscript>
 
 
+
+<!-- اختيار الثيم وتحميل CSS المدمج -->
+{% set activeTheme = appearance.active_theme or "classic" %}
+
+{% if activeTheme == "studio" %}
+  <link rel="stylesheet" href="/assets/css/combined-studio.css">
+
+{% elif activeTheme == "signature" %}
+  <link rel="stylesheet" href="/assets/css/combined-signature.css">
+
+{% elif activeTheme == "noir" %}
+  <link rel="stylesheet" href="/assets/css/combined-noir.css">
+
+{% else %}
   <link rel="stylesheet" href="/assets/css/style.css">
+{% endif %}
 
-  <!-- اختيار الثيم -->
-  {% set activeTheme = appearance.active_theme or "classic" %}
-
-  {% if activeTheme == "signature" %}
-    <link rel="stylesheet" href="/assets/css/themes/signature.css">
-    
-{% elif activeTheme == "studio" %}
-  <link rel="preload" href="/assets/css/themes/studio.css" as="style">
-  <link rel="stylesheet" href="/assets/css/themes/studio.css">
-  {% elif activeTheme == "noir" %}
-    <link rel="stylesheet" href="/assets/css/themes/noir.css">
-  {% endif %}
 
 </head>
 
