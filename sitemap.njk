@@ -5,20 +5,10 @@ eleventyExcludeFromCollections: true
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for page in collections.sitemapPages %}
+  {%- if page.url %}
   <url>
     <loc>https://alamelhada.com{{ page.url | url | escape }}</loc>
   </url>
-{%- endfor %}
-{%- for book in libraryCatalog.books %}
-  {%- set slug = book.title | arabicSlug %}
-  <url>
-    <loc>https://alamelhada.com/books/{{ slug | urlencode }}</loc>
-  </url>
-{%- endfor %}
-{%- for novel in libraryCatalog.novels %}
-  {%- set slug = novel.title | arabicSlug %}
-  <url>
-    <loc>https://alamelhada.com/novels/{{ slug | urlencode }}</loc>
-  </url>
+  {%- endif %}
 {%- endfor %}
 </urlset>
