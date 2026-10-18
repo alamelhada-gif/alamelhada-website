@@ -6,22 +6,9 @@ eleventyExcludeFromCollections: true
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for page in collections.all %}
   {%- if page.url %}
-    {%- assign path = page.url %}
-    {%- assign includePage = false %}
-
-    {%- if path == "/" or path == "/books/" or path == "/novels/" or path == "/about/" or path == "/apps/" or path == "/contact/" or path == "/articles/" %}
-      {%- assign includePage = true %}
-    {%- endif %}
-
-    {%- if path contains "/books/" or path contains "/novels/" or path contains "/articles/" or path contains "/featured/" %}
-      {%- assign includePage = true %}
-    {%- endif %}
-
-    {%- if includePage %}
   <url>
-    <loc>https://alamelhada.com{{ path | url }}</loc>
+    <loc>https://alamelhada.com{{ page.url | url }}</loc>
   </url>
-    {%- endif %}
   {%- endif %}
 {%- endfor %}
 </urlset>
