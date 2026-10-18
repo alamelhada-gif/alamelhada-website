@@ -5,10 +5,22 @@ eleventyExcludeFromCollections: true
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for page in collections.sitemapPages %}
-  {%- if page.url %}
+  {%- if page.url and page.url.slice(0, 7) != "/books/" and page.url.slice(0, 8) != "/novels/" %}
   <url>
     <loc>https://alamelhada.com{{ page.url | url | escape }}</loc>
   </url>
   {%- endif %}
+{%- endfor %}
+
+{%- for book in libraryCatalog.books %}
+  <url>
+    <loc>https://alamelhada.com/books/{{ book.title | arabicSlug }}/</loc>
+  </url>
+{%- endfor %}
+
+{%- for novel in libraryCatalog.novels %}
+  <url>
+    <loc>https://alamelhada.com/novels/{{ novel.title | arabicSlug }}/</loc>
+  </url>
 {%- endfor %}
 </urlset>
