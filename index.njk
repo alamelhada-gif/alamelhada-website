@@ -317,7 +317,9 @@ title: Alamelhada Apps
               {% if app.icon %}
                 <div class="slider-app-icon">
                   <img
-                    src="{{ app.icon }}"
+                   
+                   src="{{ app.icon | optimizedImage | escape }}"
+
                     alt="{{ app.name }}"
                     loading="lazy"
                   >
