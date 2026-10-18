@@ -98,7 +98,8 @@ title: Alamelhada Apps
     
 <img
   class="site-hero-custom-image"
-  src="{{ site.hero_image | escape }}"
+
+src="{{ site.hero_image | optimizedImage | escape }}"
   alt="{{ site.name | escape }}"
   loading="eager"
   fetchpriority="high"
@@ -122,7 +123,8 @@ title: Alamelhada Apps
   {% if site.hero_image %}
     <img
       class="site-hero-custom-image"
-      src="{{ site.hero_image | escape }}"
+  
+   src="{{ site.hero_image | optimizedImage | escape }}"
       alt=""
       loading="lazy"
       decoding="async"
