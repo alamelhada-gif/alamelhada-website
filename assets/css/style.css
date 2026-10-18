@@ -11,7 +11,8 @@ body {
   margin: 0;
   background: var(--light);
   color: var(--dark);
-  font-family: 'Noto Kufi Arabic', sans-serif;
+  
+font-family: 'Noto Kufi Arabic', Tahoma, Arial, sans-serif;
 }
 
 a {
