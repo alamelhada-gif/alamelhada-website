@@ -11,4 +11,18 @@ eleventyExcludeFromCollections: true
   </url>
   {%- endif %}
 {%- endfor %}
+
+{%- for book in libraryCatalog.books %}
+  {%- set slug = book.title | slugify %}
+  <url>
+    <loc>https://alamelhada.com/books/{{ slug }}/</loc>
+  </url>
+{%- endfor %}
+
+{%- for novel in libraryCatalog.novels %}
+  {%- set slug = novel.title | slugify %}
+  <url>
+    <loc>https://alamelhada.com/novels/{{ slug }}/</loc>
+  </url>
+{%- endfor %}
 </urlset>
