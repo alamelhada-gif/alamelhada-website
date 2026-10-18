@@ -95,12 +95,16 @@ title: Alamelhada Apps
 
 <span class="signature-art-symbol">
   {% if site.hero_image %}
-    <img
-      class="site-hero-custom-image"
-      src="{{ site.hero_image | escape }}"
-      alt="{{ site.name | escape }}"
-      loading="eager"
-    >
+    
+<img
+  class="site-hero-custom-image"
+  src="{{ site.hero_image | escape }}"
+  alt="{{ site.name | escape }}"
+  loading="eager"
+  fetchpriority="high"
+  decoding="async"
+>
+
   {% else %}
     A
   {% endif %}
@@ -112,14 +116,15 @@ title: Alamelhada Apps
   </div>
 
 
-<div class="mark" aria-hidden="true">
-  {% if site.hero_image %}
-    <img
-      class="site-hero-custom-image"
-      src="{{ site.hero_image | escape }}"
-      alt=""
-      loading="eager"
-    >
+
+<img
+  class="site-hero-custom-image"
+  src="{{ site.hero_image | escape }}"
+  alt=""
+  loading="lazy"
+  decoding="async"
+>
+
   {% else %}
     A
   {% endif %}
