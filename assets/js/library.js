@@ -106,19 +106,21 @@ function getContentUrl(item, type) {
     return `/books/${encodeURIComponent(slug)}/`;
   }
 
-  if (type === "novels" || type === "novel") {
-    return getReaderUrl(item);
-  }
+
+if (type === "novels" || type === "novel") {
+  const slug = arabicSlug(item.title || "رواية");
+  return `/novels/${encodeURIComponent(slug)}/`;
+}
+
 
   return getReaderUrl(item);
 }
 
 
 function isExternalReaderLink(item, type) {
-  return (
-    (type === "novels" || type === "novel") &&
-    Boolean(item.pdfUrl)
-  );
+  return false;
+}
+;
 }
 
 /* =========================================================
