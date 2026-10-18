@@ -117,18 +117,21 @@ title: Alamelhada Apps
 
 
 
-<img
-  class="site-hero-custom-image"
-  src="{{ site.hero_image | escape }}"
-  alt=""
-  loading="lazy"
-  decoding="async"
->
 
+<div class="mark" aria-hidden="true">
+  {% if site.hero_image %}
+    <img
+      class="site-hero-custom-image"
+      src="{{ site.hero_image | escape }}"
+      alt=""
+      loading="lazy"
+      decoding="async"
+    >
   {% else %}
     A
   {% endif %}
 </div>
+
 
 </section>
 
