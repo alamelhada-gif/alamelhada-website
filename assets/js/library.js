@@ -37,8 +37,31 @@ function escapeHtml(value = "") {
     .replaceAll("'", "&#039;");
 }
 
+
 function getCover(item) {
-  return item.coverUrl || item.cover || "";
+  const originalUrl = item.coverUrl || item.cover || "";
+
+  if (!originalUrl) return "";
+
+  try {
+    const url = new URL(originalUrl);
+
+    if (
+      url.hostname === "res.cloudinary.com" &&
+      url.pathname.includes("/image/upload/")
+    ) {
+      url.pathname = url.pathname.replace(
+        "/image/upload/",
+        "/image/upload/f_auto,q_auto,w_400,c_limit/"
+      );
+
+      return url.toString();
+    }
+  } catch (error) {
+    return originalUrl;
+  }
+
+  return originalUrl;
 }
 
 function getDateValue(item) {
