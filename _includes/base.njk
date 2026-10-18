@@ -88,8 +88,10 @@
 
   {% if activeTheme == "signature" %}
     <link rel="stylesheet" href="/assets/css/themes/signature.css">
-  {% elif activeTheme == "studio" %}
-    <link rel="stylesheet" href="/assets/css/themes/studio.css">
+    
+{% elif activeTheme == "studio" %}
+  <link rel="preload" href="/assets/css/themes/studio.css" as="style">
+  <link rel="stylesheet" href="/assets/css/themes/studio.css">
   {% elif activeTheme == "noir" %}
     <link rel="stylesheet" href="/assets/css/themes/noir.css">
   {% endif %}
