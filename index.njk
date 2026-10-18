@@ -205,12 +205,24 @@ src="{{ site.hero_image | optimizedImage | escape }}"
 
                     <div class="slider-app-icon">
 
-                      <img
-                        
-                        src="{{ item.data.image | optimizedImage | escape }}"
-                        alt="{{ item.data.title }}"
-                        loading="{% if loop.first %}eager{% else %}lazy{% endif %}"
-                      >
+                      
+{% set featuredImage = item.data.image | optimizedImage %}
+
+<img
+  src="{{ featuredImage | escape }}"
+  {% if featuredImage.startsWith('/assets/images/optimized/') %}
+  srcset="
+    {{ featuredImage | replace('.webp', '-300.webp') | escape }} 300w,
+    {{ featuredImage | replace('.webp', '-600.webp') | escape }} 600w,
+    {{ featuredImage | escape }} 1200w
+  "
+  sizes="(max-width: 600px) 150px, (max-width: 900px) 220px, 260px"
+  {% endif %}
+  alt="{{ item.data.title | escape }}"
+  loading="{% if loop.first %}eager{% else %}lazy{% endif %}"
+  decoding="async"
+>
+
 
                     </div>
 
