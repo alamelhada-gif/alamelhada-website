@@ -71,7 +71,9 @@ permalink: /apps/index.html
             
 <img
   class="apps-page-icon"
-  src="{{ app.icon | escape }}"
+  
+src="{{ app.icon | optimizedImage | escape }}"
+
   alt="{{ app.name | escape }}"
   width="88"
   height="88"
