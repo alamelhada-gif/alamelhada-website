@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build": "eleventy"
+    "build": "eleventy --config=eleventy.config.js"
   },
   "dependencies": {
     "firebase": "^12.19.0"
