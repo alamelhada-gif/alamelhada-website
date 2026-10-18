@@ -12,7 +12,8 @@ function escapeHtml(value = "") {
 
 function safeUrl(value) {
   try {
-    const url = new URL(String(value || ""), SITE);
+    if (!value) return "";
+    const url = new URL(String(value), SITE);
     return ["https:", "http:"].includes(url.protocol)
       ? url.href
       : "";
@@ -35,6 +36,26 @@ function novelPath(novel) {
   return `/novels/${slug}/`;
 }
 
+function cleanText(value = "") {
+  return String(value ?? "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function metaDescription(title, author, description) {
+  const text = cleanText(description);
+
+  if (text) {
+    return text.length > 160
+      ? text.slice(0, 157).trimEnd() + "..."
+      : text;
+  }
+
+  return author
+    ? `تعرف على رواية ${title} للكاتب ${author}، واقرأ تفاصيلها في مكتبة علم الهدى.`
+    : `تعرف على رواية ${title} واقرأ تفاصيلها في مكتبة علم الهدى.`;
+}
+
 class NovelPages {
   data() {
     return {
@@ -55,13 +76,18 @@ class NovelPages {
 
   render(data) {
     const novel = data.novel;
-    const title = novel.title || "رواية";
-    const author = novel.author || "";
-    const description = novel.description || "";
+
+    const title = cleanText(novel.title) || "رواية";
+    const author = cleanText(novel.author);
+    const description = cleanText(novel.description);
+    const category = cleanText(novel.category);
+
     const cover = safeUrl(novel.coverUrl || novel.cover);
     const pdf = safeUrl(novel.pdfUrl);
 
     const pageUrl = `${SITE}${novelPath(novel)}`;
+    const pageTitle = `${title}${author ? ` - ${author}` : ""} | علم الهدى`;
+    const seoDescription = metaDescription(title, author, description);
 
     const readerUrl = pdf
       ? `/reader/?url=${encodeURIComponent(pdf)}&title=${encodeURIComponent(title)}`
@@ -73,7 +99,11 @@ class NovelPages {
       name: title,
       url: pageUrl,
       inLanguage: "ar",
-      genre: "رواية"
+      genre: category || "رواية",
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": pageUrl
+      }
     };
 
     if (description) schema.description = description;
@@ -97,21 +127,43 @@ class NovelPages {
   <meta name="viewport"
         content="width=device-width,initial-scale=1">
 
-  <title>${escapeHtml(title)} | علم الهدى</title>
+  <title>${escapeHtml(pageTitle)}</title>
 
   <meta name="description"
-        content="${escapeHtml(description || `اقرأ رواية ${title} في مكتبة علم الهدى`)}">
+        content="${escapeHtml(seoDescription)}">
+
+  <meta name="robots"
+        content="index,follow,max-image-preview:large">
 
   <link rel="canonical"
         href="${escapeHtml(pageUrl)}">
 
   <meta property="og:type" content="book">
+  <meta property="og:locale" content="ar_AR">
+  <meta property="og:site_name" content="علم الهدى">
+
   <meta property="og:title"
-        content="${escapeHtml(title)}">
+        content="${escapeHtml(pageTitle)}">
+
+  <meta property="og:description"
+        content="${escapeHtml(seoDescription)}">
+
   <meta property="og:url"
         content="${escapeHtml(pageUrl)}">
 
-  ${cover ? `<meta property="og:image" content="${escapeHtml(cover)}">` : ""}
+  ${cover ? `<meta property="og:image" content="${escapeHtml(cover)}">
+  <meta property="og:image:alt" content="غلاف ${escapeHtml(title)}">` : ""}
+
+  <meta name="twitter:card"
+        content="${cover ? "summary_large_image" : "summary"}">
+
+  <meta name="twitter:title"
+        content="${escapeHtml(pageTitle)}">
+
+  <meta name="twitter:description"
+        content="${escapeHtml(seoDescription)}">
+
+  ${cover ? `<meta name="twitter:image" content="${escapeHtml(cover)}">` : ""}
 
   <script type="application/ld+json">${jsonLd}</script>
 
@@ -125,17 +177,22 @@ class NovelPages {
     <article>
       <h1>${escapeHtml(title)}</h1>
 
-      ${cover ? `<img src="${escapeHtml(cover)}" alt="غلاف ${escapeHtml(title)}" style="max-width:100%;max-height:440px;object-fit:contain;border-radius:16px">` : ""}
+      ${cover ? `<img src="${escapeHtml(cover)}"
+        alt="غلاف ${escapeHtml(title)}"
+        loading="eager"
+        decoding="async"
+        style="max-width:100%;max-height:440px;object-fit:contain;border-radius:16px">` : ""}
 
       ${author ? `<p>المؤلف: ${escapeHtml(author)}</p>` : ""}
 
-      ${novel.category ? `<p>التصنيف: ${escapeHtml(novel.category)}</p>` : ""}
+      ${category ? `<p>التصنيف: ${escapeHtml(category)}</p>` : ""}
 
       <p style="line-height:2">
         ${escapeHtml(description)}
       </p>
 
-      ${readerUrl ? `<a href="${escapeHtml(readerUrl)}" style="display:inline-block;padding:14px 28px;background:#4F9A43;color:white;border-radius:12px;text-decoration:none">قراءة الرواية</a>` : ""}
+      ${readerUrl ? `<a href="${escapeHtml(readerUrl)}"
+        style="display:inline-block;padding:14px 28px;background:#4F9A43;color:white;border-radius:12px;text-decoration:none">قراءة الرواية</a>` : ""}
     </article>
   </main>
 </body>
