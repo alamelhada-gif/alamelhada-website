@@ -317,17 +317,27 @@ src="{{ site.hero_image | optimizedImage | escape }}"
               rel="noopener noreferrer"
             >
 
-              {% if app.icon %}
-                <div class="slider-app-icon">
-                  <img
-                   
-                   src="{{ app.icon | optimizedImage | escape }}"
+            
+{% if app.icon %}
+  <div class="slider-app-icon">
+    {% set appImage = app.icon | optimizedImage %}
 
-                    alt="{{ app.name }}"
-                    loading="lazy"
-                  >
-                </div>
-              {% endif %}
+    <img
+      src="{{ appImage | escape }}"
+      {% if appImage.startsWith('/assets/images/optimized/') %}
+      srcset="
+        {{ appImage | replace('.webp', '-300.webp') | escape }} 300w,
+        {{ appImage | replace('.webp', '-600.webp') | escape }} 600w,
+        {{ appImage | escape }} 1200w
+      "
+      sizes="(max-width: 600px) 110px, (max-width: 900px) 160px, 220px"
+      {% endif %}
+      alt="{{ app.name | escape }}"
+      loading="lazy"
+      decoding="async"
+    >
+  </div>
+{% endif %}
 
               <h3>{{ app.name }}</h3>
 
