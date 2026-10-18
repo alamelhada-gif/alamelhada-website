@@ -1,5 +1,23 @@
 
 module.exports = function (eleventyConfig) {
+  
+  // استخدام نسخ WebP المحسنة للصور المحلية
+  eleventyConfig.addFilter("optimizedImage", function(value = "") {
+    const original = String(value || "");
+
+    if (!original.startsWith("/assets/images/uploads/")) {
+      return original;
+    }
+
+    const filename = original.split("/").pop();
+
+    if (!/\.(png|jpe?g|webp)$/i.test(filename)) {
+      return original;
+    }
+
+    return `/assets/images/optimized/${filename}.webp`;
+  });
+
 
   
   // تحويل عناوين الكتب والروايات إلى روابط عربية
