@@ -1,6 +1,18 @@
 
 module.exports = function (eleventyConfig) {
 
+  
+  // تحويل عناوين الكتب والروايات إلى روابط عربية
+  eleventyConfig.addFilter("arabicSlug", function(value = "") {
+    return String(value)
+      .normalize("NFKC")
+      .trim()
+      .replace(/[^\p{L}\p{N}]+/gu, "-")
+      .replace(/^-+|-+$/g, "")
+      .toLowerCase();
+  });
+
+
   // ملفات الموقع الأساسية
   eleventyConfig.addPassthroughCopy("assets");
   eleventyConfig.addPassthroughCopy("admin");
