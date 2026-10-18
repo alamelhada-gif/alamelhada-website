@@ -9,5 +9,6 @@
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2"
+     "lightningcss": "^1.30.1"
   }
 }
