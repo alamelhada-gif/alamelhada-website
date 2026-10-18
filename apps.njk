@@ -68,12 +68,17 @@ permalink: /apps/index.html
         <div class="apps-page-card-top">
 
           {% if app.icon %}
-            <img
-              class="apps-page-icon"
-              src="{{ app.icon | escape }}"
-              alt="{{ app.name | escape }}"
-              loading="lazy"
-            >
+            
+<img
+  class="apps-page-icon"
+  src="{{ app.icon | escape }}"
+  alt="{{ app.name | escape }}"
+  width="88"
+  height="88"
+  loading="lazy"
+  decoding="async"
+>
+
           {% else %}
             <div class="apps-page-icon apps-page-icon-placeholder">
               ✦
