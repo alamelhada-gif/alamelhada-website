@@ -9,7 +9,9 @@
     "binding": "ASSETS",
     "run_worker_first": [
       "/library-detail",
-      "/library-detail/*"
+      "/library-detail/*",
+      "/books/*",
+      "/novels/*"
     ]
   }
 }
