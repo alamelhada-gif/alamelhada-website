@@ -4,6 +4,135 @@ title: "تفاصيل الكتاب أو الرواية"
 permalink: /library-detail/index.html
 ---
 
+<style>
+/* تصميم صفحة تفاصيل الكتب والروايات */
+#dynamicLibraryDetail {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px 45px;
+  text-align: center;
+  direction: rtl;
+}
+
+/* إزالة شكل البطاقة والخلفية الرمادية */
+#dynamicLibraryDetail > .library-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 0;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+/* ترتيب العنوان فوق الغلاف */
+#dynamicLibraryDetail > .library-card .library-card-content {
+  display: contents;
+}
+
+#dynamicLibraryDetail > .library-card h1 {
+  order: 1;
+  width: 100%;
+  margin: 0 0 12px;
+  font-size: clamp(26px, 5vw, 38px);
+  font-weight: 800;
+  line-height: 1.5;
+  color: #111827;
+}
+
+/* الغلاف فقط دون مساحة رمادية */
+#dynamicLibraryDetail > .library-card .library-cover {
+  order: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  margin: 0 auto;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+
+#dynamicLibraryDetail > .library-card .library-cover img {
+  display: block;
+  width: auto;
+  max-width: min(230px, 65vw);
+  height: auto;
+  max-height: 340px;
+  object-fit: contain;
+  margin: 0 auto;
+  border-radius: 6px;
+}
+
+/* المؤلف والتصنيف */
+#dynamicLibraryDetail > .library-card .library-author,
+#dynamicLibraryDetail > .library-card .library-card-content > p:not(.library-description) {
+  order: 3;
+  margin: 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* الوصف */
+#dynamicLibraryDetail > .library-card .library-description {
+  order: 4;
+  width: 100%;
+  max-width: 760px;
+  margin: 12px auto;
+  font-size: 16px;
+  line-height: 2;
+  text-align: right;
+  color: #334155;
+}
+
+/* زر القراءة */
+#dynamicLibraryDetail > .library-card .library-read-btn {
+  order: 5;
+  display: inline-block;
+  width: auto;
+  margin: 8px auto 0;
+  padding: 12px 28px;
+  background: #4F9A43;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+/* قسم اقرأ أيضًا */
+#relatedLibraryItems {
+  width: 100%;
+  margin: 45px auto 0 !important;
+  text-align: right;
+}
+
+#relatedLibraryItems h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+@media (max-width: 600px) {
+  #dynamicLibraryDetail {
+    padding: 18px 10px 30px;
+  }
+
+  #dynamicLibraryDetail > .library-card .library-description {
+    font-size: 14px;
+    line-height: 1.9;
+  }
+}
+</style>
+
 <section class="section home-library-section" dir="rtl">
   <div id="dynamicLibraryDetail" aria-live="polite">
     <p>جاري تحميل التفاصيل...</p>
