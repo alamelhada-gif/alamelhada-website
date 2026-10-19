@@ -1,3 +1,4 @@
+
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "alamelhada-website",
@@ -10,7 +11,8 @@
       "/library-detail",
       "/library-detail/*",
       "/books/*",
-      "/novels/*"
+      "/novels/*",
+      "/sitemap.xml"
     ]
   }
 }
