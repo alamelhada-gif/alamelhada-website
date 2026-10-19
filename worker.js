@@ -3,124 +3,200 @@ const SITE = "https://alamelhada.com";
 const PROJECT = "riwayati-app-26720";
 
 function escapeHtml(value) {
-  return String(value ?? "").replace(/[&<>"']/g, (char) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[char]);
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;",
+    '"': "&quot;", "'": "&#39;"
+  })[c]);
 }
 
-function firestoreValue(field) {
-  if (!field) return "";
-  return field.stringValue ?? field.integerValue ??
-    field.booleanValue ?? "";
+function fieldValue(field) {
+  return field?.stringValue ??
+    field?.integerValue ??
+    field?.booleanValue ?? "";
 }
 
-function setMeta(html, selector, replacement) {
-  return html.replace(selector, replacement);
+function arabicSlug(value = "") {
+  return String(value)
+    .normalize("NFKC")
+    .trim()
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+}
+
+function safeJson(value) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
+function replaceTag(html, pattern, replacement) {
+  return html.replace(pattern, replacement);
+}
+
+function htmlResponse(html, status = 200) {
+  return new Response(html, {
+    status,
+    headers: {
+      "content-type": "text/html; charset=utf-8",
+      "cache-control": "public, max-age=0, s-maxage=60"
+    }
+  });
+}
+
+async function getDocument(type, id) {
+  const url =
+    `https://firestore.googleapis.com/v1/projects/${PROJECT}` +
+    `/databases/(default)/documents/${type}/${encodeURIComponent(id)}`;
+
+  const response = await fetch(url);
+  if (!response.ok) return null;
+
+  return response.json();
+}
+
+async function findBySlug(type, slug) {
+  let pageToken = "";
+  let pages = 0;
+
+  do {
+    const url = new URL(
+      `https://firestore.googleapis.com/v1/projects/${PROJECT}` +
+      `/databases/(default)/documents/${type}`
+    );
+
+    url.searchParams.set("pageSize", "100");
+    url.searchParams.set("mask.fieldPaths", "title");
+    url.searchParams.append("mask.fieldPaths", "status");
+
+    if (pageToken) url.searchParams.set("pageToken", pageToken);
+
+    const response = await fetch(url.toString());
+    if (!response.ok) return null;
+
+    const data = await response.json();
+
+    for (const doc of data.documents || []) {
+      const fields = doc.fields || {};
+
+      if (
+        fieldValue(fields.status) === "published" &&
+        arabicSlug(fieldValue(fields.title)) === slug
+      ) {
+        const id = doc.name.split("/").pop();
+        return getDocument(type, id);
+      }
+    }
+
+    pageToken = data.nextPageToken || "";
+    pages++;
+  } while (pageToken && pages < 20);
+
+  return null;
 }
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    const path = decodeURI(url.pathname);
 
-    // بقية الموقع تبقى كما هي تمامًا
-    if (url.pathname !== "/library-detail/" &&
-        url.pathname !== "/library-detail/index.html") {
+    let type = "";
+    let id = "";
+    let slug = "";
+
+    const match = path.match(/^\/(books|novels)\/([^/]+)\/?$/);
+
+    if (match) {
+      type = match[1];
+      slug = match[2];
+    } else if (
+      path === "/library-detail/" ||
+      path === "/library-detail/index.html"
+    ) {
+      type = url.searchParams.get("type") || "";
+      id = url.searchParams.get("id") || "";
+    } else {
       return env.ASSETS.fetch(request);
     }
 
-    const type = url.searchParams.get("type");
-    const id = url.searchParams.get("id");
-
-    if (!["books", "novels"].includes(type) ||
-        !id || !/^[a-zA-Z0-9_-]+$/.test(id)) {
+    if (!["books", "novels"].includes(type)) {
       return env.ASSETS.fetch(request);
     }
 
-    // قراءة صفحة التفاصيل الحالية من ملفات Eleventy
-    const pageRequest = new Request(
-  new URL("/library-detail/", url.origin),
-  request
-);
-
-    const pageResponse = await env.ASSETS.fetch(pageRequest);
-
-    if (!pageResponse.ok) return pageResponse;
-
-    let html = await pageResponse.text();
+    let document;
 
     try {
-      const apiUrl =
-        `https://firestore.googleapis.com/v1/projects/${PROJECT}` +
-        `/databases/(default)/documents/${type}/${id}`;
-
-      const response = await fetch(apiUrl);
-
-      if (!response.ok) {
-        return new Response(html, {
-          status: pageResponse.status,
-          headers: pageResponse.headers
-        });
+      if (slug) {
+        document = await findBySlug(type, slug);
+      } else if (id && /^[a-zA-Z0-9_-]+$/.test(id)) {
+        document = await getDocument(type, id);
       }
 
-      const document = await response.json();
+      if (!document) {
+        return env.ASSETS.fetch(request);
+      }
+
       const fields = document.fields || {};
 
-      if (firestoreValue(fields.status) !== "published") {
-        return new Response(html, {
-          status: 404,
-          headers: { "content-type": "text/html; charset=utf-8" }
-        });
+      if (fieldValue(fields.status) !== "published") {
+        return new Response("المحتوى غير متاح", { status: 404 });
       }
 
-      const title = String(firestoreValue(fields.title) || "كتاب");
+      const docId = document.name.split("/").pop();
+      const title = String(fieldValue(fields.title) || "كتاب");
+      const author = String(fieldValue(fields.author) || "");
       const description = String(
-        firestoreValue(fields.description) ||
-        `اقرأ ${title} على موقع علم الهدى`
+        fieldValue(fields.description) ||
+        `اقرأ ${title} في مكتبة علم الهدى`
       ).replace(/\s+/g, " ").slice(0, 160);
 
       const cover = String(
-        firestoreValue(fields.coverUrl) ||
-        firestoreValue(fields.cover) || ""
+        fieldValue(fields.coverUrl) ||
+        fieldValue(fields.cover) || ""
       );
 
       const canonical =
-        `${SITE}/library-detail/?type=${type}&id=${encodeURIComponent(id)}`;
+        `${SITE}/${type}/${arabicSlug(title)}/`;
 
-      const fullTitle = `${title} | علم الهدى`;
+      // نستخدم صفحة التفاصيل الموجودة حاليًا
+      const pageUrl = new URL("/library-detail/", url.origin);
+      const pageResponse = await env.ASSETS.fetch(
+        new Request(pageUrl, request)
+      );
 
-      html = setMeta(
+      if (!pageResponse.ok) return pageResponse;
+
+      let html = await pageResponse.text();
+
+      const fullTitle =
+        `${title}${author ? ` - ${author}` : ""} | علم الهدى`;
+
+      html = replaceTag(
         html,
         /<title>[\s\S]*?<\/title>/i,
         `<title>${escapeHtml(fullTitle)}</title>`
       );
 
-      html = setMeta(
+      html = replaceTag(
         html,
         /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i,
         `<meta name="description" content="${escapeHtml(description)}">`
       );
 
-      html = setMeta(
+      html = replaceTag(
         html,
         /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
         `<link rel="canonical" href="${escapeHtml(canonical)}">`
       );
 
-      const metaTags = [
-        ["og:type", "book"],
-        ["og:title", fullTitle],
-        ["og:description", description],
-        ["og:url", canonical],
-        ["twitter:title", fullTitle],
-        ["twitter:description", description]
+      const tags = [
+        ["property", "og:type", "book"],
+        ["property", "og:title", fullTitle],
+        ["property", "og:description", description],
+        ["property", "og:url", canonical],
+        ["name", "twitter:title", fullTitle],
+        ["name", "twitter:description", description]
       ];
 
-      for (const [name, value] of metaTags) {
-        const attr = name.startsWith("og:") ? "property" : "name";
+      for (const [attr, name, value] of tags) {
         const pattern = new RegExp(
           `<meta\\s+${attr}="${name}"\\s+content="[^"]*"\\s*\\/?>`,
           "i"
@@ -132,7 +208,7 @@ export default {
         );
       }
 
-      if (cover && /^https:\/\//.test(cover)) {
+      if (/^https:\/\//.test(cover)) {
         html = html.replace(
           /<meta\s+property="og:image"\s+content="[^"]*"\s*\/?>/i,
           ""
@@ -147,70 +223,49 @@ export default {
         );
       }
 
-      // تحديث بيانات WebPage المنظمة القديمة وإضافة Book
-      html = html.replace(
-        /<script type="application\/ld\+json">[\s\S]*?<\/script>/g,
-        (script) => {
-          try {
-            const jsonText = script
-              .replace(/^<script[^>]*>/, "")
-              .replace(/<\/script>$/, "");
-            const data = JSON.parse(jsonText);
-
-            if (data["@type"] !== "WebPage") return script;
-
-            data["@id"] = canonical + "#webpage";
-            data.url = canonical;
-            data.name = fullTitle;
-            data.description = description;
-
-            return `<script type="application/ld+json">${JSON.stringify(data)}</script>`;
-          } catch {
-            return script;
-          }
-        }
-      );
-
-      const bookSchema = {
+      const schema = {
         "@context": "https://schema.org",
         "@type": "Book",
         name: title,
-        description,
         url: canonical,
+        description,
         inLanguage: "ar",
-        author: {
-          "@type": "Person",
-          name: String(firestoreValue(fields.author) || "غير معروف")
-        }
+        mainEntityOfPage: canonical
       };
 
-      if (cover && /^https:\/\//.test(cover)) {
-        bookSchema.image = cover;
+      if (author) {
+        schema.author = { "@type": "Person", name: author };
+      }
+
+      if (cover.startsWith("https://")) {
+        schema.image = cover;
       }
 
       html = html.replace(
         "</head>",
-        `<script type="application/ld+json">${JSON.stringify(bookSchema).replace(/</g, "\\u003c")}</script>
-        </head>`
+        `<script type="application/ld+json">${safeJson(schema)}</script>
+         </head>`
       );
 
-      const headers = new Headers(pageResponse.headers);
-      headers.set("content-type", "text/html; charset=utf-8");
-      headers.delete("content-length");
-      headers.set("cache-control", "public, max-age=0, s-maxage=60");
+      // تمرير بيانات الكتاب إلى صفحة التفاصيل الحالية
+      const bootstrap = {
+        type,
+        id: docId,
+        title
+      };
 
-      return new Response(html, {
-        status: 200,
-        headers
-      });
+      html = html.replace(
+        "</head>",
+        `<script>
+          window.__LIBRARY_CONTENT__ = ${safeJson(bootstrap)};
+         </script></head>`
+      );
+
+      return htmlResponse(html);
 
     } catch (error) {
-      console.error("Dynamic SEO error:", error);
-
-      return new Response(html, {
-        status: pageResponse.status,
-        headers: pageResponse.headers
-      });
+      console.error("Library SEO Worker:", error);
+      return env.ASSETS.fetch(request);
     }
   }
 };
