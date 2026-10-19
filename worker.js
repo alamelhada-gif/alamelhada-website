@@ -4,8 +4,11 @@ const PROJECT = "riwayati-app-26720";
 
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, c => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;",
-    '"': "&quot;", "'": "&#39;"
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
   })[c]);
 }
 
@@ -42,17 +45,20 @@ function htmlResponse(html, status = 200) {
   });
 }
 
+// قراءة مستند واحد من Firebase
 async function getDocument(type, id) {
   const url =
     `https://firestore.googleapis.com/v1/projects/${PROJECT}` +
     `/databases/(default)/documents/${type}/${encodeURIComponent(id)}`;
 
   const response = await fetch(url);
+
   if (!response.ok) return null;
 
   return response.json();
 }
 
+// البحث عن كتاب أو رواية باستخدام الرابط العربي
 async function findBySlug(type, slug) {
   let pageToken = "";
   let pages = 0;
@@ -64,12 +70,15 @@ async function findBySlug(type, slug) {
     );
 
     url.searchParams.set("pageSize", "100");
-    url.searchParams.set("mask.fieldPaths", "title");
+    url.searchParams.append("mask.fieldPaths", "title");
     url.searchParams.append("mask.fieldPaths", "status");
 
-    if (pageToken) url.searchParams.set("pageToken", pageToken);
+    if (pageToken) {
+      url.searchParams.set("pageToken", pageToken);
+    }
 
     const response = await fetch(url.toString());
+
     if (!response.ok) return null;
 
     const data = await response.json();
@@ -93,26 +102,154 @@ async function findBySlug(type, slug) {
   return null;
 }
 
+// جلب جميع روابط الكتب أو الروايات المنشورة
+async function getPublishedUrls(type) {
+  const urls = new Set();
+  let pageToken = "";
+
+  do {
+    const apiUrl = new URL(
+      `https://firestore.googleapis.com/v1/projects/${PROJECT}` +
+      `/databases/(default)/documents/${type}`
+    );
+
+    apiUrl.searchParams.set("pageSize", "100");
+    apiUrl.searchParams.append("mask.fieldPaths", "title");
+    apiUrl.searchParams.append("mask.fieldPaths", "status");
+
+    if (pageToken) {
+      apiUrl.searchParams.set("pageToken", pageToken);
+    }
+
+    const response = await fetch(apiUrl.toString());
+
+    if (!response.ok) {
+      throw new Error(
+        `Firestore ${type}: ${response.status}`
+      );
+    }
+
+    const data = await response.json();
+
+    for (const document of data.documents || []) {
+      const fields = document.fields || {};
+
+      if (fieldValue(fields.status) !== "published") {
+        continue;
+      }
+
+      const slug = arabicSlug(fieldValue(fields.title));
+
+      if (slug) {
+        urls.add(`${SITE}/${type}/${slug}/`);
+      }
+    }
+
+    pageToken = data.nextPageToken || "";
+  } while (pageToken);
+
+  return [...urls];
+}
+
+// إنشاء خريطة موقع متجددة من Firebase
+async function generateSitemap(request, env) {
+  const staticResponse = await env.ASSETS.fetch(request);
+
+  if (!staticResponse.ok) {
+    return staticResponse;
+  }
+
+  try {
+    const [books, novels] = await Promise.all([
+      getPublishedUrls("books"),
+      getPublishedUrls("novels")
+    ]);
+
+    const staticXml = await staticResponse.text();
+
+    // الاحتفاظ بروابط الصفحات الثابتة
+    const existingUrls = [
+      ...staticXml.matchAll(/<loc>([^<]+)<\/loc>/g)
+    ].map(match => match[1]);
+
+    const allUrls = new Set();
+
+    for (const url of existingUrls) {
+      if (
+        !url.startsWith(`${SITE}/books/`) &&
+        !url.startsWith(`${SITE}/novels/`)
+      ) {
+        allUrls.add(url);
+      }
+    }
+
+    // إضافة الكتب والروايات الحالية
+    for (const url of [...books, ...novels]) {
+      allUrls.add(url);
+    }
+
+    const entries = [...allUrls].map(url => `
+  <url>
+    <loc>${escapeHtml(url)}</loc>
+  </url>`).join("");
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries}
+</urlset>`;
+
+    return new Response(xml, {
+      status: 200,
+      headers: {
+        "content-type": "application/xml; charset=utf-8",
+        "cache-control": "public, max-age=0, s-maxage=60"
+      }
+    });
+
+  } catch (error) {
+    console.error("Sitemap generation error:", error);
+
+    // عند تعذر Firebase نستخدم الخريطة الثابتة
+    return staticResponse;
+  }
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    const path = decodeURI(url.pathname);
+
+    // خريطة الموقع الديناميكية
+    if (url.pathname === "/sitemap.xml") {
+      return generateSitemap(request, env);
+    }
+
+    let path;
+
+    try {
+      path = decodeURI(url.pathname);
+    } catch {
+      return env.ASSETS.fetch(request);
+    }
 
     let type = "";
     let id = "";
     let slug = "";
 
-    const match = path.match(/^\/(books|novels)\/([^/]+)\/?$/);
+    const match = path.match(
+      /^\/(books|novels)\/([^/]+)\/?$/
+    );
 
     if (match) {
       type = match[1];
       slug = match[2];
+
     } else if (
       path === "/library-detail/" ||
       path === "/library-detail/index.html"
     ) {
       type = url.searchParams.get("type") || "";
       id = url.searchParams.get("id") || "";
+
     } else {
       return env.ASSETS.fetch(request);
     }
@@ -126,7 +263,11 @@ export default {
     try {
       if (slug) {
         document = await findBySlug(type, slug);
-      } else if (id && /^[a-zA-Z0-9_-]+$/.test(id)) {
+
+      } else if (
+        id &&
+        /^[a-zA-Z0-9_-]+$/.test(id)
+      ) {
         document = await getDocument(type, id);
       }
 
@@ -137,12 +278,21 @@ export default {
       const fields = document.fields || {};
 
       if (fieldValue(fields.status) !== "published") {
-        return new Response("المحتوى غير متاح", { status: 404 });
+        return new Response("المحتوى غير متاح", {
+          status: 404
+        });
       }
 
       const docId = document.name.split("/").pop();
-      const title = String(fieldValue(fields.title) || "كتاب");
-      const author = String(fieldValue(fields.author) || "");
+
+      const title = String(
+        fieldValue(fields.title) || "كتاب"
+      );
+
+      const author = String(
+        fieldValue(fields.author) || ""
+      );
+
       const description = String(
         fieldValue(fields.description) ||
         `اقرأ ${title} في مكتبة علم الهدى`
@@ -156,37 +306,47 @@ export default {
       const canonical =
         `${SITE}/${type}/${arabicSlug(title)}/`;
 
-      // نستخدم صفحة التفاصيل الموجودة حاليًا
-      const pageUrl = new URL("/library-detail/", url.origin);
+      // استخدام صفحة التفاصيل المبنية بواسطة Eleventy
+      const pageUrl = new URL(
+        "/library-detail/",
+        url.origin
+      );
+
       const pageResponse = await env.ASSETS.fetch(
         new Request(pageUrl, request)
       );
 
-      if (!pageResponse.ok) return pageResponse;
+      if (!pageResponse.ok) {
+        return pageResponse;
+      }
 
       let html = await pageResponse.text();
 
       const fullTitle =
         `${title}${author ? ` - ${author}` : ""} | علم الهدى`;
 
+      // عنوان الصفحة
       html = replaceTag(
         html,
         /<title>[\s\S]*?<\/title>/i,
         `<title>${escapeHtml(fullTitle)}</title>`
       );
 
+      // وصف الصفحة
       html = replaceTag(
         html,
         /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i,
         `<meta name="description" content="${escapeHtml(description)}">`
       );
 
+      // الرابط الأساسي
       html = replaceTag(
         html,
         /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
         `<link rel="canonical" href="${escapeHtml(canonical)}">`
       );
 
+      // بيانات المشاركة في الشبكات الاجتماعية
       const tags = [
         ["property", "og:type", "book"],
         ["property", "og:title", fullTitle],
@@ -208,6 +368,7 @@ export default {
         );
       }
 
+      // صورة الغلاف للمشاركة
       if (/^https:\/\//.test(cover)) {
         html = html.replace(
           /<meta\s+property="og:image"\s+content="[^"]*"\s*\/?>/i,
@@ -223,6 +384,7 @@ export default {
         );
       }
 
+      // بيانات الكتاب المنظمة
       const schema = {
         "@context": "https://schema.org",
         "@type": "Book",
@@ -234,7 +396,10 @@ export default {
       };
 
       if (author) {
-        schema.author = { "@type": "Person", name: author };
+        schema.author = {
+          "@type": "Person",
+          name: author
+        };
       }
 
       if (cover.startsWith("https://")) {
@@ -247,7 +412,7 @@ export default {
          </head>`
       );
 
-      // تمرير بيانات الكتاب إلى صفحة التفاصيل الحالية
+      // تمرير معرف الكتاب أو الرواية إلى JavaScript
       const bootstrap = {
         type,
         id: docId,
@@ -264,7 +429,11 @@ export default {
       return htmlResponse(html);
 
     } catch (error) {
-      console.error("Library SEO Worker:", error);
+      console.error(
+        "Library SEO Worker:",
+        error
+      );
+
       return env.ASSETS.fetch(request);
     }
   }
