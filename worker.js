@@ -42,9 +42,9 @@ export default {
 
     // قراءة صفحة التفاصيل الحالية من ملفات Eleventy
     const pageRequest = new Request(
-      new URL("/library-detail/index.html", url.origin),
-      request
-    );
+  new URL("/library-detail/", url.origin),
+  request
+);
 
     const pageResponse = await env.ASSETS.fetch(pageRequest);
 
