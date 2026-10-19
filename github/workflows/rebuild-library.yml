@@ -1,13 +1,12 @@
 
 name: Rebuild Library
 
-
 on:
   schedule:
     - cron: "*/15 * * * *"
+  workflow_dispatch:
   repository_dispatch:
     types: [library_updated]
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -17,7 +16,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  trigger-build:
+  check-library:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,12 +25,26 @@ jobs:
         with:
           ref: main
 
-      - name: Trigger Cloudflare build
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check Firebase library
+        id: library
+        run: node scripts/check-library-changes.js
+
+      - name: Save library fingerprint and trigger deployment
+        if: steps.library.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git commit --allow-empty -m "chore: rebuild library pages"
+          git add .library-content-hash
+          git commit -m "chore: sync Firebase library"
+          git pull --rebase origin main
           git push origin HEAD:main
