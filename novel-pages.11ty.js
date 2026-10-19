@@ -77,6 +77,16 @@ class NovelPages {
   render(data) {
     const novel = data.novel;
 
+    
+    const relatedNovels = (data.libraryCatalog?.novels || [])
+      .filter(item =>
+        item.id !== novel.id &&
+        cleanText(item.category) === cleanText(novel.category) &&
+        cleanText(novel.category) !== ""
+      )
+      .slice(0, 6);
+
+
     const title = cleanText(novel.title) || "رواية";
     const author = cleanText(novel.author);
     const description = cleanText(novel.description);
