@@ -1,7 +1,10 @@
 
 name: Rebuild Library
 
+
 on:
+  schedule:
+    - cron: "*/15 * * * *"
   repository_dispatch:
     types: [library_updated]
   workflow_dispatch:
