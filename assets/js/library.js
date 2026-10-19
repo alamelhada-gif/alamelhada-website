@@ -122,6 +122,7 @@ function arabicSlug(value = "") {
 
 
 
+
 function getContentUrl(item, type) {
   if (!item || !item.id) return "#";
 
@@ -135,11 +136,18 @@ function getContentUrl(item, type) {
     return getReaderUrl(item);
   }
 
+  const slug = arabicSlug(item.title || "");
+
+  if (slug) {
+    return `/${contentType}/${encodeURIComponent(slug)}/`;
+  }
+
   return (
     `/library-detail/?type=${contentType}` +
     `&id=${encodeURIComponent(item.id)}`
   );
 }
+
 
 
 
