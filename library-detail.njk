@@ -1,3 +1,4 @@
+
 ---
 layout: base.njk
 title: "تفاصيل الكتاب أو الرواية"
@@ -47,7 +48,7 @@ permalink: /library-detail/index.html
   color: #111827;
 }
 
-/* الغلاف فقط دون مساحة رمادية */
+/* الغلاف */
 #dynamicLibraryDetail > .library-card .library-cover {
   order: 2;
   display: flex;
@@ -109,6 +110,10 @@ permalink: /library-detail/index.html
   font-weight: 700;
 }
 
+#dynamicLibraryDetail > .library-card .library-read-btn:hover {
+  background: #3f8035;
+}
+
 /* قسم اقرأ أيضًا */
 #relatedLibraryItems {
   width: 100%;
@@ -140,7 +145,12 @@ permalink: /library-detail/index.html
 </section>
 
 <script type="module">
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {
+  initializeApp,
+  getApps,
+  getApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
 import {
   getFirestore,
   doc,
@@ -158,13 +168,39 @@ const firebaseConfig = {
   appId: "1:852768512121:web:a5167c06137209c2df1ca8"
 };
 
-const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const container = document.getElementById("dynamicLibraryDetail");
-const params = new URLSearchParams(location.search);
-const type = params.get("type");
-const id = params.get("id");
+const app = getApps().length
+  ? getApp()
+  : initializeApp(firebaseConfig);
 
+const db = getFirestore(app);
+
+const container = document.getElementById(
+  "dynamicLibraryDetail"
+);
+
+/*
+  دعم طريقتين لفتح المحتوى:
+
+  1. الرابط القديم:
+     /library-detail/?type=novels&id=...
+
+  2. الرابط العربي:
+     /novels/اسم-الرواية/
+
+     وفي هذه الحالة يمرر Cloudflare Worker
+     بيانات المحتوى عبر __LIBRARY_CONTENT__
+*/
+
+const params = new URLSearchParams(
+  window.location.search
+);
+
+const workerData = window.__LIBRARY_CONTENT__ || {};
+
+const type = params.get("type") || workerData.type;
+const id = params.get("id") || workerData.id;
+
+/* حماية النصوص المعروضة داخل HTML */
 function escapeHtml(value = "") {
   return String(value ?? "")
     .replaceAll("&", "&amp;")
@@ -174,47 +210,96 @@ function escapeHtml(value = "") {
     .replaceAll("'", "&#039;");
 }
 
+/* تحويل عنوان الكتاب أو الرواية إلى رابط عربي */
+function arabicSlug(value = "") {
+  return String(value)
+    .normalize("NFKC")
+    .trim()
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
+}
+
+/*
+  روابط المحتوى المقترح.
+
+  نستخدم الرابط العربي إذا كان العنوان موجودًا،
+  ونحتفظ بالرابط الديناميكي كحل احتياطي.
+*/
 function contentUrl(item, contentType) {
+  const slug = arabicSlug(item.title || "");
+
+  if (slug) {
+    return "/" + contentType + "/" +
+      encodeURIComponent(slug) + "/";
+  }
+
   return "/library-detail/?type=" +
     encodeURIComponent(contentType) +
     "&id=" + encodeURIComponent(item.id);
 }
 
+/* قراءة بيانات الكتاب أو الرواية */
 async function loadDetail() {
-  if (!["books", "novels"].includes(type) || !id) {
-    container.textContent = "رابط المحتوى غير صحيح.";
+
+  if (
+    !["books", "novels"].includes(type) ||
+    !id
+  ) {
+    container.textContent =
+      "رابط المحتوى غير صحيح.";
     return;
   }
 
   try {
-    const snapshot = await getDoc(doc(db, type, id));
+    const snapshot = await getDoc(
+      doc(db, type, id)
+    );
 
-    if (!snapshot.exists() || snapshot.data().status !== "published") {
-      container.textContent = "هذا المحتوى غير متاح.";
+    if (
+      !snapshot.exists() ||
+      snapshot.data().status !== "published"
+    ) {
+      container.textContent =
+        "هذا المحتوى غير متاح.";
       return;
     }
 
     const item = snapshot.data();
+
     const title = item.title || "بدون عنوان";
     const cover = item.coverUrl || item.cover || "";
+
     const readerUrl = item.pdfUrl
-      ? "/reader/?url=" + encodeURIComponent(item.pdfUrl) +
-        "&title=" + encodeURIComponent(title)
+      ? "/reader/?url=" +
+        encodeURIComponent(item.pdfUrl) +
+        "&title=" +
+        encodeURIComponent(title)
       : "";
 
+    /* عنوان الصفحة في المتصفح */
     document.title = title + " | علم الهدى";
 
+    /*
+      عرض التفاصيل مع الحفاظ
+      على التصميم الحالي
+    */
     container.innerHTML = `
-      <article class="library-card" style="max-width:850px;margin:auto">
+      <article class="library-card"
+               style="max-width:850px;margin:auto">
+
         ${cover ? `
           <div class="library-cover">
-            <img src="${escapeHtml(cover)}"
-                 alt="${escapeHtml(title)}"
-                 style="max-height:340px;object-fit:contain">
+            <img
+              src="${escapeHtml(cover)}"
+              alt="غلاف ${escapeHtml(title)}"
+              style="max-height:340px;object-fit:contain"
+            >
           </div>
         ` : ""}
 
         <div class="library-card-content">
+
           <h1>${escapeHtml(title)}</h1>
 
           ${item.author ? `
@@ -224,7 +309,9 @@ async function loadDetail() {
           ` : ""}
 
           ${item.category ? `
-            <p>التصنيف: ${escapeHtml(item.category)}</p>
+            <p>
+              التصنيف: ${escapeHtml(item.category)}
+            </p>
           ` : ""}
 
           ${item.description ? `
@@ -234,52 +321,104 @@ async function loadDetail() {
           ` : ""}
 
           ${readerUrl ? `
-            <a class="library-read-btn"
-               href="${escapeHtml(readerUrl)}">
-              ${type === "novels" ? "قراءة الرواية" : "قراءة الكتاب"}
+            <a
+              class="library-read-btn"
+              href="${escapeHtml(readerUrl)}"
+            >
+              ${type === "novels"
+                ? "قراءة الرواية"
+                : "قراءة الكتاب"}
             </a>
           ` : ""}
+
         </div>
+
       </article>
-      <div id="relatedLibraryItems" style="max-width:1000px;margin:32px auto"></div>
+
+      <div
+        id="relatedLibraryItems"
+        style="max-width:1000px;margin:32px auto"
+      ></div>
     `;
 
-    const relatedContainer = document.getElementById("relatedLibraryItems");
-    const all = await getDocs(collection(db, type));
+    /*
+      تحميل الكتب أو الروايات
+      المقترحة من نفس التصنيف
+    */
+    const relatedContainer = document.getElementById(
+      "relatedLibraryItems"
+    );
+
+    const all = await getDocs(
+      collection(db, type)
+    );
+
     const related = all.docs
-      .map(d => ({ id: d.id, ...d.data() }))
+      .map(d => ({
+        id: d.id,
+        ...d.data()
+      }))
       .filter(other =>
         other.id !== id &&
         other.status === "published" &&
+        item.category &&
         other.category === item.category
       )
       .slice(0, 8);
 
     if (related.length) {
+
       relatedContainer.innerHTML = `
         <h2>اقرأ أيضًا من نفس التصنيف</h2>
-        <div class="home-library-track" style="overflow-x:auto">
+
+        <div
+          class="home-library-track"
+          style="overflow-x:auto"
+        >
+
           ${related.map(other => `
             <article class="home-library-card">
+
               <div class="home-library-cover">
+
                 ${other.coverUrl || other.cover ? `
-                  <img src="${escapeHtml(other.coverUrl || other.cover)}"
-                       alt="${escapeHtml(other.title || "")}"
-                       loading="lazy">
+                  <img
+                    src="${escapeHtml(
+                      other.coverUrl || other.cover
+                    )}"
+                    alt="${escapeHtml(other.title || "")}"
+                    loading="lazy"
+                  >
                 ` : ""}
+
               </div>
-              <a class="home-library-read"
-                 href="${escapeHtml(contentUrl(other, type))}">
-                ${escapeHtml(other.title || "اقرأ الآن")} ←
+
+              <a
+                class="home-library-read"
+                href="${escapeHtml(
+                  contentUrl(other, type)
+                )}"
+              >
+                ${escapeHtml(
+                  other.title || "اقرأ الآن"
+                )} ←
               </a>
+
             </article>
           `).join("")}
+
         </div>
       `;
     }
+
   } catch (error) {
-    console.error("Library detail error:", error);
-    container.textContent = "تعذر تحميل التفاصيل. حاول مرة أخرى.";
+    console.error(
+      "Library detail error:",
+      error
+    );
+
+    container.textContent =
+      "تعذر تحميل التفاصيل. حاول مرة أخرى.";
   }
 }
 
