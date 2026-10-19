@@ -9,223 +9,134 @@ date: 2026-09-22T00:00:00.000+03:00
 image: /assets/images/uploads/تصشميم-بدون-عنوان.png
 tags: article
 ---
-# Privacy Policy for ALAM VPN
-
-**Effective Date: October 13, 2026**
-
-ALAM VPN (“we”, “our”, or “the app”) respects your privacy. This Privacy Policy explains how information is handled when you use the ALAM VPN Android application.
+# ALAM VPN Privacy Policy
 
 **App Name:** ALAM VPN  
-**Developer / Provider:** Alam elhada fakhereldeen Ahmed  
-**Contact Email:** alamelhada@gmail.com
+**Developer:** Alam elhada  
+**Platform:** iOS (iPhone)  
+**Last Updated:** October 19, 2026
 
----
+## 1. Introduction
 
-## 1. App Overview
+ALAM VPN respects your privacy and is committed to protecting your personal information.
 
-ALAM VPN is a VPN application that allows users to connect to the internet through a VPN server. The app uses Android VPN Service functionality to create and manage the VPN connection.
+This Privacy Policy explains how information may be collected, processed, and used when you access the ALAM VPN application and its VPN services.
 
-ALAM VPN does not require users to create an account. Users can use the app without registering an account.
+Please read this policy carefully before using the application.
 
-## 2. Information We Collect and Process
+## 2. Information We Process
 
-ALAM VPN does not require users to provide names, phone numbers, email addresses, contacts, photos, messages, or precise GPS location.
+Depending on the features you use, ALAM VPN may process the following information:
 
-The app may process limited technical information required to provide its functionality.
+- IP address and network connection information necessary to establish and maintain VPN connections.
+- Operating system version, device model, and basic application information.
+- VPN server selection and technical connection status.
+- Subscription status and purchase verification information.
+- Technical diagnostic information necessary for application security and troubleshooting.
+- Advertising-related information, where advertising services are enabled.
 
-This may include:
-
-- IP address
-- Operating system information
-- Basic app information
-- Device and software parameters
-- VPN connection status
-- Selected VPN server
-- Remaining VPN usage time
-- Number of rewarded ads watched
-- App preferences
-- First-use free time status
-
-Some information, such as app preferences, selected VPN server, remaining usage time, and rewarded-ad status, may be stored locally on the user's device.
+We aim to limit information processing to what is necessary to operate and maintain the service.
 
 ## 3. VPN Service and Network Traffic
 
-When you connect to ALAM VPN, your internet traffic is routed through a VPN server in order to provide the VPN service.
+ALAM VPN routes your network traffic through the VPN server you select.
 
-ALAM VPN does not intentionally collect or sell users' browsing history, websites visited, DNS queries, or the content of users' internet communications.
+The VPN service processes the technical information necessary to establish, maintain, and secure your connection.
 
-Because ALAM VPN provides a VPN service, network traffic must technically pass through the VPN infrastructure while the VPN connection is active.
+The specific connection information retained, if any, and its retention period depend on the configuration of the VPN infrastructure.
 
-Limited technical processing may occur where necessary to:
+ALAM VPN does not sell users' VPN browsing data or personal information.
 
-- Establish and maintain the VPN connection
-- Maintain service stability and security
-- Prevent abuse or misuse
-- Diagnose technical problems
-- Provide the requested VPN functionality
+## 4. Advertising
 
-## 4. Advertising and Third-Party Services
+ALAM VPN may use Yandex Mobile Ads to display advertisements if advertising is enabled in the iOS version.
 
-ALAM VPN uses Yandex Mobile Ads and advertising mediation partners to display advertisements inside the app.
+Yandex Mobile Ads may process device information, advertising identifiers where permitted, application information, and network-related information according to its applicable privacy policies.
 
-Advertisements may include:
+Where required by Apple policies and applicable law, ALAM VPN will request the appropriate permission before enabling advertising-related tracking.
 
-- Banner ads
-- Interstitial ads
-- Rewarded ads
-- App open ads
+Users may manage applicable tracking permissions through their iPhone settings.
 
-Yandex Mobile Ads and its advertising partners may process certain technical information necessary to provide advertising services.
+## 5. Subscriptions and Payments
 
-Depending on the advertising provider and the user's device or settings, this information may include:
+ALAM VPN may offer paid subscriptions through Apple's In-App Purchase system.
 
-- IP address
-- Operating system information
-- Basic app information, such as package name and app version
-- Device and software parameters
-- Advertising identifiers
-- Ad interactions and impressions
-- Diagnostic information
-- Advertising performance information
+Payments are processed by Apple through the App Store.
 
-This information may be used to provide, measure, improve, and personalize advertising, prevent advertising fraud, maintain security, and measure advertising performance.
+ALAM VPN does not collect or store your complete payment card details.
 
-Third-party advertising providers process information according to their own privacy policies and applicable legal requirements.
+The application may process subscription status, transaction identifiers, and purchase verification information to provide access to paid features.
 
-## 5. Rewarded Ads
+Users can manage or cancel subscriptions through their Apple account settings.
 
-ALAM VPN allows users to voluntarily watch rewarded advertisements to receive additional VPN usage time.
+## 6. How Information Is Used
 
-Watching rewarded advertisements is optional.
+Information may be processed to:
 
-When a rewarded advertisement is completed successfully, additional VPN usage time may be added to the app.
+- Establish and maintain VPN connections.
+- Provide access to VPN servers.
+- Verify subscriptions and enable purchased services.
+- Maintain application functionality and security.
+- Diagnose technical problems.
+- Display advertising where enabled and permitted.
+- Comply with applicable legal obligations.
 
-The app may locally store information such as:
+## 7. Third-Party Services
 
-- Remaining VPN usage time
-- Number of rewarded advertisements watched
-- Reward status
+Depending on the functionality enabled, ALAM VPN may integrate with third-party services, including:
 
-This information is used to operate the rewarded-ad functionality.
+- Apple App Store and StoreKit for subscriptions and purchases.
+- Yandex Mobile Ads for advertising, if enabled.
+- VPN hosting and infrastructure providers for operating VPN connections.
 
-## 6. How We Use Information
+These services may process information under their applicable privacy policies and contractual arrangements.
 
-Information may be processed for the following purposes:
+ALAM VPN does not sell personal information.
 
-- To provide and maintain VPN functionality
-- To establish and manage VPN connections
-- To manage remaining VPN usage time
-- To remember app preferences
-- To display advertisements
-- To provide rewarded advertisements
-- To improve app stability
-- To diagnose and troubleshoot technical issues
-- To prevent abuse, fraud, or misuse
-- To maintain app and service security
-- To comply with applicable legal and platform requirements
+## 8. Data Security
 
-## 7. Data Sharing and Third Parties
+We take reasonable technical and organizational measures to protect information processed in connection with the application.
 
-We do not sell users' personal data.
+However, no method of electronic transmission or storage can be guaranteed to be completely secure.
 
-Certain technical information may be processed by third-party service providers used by ALAM VPN, including Yandex Mobile Ads and its advertising mediation partners.
+## 9. Data Retention and Deletion
 
-These third parties may process information for purposes including:
+Information is retained only for as long as necessary for the purposes described in this policy or as required by applicable law.
 
-- Advertising delivery
-- Advertising measurement
-- Advertising personalization where permitted
-- Fraud prevention
-- Security
-- Diagnostics
-- Service improvement
+Where applicable, users may request access to or deletion of personal information by contacting the developer.
 
-Information may also be disclosed where required by applicable law, regulation, legal process, or where necessary to protect the security and integrity of ALAM VPN and its services.
+Certain transaction records may remain available through Apple or be retained where legally required.
 
-## 8. Local Data Storage
+## 10. Children's Privacy
 
-Certain app information may be stored locally on the user's device.
+ALAM VPN is not specifically designed for children.
 
-This may include:
+We do not knowingly collect personal information from children in violation of applicable privacy laws.
 
-- App preferences
-- Selected VPN server
-- Remaining VPN usage time
-- Rewarded-ad status
-- First-use free time status
+If we become aware of such collection, we will take appropriate steps to address it.
 
-Local information may remain on the device until the user clears the app's data or uninstalls ALAM VPN.
+## 11. Your Privacy Choices
 
-## 9. Data Retention
+Depending on your location and applicable law, you may have rights to request access to, correction of, or deletion of your personal information.
 
-ALAM VPN does not require users to create an account.
+You may also manage applicable application permissions and advertising tracking preferences through iOS settings.
 
-Locally stored app information may remain on the user's device until:
+## 12. Changes to This Privacy Policy
 
-- The app data is cleared
-- The information is overwritten by the app
-- ALAM VPN is uninstalled
+We may update this Privacy Policy to reflect changes in the application, its services, or applicable legal requirements.
 
-Third-party service providers may retain information according to their own privacy policies and applicable legal requirements.
+The updated policy will be made available through the application or its official privacy policy page.
 
-## 10. Account Creation and Deletion
+## 13. Contact
 
-ALAM VPN does not provide user account registration and does not require users to create an account.
+**Developer:** Alam elhada  
+**Application:** ALAM VPN  
+**Support Email:** [Insert your official support email]
 
-Because ALAM VPN does not create a user account, there is no account deletion process inside the app.
+For privacy questions, requests, or concerns, please contact the developer using the email address above.
 
-Users can remove locally stored ALAM VPN information by clearing the app's data through Android settings or by uninstalling the application.
+## 14. Privacy Notice Acceptance
 
-## 11. Data Security
+By selecting **"Agree and Continue"**, you acknowledge that you have read this Privacy Policy.
 
-We use reasonable technical measures designed to protect the operation of ALAM VPN and its services.
-
-VPN connections are intended to provide a secure connection while the VPN service is active.
-
-However, no internet transmission, VPN technology, or electronic storage system can be guaranteed to be completely secure.
-
-## 12. International and Cross-Border Data Processing
-
-ALAM VPN may connect users to VPN servers located outside their country or region.
-
-As a result, network traffic and limited technical information necessary to provide the VPN service may be processed in countries or regions where our VPN infrastructure operates.
-
-In addition, third-party advertising providers may process information in countries or regions where their infrastructure, partners, or service providers operate.
-
-Such processing is subject to applicable legal requirements and the privacy practices of the relevant service providers.
-
-## 13. Children's Privacy
-
-ALAM VPN is not directed to children under the age of 13.
-
-We do not knowingly request personal information directly from children under the age of 13.
-
-If you believe that a child has provided personal information through ALAM VPN, please contact us using the email address provided below.
-
-## 14. User Choices
-
-Users can:
-
-- Connect or disconnect the VPN at any time
-- Choose whether to watch rewarded advertisements
-- Clear ALAM VPN app data through Android settings
-- Uninstall ALAM VPN
-- Manage applicable advertising privacy or personalization settings through their device or relevant advertising services
-
-## 15. Changes to This Privacy Policy
-
-We may update this Privacy Policy from time to time to reflect changes to ALAM VPN, third-party services, legal requirements, or privacy practices.
-
-When this Privacy Policy is updated, the revised version will be published on the privacy policy page with an updated effective date.
-
-## 16. Contact Us
-
-If you have questions, concerns, or requests regarding this Privacy Policy or ALAM VPN, please contact:
-
-**App:** ALAM VPN
-
-**Developer / Provider:**  
-Alam elhada fakhereldeen Ahmed
-
-**Email:**  
-alamelhada@gmail.com
+Any consent required for specific processing activities, such as advertising tracking, will be requested separately where applicable.
