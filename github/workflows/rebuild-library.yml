@@ -1,0 +1,34 @@
+
+name: Rebuild Library
+
+on:
+  repository_dispatch:
+    types: [library_updated]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: library-rebuild
+  cancel-in-progress: false
+
+jobs:
+  trigger-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Trigger Cloudflare build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git commit --allow-empty -m "chore: rebuild library pages"
+          git push origin HEAD:main
