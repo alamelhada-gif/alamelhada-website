@@ -121,23 +121,26 @@ function arabicSlug(value = "") {
 }
 
 
+
 function getContentUrl(item, type) {
-  if (!item) return "#";
+  if (!item || !item.id) return "#";
+
+  let contentType;
 
   if (type === "books" || type === "book") {
-    const slug = arabicSlug(item.title || "كتاب");
-    return `/books/${encodeURIComponent(slug)}/`;
+    contentType = "books";
+  } else if (type === "novels" || type === "novel") {
+    contentType = "novels";
+  } else {
+    return getReaderUrl(item);
   }
 
-
-if (type === "novels" || type === "novel") {
-  const slug = arabicSlug(item.title || "رواية");
-  return `/novels/${encodeURIComponent(slug)}/`;
+  return (
+    `/library-detail/?type=${contentType}` +
+    `&id=${encodeURIComponent(item.id)}`
+  );
 }
 
-
-  return getReaderUrl(item);
-}
 
 
 function isExternalReaderLink(item, type) {
