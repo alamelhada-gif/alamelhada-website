@@ -77,7 +77,6 @@ class NovelPages {
   render(data) {
     const novel = data.novel;
 
-    
     const relatedNovels = (data.libraryCatalog?.novels || [])
       .filter(item =>
         item.id !== novel.id &&
@@ -85,7 +84,6 @@ class NovelPages {
         cleanText(novel.category) !== ""
       )
       .slice(0, 6);
-
 
     const title = cleanText(novel.title) || "رواية";
     const author = cleanText(novel.author);
@@ -116,7 +114,9 @@ class NovelPages {
       }
     };
 
-    if (description) schema.description = description;
+    if (description) {
+      schema.description = description;
+    }
 
     if (author) {
       schema.author = {
@@ -125,7 +125,9 @@ class NovelPages {
       };
     }
 
-    if (cover) schema.image = cover;
+    if (cover) {
+      schema.image = cover;
+    }
 
     const jsonLd = JSON.stringify(schema)
       .replace(/</g, "\\u003c");
@@ -180,18 +182,22 @@ class NovelPages {
   <link rel="icon" href="/favicon.svg">
   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
+
 <body>
   <main style="max-width:850px;margin:40px auto;padding:24px;text-align:center">
+
     <a href="/novels/">العودة إلى الروايات</a>
 
     <article>
       <h1>${escapeHtml(title)}</h1>
 
-      ${cover ? `<img src="${escapeHtml(cover)}"
-        alt="غلاف ${escapeHtml(title)}"
-        loading="eager"
-        decoding="async"
-        style="max-width:100%;max-height:440px;object-fit:contain;border-radius:16px">` : ""}
+      ${cover ? `
+        <img src="${escapeHtml(cover)}"
+             alt="غلاف ${escapeHtml(title)}"
+             loading="eager"
+             decoding="async"
+             style="max-width:100%;max-height:440px;object-fit:contain;border-radius:16px">
+      ` : ""}
 
       ${author ? `<p>المؤلف: ${escapeHtml(author)}</p>` : ""}
 
@@ -201,9 +207,87 @@ class NovelPages {
         ${escapeHtml(description)}
       </p>
 
-      ${readerUrl ? `<a href="${escapeHtml(readerUrl)}"
-        style="display:inline-block;padding:14px 28px;background:#4F9A43;color:white;border-radius:12px;text-decoration:none">قراءة الرواية</a>` : ""}
+      ${readerUrl ? `
+        <a href="${escapeHtml(readerUrl)}"
+           style="display:inline-block;padding:14px 28px;background:#4F9A43;color:white;border-radius:12px;text-decoration:none">
+          قراءة الرواية
+        </a>
+      ` : ""}
+
     </article>
+
+    ${relatedNovels.length ? `
+      <section style="margin-top:55px;text-align:right">
+
+        <h2 style="font-size:24px;margin-bottom:8px">
+          اقرأ أيضًا من نفس التصنيف
+        </h2>
+
+        <p style="color:#777;font-size:14px;margin-bottom:24px">
+          روايات أخرى من تصنيف ${escapeHtml(category)}
+        </p>
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+          gap:18px;
+        ">
+
+          ${relatedNovels.map(item => {
+            const itemTitle = cleanText(item.title) || "رواية";
+            const itemCover = safeUrl(item.coverUrl || item.cover);
+
+            return `
+              <a href="${escapeHtml(novelPath(item))}"
+                 style="
+                   display:block;
+                   text-align:center;
+                   text-decoration:none;
+                   color:inherit;
+                   border:1px solid #e8e8e8;
+                   border-radius:15px;
+                   padding:12px;
+                   background:#fff;
+                 ">
+
+                ${itemCover ? `
+                  <img src="${escapeHtml(itemCover)}"
+                       alt="غلاف ${escapeHtml(itemTitle)}"
+                       loading="lazy"
+                       decoding="async"
+                       style="
+                         width:100%;
+                         height:210px;
+                         object-fit:contain;
+                         border-radius:10px;
+                       ">
+                ` : ""}
+
+                <h3 style="
+                  font-size:15px;
+                  line-height:1.7;
+                  margin:12px 0 8px;
+                ">
+                  ${escapeHtml(itemTitle)}
+                </h3>
+
+                <span style="
+                  display:inline-block;
+                  color:#4F9A43;
+                  font-size:13px;
+                  font-weight:600;
+                ">
+                  عرض الرواية ←
+                </span>
+
+              </a>
+            `;
+          }).join("")}
+
+        </div>
+      </section>
+    ` : ""}
+
   </main>
 </body>
 </html>`;
