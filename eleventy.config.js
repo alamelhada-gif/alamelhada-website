@@ -38,6 +38,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("app-ads.txt");
   eleventyConfig.addPassthroughCopy("favicon.svg");
   eleventyConfig.addPassthroughCopy("robots.txt");
+  eleventyConfig.addPassthroughCopy("_redirects");
 
   // إثبات ملكية الموقع في Google Search Console
   eleventyConfig.addPassthroughCopy(
