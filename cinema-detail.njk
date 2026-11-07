@@ -117,7 +117,107 @@ const id = params.get("id") ||
     download.className = "cinema-download";
     download.textContent = "تطبيق المشاهدة قريبًا على Google Play";
 
-    info.append(title, category, description, download);
+    
+info.append(title, category, description, download);
+
+// عرض المواسم والحلقات للمسلسلات فقط
+if (item.kind === "series") {
+  const section = document.createElement("section");
+  section.className = "cinema-seasons";
+  section.style.marginTop = "35px";
+
+  const heading = document.createElement("h2");
+  heading.textContent = "المواسم والحلقات";
+  section.appendChild(heading);
+
+  const status = document.createElement("p");
+  status.textContent = "جاري تحميل الحلقات...";
+  section.appendChild(status);
+
+  info.appendChild(section);
+
+  try {
+    const api = "https://cinema-api.alamelhada.workers.dev";
+
+    const seasonsResponse = await fetch(
+      api + "/seasons?seriesId=" + encodeURIComponent(item.id)
+    );
+
+    if (!seasonsResponse.ok) {
+      throw new Error("تعذر جلب المواسم");
+    }
+
+    const seasons = await seasonsResponse.json();
+
+    status.remove();
+
+    if (!Array.isArray(seasons) || seasons.length === 0) {
+      section.append("لا توجد مواسم منشورة حاليًا");
+    } else {
+      for (const season of seasons) {
+        const seasonBox = document.createElement("div");
+        seasonBox.style.margin = "20px 0";
+
+        const seasonTitle = document.createElement("h3");
+        seasonTitle.textContent =
+          season.title ||
+          season.name ||
+          "الموسم " + (season.season_number ?? season.number ?? "");
+
+        seasonBox.appendChild(seasonTitle);
+
+        const episodesResponse = await fetch(
+          api + "/episodes?seasonId=" + encodeURIComponent(season.id)
+        );
+
+        if (!episodesResponse.ok) {
+          throw new Error("تعذر جلب الحلقات");
+        }
+
+        const episodes = await episodesResponse.json();
+
+        if (!Array.isArray(episodes) || episodes.length === 0) {
+          const empty = document.createElement("p");
+          empty.textContent = "لا توجد حلقات منشورة";
+          seasonBox.appendChild(empty);
+        } else {
+          for (const episode of episodes) {
+            const episodeBox = document.createElement("div");
+            episodeBox.style.padding = "12px";
+            episodeBox.style.margin = "10px 0";
+            episodeBox.style.border = "1px solid #8884";
+            episodeBox.style.borderRadius = "10px";
+
+            const episodeTitle = document.createElement("strong");
+            episodeTitle.textContent =
+              episode.title ||
+              "الحلقة " +
+                (episode.episodeNumber ??
+                 episode.episode_number ??
+                 episode.number ?? "");
+
+            episodeBox.appendChild(episodeTitle);
+
+            if (episode.description) {
+              const episodeDescription =
+                document.createElement("p");
+              episodeDescription.textContent = episode.description;
+              episodeBox.appendChild(episodeDescription);
+            }
+
+            seasonBox.appendChild(episodeBox);
+          }
+        }
+
+        section.appendChild(seasonBox);
+      }
+    }
+  } catch (error) {
+    status.textContent = "تعذر تحميل المواسم والحلقات";
+    console.error(error);
+  }
+}
+
     detail.append(poster, info);
     container.replaceChildren(detail);
   } catch (error) {
