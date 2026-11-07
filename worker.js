@@ -87,14 +87,32 @@ async function handleCinemaDetail(request, env, url, type, id) {
       throw new Error("Invalid cinema data");
     }
 
-    const item = items.find(x =>
-      String(x.id) === id &&
-      x.kind === (type === "movies" ? "movie" : "series")
-    );
+  
+const expectedKind = type === "movies" ? "movie" : "series";
 
-    if (!item) {
-      return new Response("المحتوى غير موجود", { status: 404 });
-    }
+const item = items.find(x =>
+  x.kind === expectedKind &&
+  (
+    String(x.id) === id ||
+    cinemaSlugForItem(x, items) === id
+  )
+);
+
+if (!item) {
+  return new Response("المحتوى غير موجود", { status: 404 });
+}
+
+const friendlySlug = cinemaSlugForItem(item, items);
+const friendlyPath = `/${type}/${encodeURIComponent(friendlySlug)}/`;
+
+// تحويل الروابط القديمة إلى الروابط الجديدة
+if (url.pathname !== friendlyPath) {
+  return Response.redirect(
+    `${url.origin}${friendlyPath}`,
+    301
+  );
+}
+
 
     const templateUrl = new URL("/cinema-detail/", url.origin);
     const templateResponse = await env.ASSETS.fetch(
@@ -105,7 +123,7 @@ async function handleCinemaDetail(request, env, url, type, id) {
 
     let html = await templateResponse.text();
 
-    const canonical = `${SITE}/${type}/${encodeURIComponent(id)}/`;
+    const canonical = `${SITE}${friendlyPath}`;
     const title = String(item.title || "بدون عنوان");
     const description = String(item.description || "")
       .replace(/\s+/g, " ")
