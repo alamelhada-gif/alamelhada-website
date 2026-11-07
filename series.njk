@@ -1,0 +1,90 @@
+---
+layout: base.njk
+title: المسلسلات | علم الهدى
+description: تصفح أحدث المسلسلات على موقع علم الهدى
+permalink: /series/index.html
+---
+
+<section class="section" dir="rtl">
+  <div class="home-library-heading">
+    <div>
+      <span class="home-library-label">تطبيق مشاهدة الأفلام</span>
+      <h1>أحدث المسلسلات</h1>
+    </div>
+  </div>
+
+  <div id="cinemaSeries" class="cinema-grid">
+    <p>جاري تحميل المسلسلات...</p>
+  </div>
+</section>
+
+<style>
+.cinema-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+  margin: 25px 0;
+}
+.cinema-card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.cinema-card img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+}
+.cinema-card h3 {
+  font-size: 15px;
+  margin: 10px 0;
+}
+</style>
+
+<script>
+(async function () {
+  const container = document.getElementById("cinemaSeries");
+
+  try {
+    const response = await fetch(
+      "https://cinema-api.alamelhada.workers.dev/content"
+    );
+
+    if (!response.ok) throw new Error("API error");
+
+    const items = await response.json();
+
+    const series = items.filter(
+      item => item.kind === "series"
+    );
+
+    container.replaceChildren();
+
+    if (!series.length) {
+      container.textContent = "لا توجد مسلسلات حاليًا";
+      return;
+    }
+
+    for (const show of series) {
+      const link = document.createElement("a");
+      link.className = "cinema-card";
+      link.href = "/series/" + encodeURIComponent(show.id) + "/";
+
+      const poster = document.createElement("img");
+      poster.src = show.poster || "";
+      poster.alt = show.title || "مسلسل";
+      poster.loading = "lazy";
+
+      const title = document.createElement("h3");
+      title.textContent = show.title || "بدون عنوان";
+
+      link.append(poster, title);
+      container.appendChild(link);
+    }
+  } catch (error) {
+    container.textContent = "تعذر تحميل المسلسلات حاليًا";
+    console.error(error);
+  }
+})();
+</script>
