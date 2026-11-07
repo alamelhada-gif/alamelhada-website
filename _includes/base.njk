@@ -185,6 +185,30 @@
         الروايات
       {% endif %}
     </a>
+  
+<!-- الأفلام -->
+<a
+  href="/movies/"
+  onclick="document.body.classList.remove('mobile-menu-open')"
+>
+  {% if lang == 'en' %}
+    Movies
+  {% else %}
+    الأفلام
+  {% endif %}
+</a>
+
+<!-- المسلسلات -->
+<a
+  href="/series/"
+  onclick="document.body.classList.remove('mobile-menu-open')"
+>
+  {% if lang == 'en' %}
+    Series
+  {% else %}
+    المسلسلات
+  {% endif %}
+</a>
 
     <!-- التطبيقات -->
     {% if site.show_nav_apps %}
