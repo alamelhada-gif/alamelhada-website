@@ -475,10 +475,13 @@ src="{{ site.hero_image | optimizedImage | escape }}"
   display: none;
 }
 
+
 .home-cinema-card {
   display: block;
-  flex: 0 0 185px;
-  width: 185px;
+  flex: 0 0 125px;
+  width: 125px;
+  min-width: 125px;
+  max-width: 125px;
   scroll-snap-align: start;
   color: inherit;
   text-decoration: none;
@@ -492,23 +495,26 @@ src="{{ site.hero_image | optimizedImage | escape }}"
 .home-cinema-card img {
   display: block;
   width: 100%;
+  height: 185px;
   aspect-ratio: 2 / 3;
   object-fit: cover;
-  border-radius: 14px;
+  border-radius: 9px;
   background: #e5e7eb;
-  box-shadow: 0 8px 22px rgba(0,0,0,.12);
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
 }
 
 .home-cinema-card h3 {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.6;
-  margin: 10px 0 0;
+  text-align: center;
+  margin: 8px 0 0;
   font-weight: 700;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+
 
 #movies .home-library-arrow,
 #series .home-library-arrow {
@@ -529,11 +535,18 @@ src="{{ site.hero_image | optimizedImage | escape }}"
   color: #fff;
 }
 
-@media (max-width: 650px) {
-  #homeMoviesTrack,
-  #homeSeriesTrack {
-    gap: 10px;
-  }
+
+.home-cinema-card {
+  flex: 0 0 110px;
+  width: 110px;
+  min-width: 110px;
+  max-width: 110px;
+}
+
+.home-cinema-card img {
+  height: 165px;
+}
+
 
   .home-cinema-card {
     flex-basis: calc((100% - 10px) / 2);
