@@ -12,6 +12,8 @@
       "/library-detail/*",
       "/books/*",
       "/novels/*",
+      "/movies/*",
+      "/series/*",
       "/sitemap.xml"
     ]
   }
