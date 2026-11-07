@@ -240,6 +240,7 @@ async function handleCinemaDetail(request, env, url, type, id) {
           <span class="cinema-download">
             تطبيق المشاهدة قريبًا على Google Play
           </span>
+          ${seasonsHtml}
         </div>
       </article>`;
 
