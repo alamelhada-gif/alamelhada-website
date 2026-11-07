@@ -2,6 +2,149 @@
 const SITE = "https://alamelhada.com";
 const PROJECT = "riwayati-app-26720";
 
+const CINEMA_API = "https://cinema-api.alamelhada.workers.dev";
+
+async function handleCinemaDetail(request, env, url, type, id) {
+  if (!/^[a-zA-Z0-9_-]+$/.test(id)) {
+    return new Response("رابط غير صالح", { status: 404 });
+  }
+
+  try {
+    const apiResponse = await fetch(`${CINEMA_API}/content`);
+
+    if (!apiResponse.ok) {
+      throw new Error(`Cinema API: ${apiResponse.status}`);
+    }
+
+    const items = await apiResponse.json();
+
+    if (!Array.isArray(items)) {
+      throw new Error("Invalid cinema data");
+    }
+
+    const item = items.find(x =>
+      String(x.id) === id &&
+      x.kind === (type === "movies" ? "movie" : "series")
+    );
+
+    if (!item) {
+      return new Response("المحتوى غير موجود", { status: 404 });
+    }
+
+    const templateUrl = new URL("/cinema-detail/", url.origin);
+    const templateResponse = await env.ASSETS.fetch(
+      new Request(templateUrl, request)
+    );
+
+    if (!templateResponse.ok) return templateResponse;
+
+    let html = await templateResponse.text();
+
+    const canonical = `${SITE}/${type}/${encodeURIComponent(id)}/`;
+    const title = String(item.title || "بدون عنوان");
+    const description = String(item.description || "")
+      .replace(/\s+/g, " ")
+      .slice(0, 160);
+    const fullTitle = `${title} | علم الهدى`;
+    const poster = String(item.poster || "");
+
+    html = html.replace(
+      /<title>[\s\S]*?<\/title>/i,
+      `<title>${escapeHtml(fullTitle)}</title>`
+    );
+
+    html = html.replace(
+      /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i,
+      `<meta name="description" content="${escapeHtml(description)}">`
+    );
+
+    html = html.replace(
+      /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
+      `<link rel="canonical" href="${escapeHtml(canonical)}">`
+    );
+
+    const metaTags = [
+      ["property", "og:type", "website"],
+      ["property", "og:title", fullTitle],
+      ["property", "og:description", description],
+      ["property", "og:url", canonical],
+      ["name", "twitter:title", fullTitle],
+      ["name", "twitter:description", description]
+    ];
+
+    for (const [attr, name, value] of metaTags) {
+      const pattern = new RegExp(
+        `<meta\\s+${attr}="${name}"\\s+content="[^"]*"\\s*\\/?>`,
+        "i"
+      );
+
+      html = html.replace(
+        pattern,
+        `<meta ${attr}="${name}" content="${escapeHtml(value)}">`
+      );
+    }
+
+    if (/^https:\/\//.test(poster)) {
+      html = html.replace(
+        /<meta\s+property="og:image"\s+content="[^"]*"\s*\/?>/i,
+        ""
+      ).replace(
+        /<meta\s+name="twitter:image"\s+content="[^"]*"\s*\/?>/i,
+        ""
+      ).replace(
+        "</head>",
+        `<meta property="og:image" content="${escapeHtml(poster)}">
+         <meta name="twitter:image" content="${escapeHtml(poster)}">
+         </head>`
+      );
+    }
+
+    // تجهيز بيانات الصفحة للعرض دون جلب الفيديو
+    const bootstrap = {
+      id: item.id,
+      kind: item.kind,
+      title,
+      description: String(item.description || ""),
+      poster,
+      category: String(item.category || "")
+    };
+
+    html = html.replace(
+      "</head>",
+      `<script>window.__CINEMA_CONTENT__=${safeJson(bootstrap)};</script></head>`
+    );
+
+    // عرض محتوى الفيلم في HTML حتى تتمكن محركات البحث من قراءته
+    const detailHtml = `
+      <article class="cinema-detail">
+        ${/^https:\/\//.test(poster)
+          ? `<img class="cinema-detail-poster"
+                  src="${escapeHtml(poster)}"
+                  alt="${escapeHtml(title)}">`
+          : ""}
+        <div class="cinema-detail-info">
+          <h1>${escapeHtml(title)}</h1>
+          <p>${type === "movies" ? "فيلم" : "مسلسل"}</p>
+          <p>${escapeHtml(String(item.description || "لا يوجد وصف حاليًا"))}</p>
+          <span class="cinema-download">
+            تطبيق المشاهدة قريبًا على Google Play
+          </span>
+        </div>
+      </article>`;
+
+    html = html.replace(
+      /<div id="cinemaDetail">[\s\S]*?<\/div>/i,
+      `<div id="cinemaDetail">${detailHtml}</div>`
+    );
+
+    return htmlResponse(html);
+  } catch (error) {
+    console.error("Cinema detail error:", error);
+    return new Response("تعذر تحميل التفاصيل حاليًا", { status: 503 });
+  }
+}
+
+
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, c => ({
     "&": "&amp;",
