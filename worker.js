@@ -45,6 +45,30 @@ async function getCinemaSeasons(seriesId) {
   return results;
 }
 
+function cinemaSlug(value = "") {
+  return String(value)
+    .normalize("NFKC")
+    .trim()
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+// إنشاء رابط فريد لكل فيلم أو مسلسل
+function cinemaSlugForItem(item, items) {
+  const base = cinemaSlug(item.title) || "content";
+
+  const sameTitle = items
+    .filter(x => x.kind === item.kind)
+    .filter(x => cinemaSlug(x.title) === base)
+    .sort((a, b) => String(a.id).localeCompare(String(b.id)));
+
+  if (sameTitle.length <= 1) return base;
+
+  // إضافة جزء من المعرف عند تكرار العنوان
+  return `${base}-${String(item.id).slice(0, 8)}`;
+}
+
 async function handleCinemaDetail(request, env, url, type, id) {
   if (!/^[a-zA-Z0-9_-]+$/.test(id)) {
     return new Response("رابط غير صالح", { status: 404 });
