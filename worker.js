@@ -361,6 +361,22 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    // صفحات تفاصيل الأفلام والمسلسلات
+    const cinemaMatch = url.pathname.match(
+      /^\/(movies|series)\/([a-zA-Z0-9_-]+)\/?$/
+    );
+
+    if (cinemaMatch) {
+      return handleCinemaDetail(
+        request,
+        env,
+        url,
+        cinemaMatch[1],
+        cinemaMatch[2]
+      );
+    }
+
+
     // خريطة الموقع الديناميكية
     if (url.pathname === "/sitemap.xml") {
       return generateSitemap(request, env);
