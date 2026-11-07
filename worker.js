@@ -457,6 +457,36 @@ async function getPublishedUrls(type) {
   return [...urls];
 }
 
+async function getCinemaSitemapUrls() {
+  const response = await fetch(`${CINEMA_API}/content`);
+
+  if (!response.ok) {
+    throw new Error(`Cinema API: ${response.status}`);
+  }
+
+  const items = await response.json();
+
+  if (!Array.isArray(items)) {
+    throw new Error("Invalid cinema content");
+  }
+
+  return items
+    .filter(item =>
+      item &&
+      item.id &&
+      (item.kind === "movie" || item.kind === "series")
+    )
+    .map(item => {
+      const type = item.kind === "movie"
+        ? "movies"
+        : "series";
+
+      const slug = cinemaSlugForItem(item, items);
+
+      return `${SITE}/${type}/${encodeURIComponent(slug)}/`;
+    });
+}
+
 // إنشاء خريطة موقع متجددة من Firebase
 async function generateSitemap(request, env) {
   const staticResponse = await env.ASSETS.fetch(request);
@@ -470,6 +500,14 @@ async function generateSitemap(request, env) {
       getPublishedUrls("books"),
       getPublishedUrls("novels")
     ]);
+ 
+let cinemaUrls = [];
+
+try {
+  cinemaUrls = await getCinemaSitemapUrls();
+} catch (error) {
+  console.error("Cinema sitemap error:", error);
+}
 
     const staticXml = await staticResponse.text();
 
@@ -482,17 +520,23 @@ async function generateSitemap(request, env) {
 
     for (const url of existingUrls) {
       if (
-        !url.startsWith(`${SITE}/books/`) &&
-        !url.startsWith(`${SITE}/novels/`)
+        
+   !url.startsWith(`${SITE}/books/`) &&
+   !url.startsWith(`${SITE}/novels/`) &&
+   !url.startsWith(`${SITE}/movies/`) &&
+   !url.startsWith(`${SITE}/series/`)
+
       ) {
         allUrls.add(url);
       }
     }
 
     // إضافة الكتب والروايات الحالية
-    for (const url of [...books, ...novels]) {
-      allUrls.add(url);
-    }
+     
+  for (const url of [...books, ...novels, ...cinemaUrls]) {
+    allUrls.add(url);
+  }
+
 
     const entries = [...allUrls].map(url => `
   <url>
