@@ -4,6 +4,47 @@ const PROJECT = "riwayati-app-26720";
 
 const CINEMA_API = "https://cinema-api.alamelhada.workers.dev";
 
+
+async function getCinemaSeasons(seriesId) {
+  const api = "https://cinema-api.alamelhada.workers.dev";
+
+  const response = await fetch(
+    `${api}/seasons?seriesId=${encodeURIComponent(seriesId)}`
+  );
+
+  if (!response.ok) {
+    throw new Error(`Seasons API: ${response.status}`);
+  }
+
+  const seasons = await response.json();
+
+  if (!Array.isArray(seasons)) {
+    throw new Error("Invalid seasons response");
+  }
+
+  const results = await Promise.all(
+    seasons.map(async (season) => {
+      const episodesResponse = await fetch(
+        `${api}/episodes?seasonId=${encodeURIComponent(season.id)}`
+      );
+
+      if (!episodesResponse.ok) {
+        throw new Error(`Episodes API: ${episodesResponse.status}`);
+      }
+
+      const episodes = await episodesResponse.json();
+
+      if (!Array.isArray(episodes)) {
+        throw new Error("Invalid episodes response");
+      }
+
+      return { season, episodes };
+    })
+  );
+
+  return results;
+}
+
 async function handleCinemaDetail(request, env, url, type, id) {
   if (!/^[a-zA-Z0-9_-]+$/.test(id)) {
     return new Response("رابط غير صالح", { status: 404 });
