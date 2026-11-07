@@ -155,6 +155,76 @@ async function handleCinemaDetail(request, env, url, type, id) {
       `<script>window.__CINEMA_CONTENT__=${safeJson(bootstrap)};</script></head>`
     );
 
+    // جلب المواسم والحلقات للمسلسلات
+    let seasonsHtml = "";
+    let seasonsSchema = [];
+
+    if (item.kind === "series") {
+      const seasonGroups = await getCinemaSeasons(item.id);
+
+      for (const { season, episodes } of seasonGroups) {
+        const seasonNumber = Number(season.season_number || 1);
+        const seasonTitle =
+          season.title || `الموسم ${seasonNumber}`;
+
+        const sortedEpisodes = [...episodes].sort(
+          (a, b) =>
+            Number(a.episodeNumber || 0) -
+            Number(b.episodeNumber || 0)
+        );
+
+        seasonsHtml += `
+          <section class="cinema-season">
+            <h2>${escapeHtml(seasonTitle)}</h2>
+            <div class="cinema-episodes">
+              ${sortedEpisodes.map(episode => `
+                <article class="cinema-episode">
+                  <h3>${escapeHtml(
+                    episode.title ||
+                    `الحلقة ${episode.episodeNumber}`
+                  )}</h3>
+                  ${episode.description
+                    ? `<p>${escapeHtml(episode.description)}</p>`
+                    : ""}
+                </article>
+              `).join("")}
+            </div>
+          </section>
+        `;
+
+        seasonsSchema.push({
+          "@type": "TVSeason",
+          name: seasonTitle,
+          seasonNumber,
+          episode: sortedEpisodes.map(episode => ({
+            "@type": "TVEpisode",
+            name: episode.title ||
+              `الحلقة ${episode.episodeNumber}`,
+            episodeNumber: Number(episode.episodeNumber || 0),
+            description: episode.description || undefined
+          }))
+        });
+      }
+
+      const seriesSchema = {
+        "@context": "https://schema.org",
+        "@type": "TVSeries",
+        name: title,
+        description: String(item.description || ""),
+        url: canonical,
+        containsSeason: seasonsSchema
+      };
+
+      if (/^https:\/\//.test(poster)) {
+        seriesSchema.image = poster;
+      }
+
+      html = html.replace(
+        "</head>",
+        `<script type="application/ld+json">${safeJson(seriesSchema)}</script></head>`
+      );
+    }
+
     // عرض محتوى الفيلم في HTML حتى تتمكن محركات البحث من قراءته
     const detailHtml = `
       <article class="cinema-detail">
