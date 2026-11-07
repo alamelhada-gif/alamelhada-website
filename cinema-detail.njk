@@ -1,0 +1,115 @@
+---
+layout: base.njk
+title: تفاصيل الفيلم أو المسلسل | علم الهدى
+description: اكتشف الأفلام والمسلسلات على علم الهدى
+permalink: /cinema-detail/index.html
+---
+
+<section class="section" dir="rtl">
+  <div id="cinemaDetail">
+    <p>جاري تحميل التفاصيل...</p>
+  </div>
+</section>
+
+<style>
+.cinema-detail {
+  display: grid;
+  grid-template-columns: minmax(180px, 280px) 1fr;
+  gap: 30px;
+  align-items: start;
+  margin: 30px 0;
+}
+.cinema-detail-poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 16px;
+}
+.cinema-detail-info h1 {
+  margin: 0 0 15px;
+  line-height: 1.6;
+}
+.cinema-detail-info p {
+  line-height: 2;
+}
+.cinema-download {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 22px;
+  border-radius: 10px;
+  background: #333;
+  color: white;
+  text-decoration: none;
+}
+@media(max-width: 600px) {
+  .cinema-detail {
+    grid-template-columns: 1fr;
+  }
+  .cinema-detail-poster {
+    max-width: 260px;
+  }
+}
+</style>
+
+<script>
+(async function () {
+  const container = document.getElementById("cinemaDetail");
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id");
+
+  if (!id) {
+    container.textContent = "لم يتم تحديد الفيلم أو المسلسل";
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      "https://cinema-api.alamelhada.workers.dev/content"
+    );
+
+    if (!response.ok) throw new Error("API error");
+
+    const items = await response.json();
+    const item = items.find(x => String(x.id) === id);
+
+    if (!item) {
+      container.textContent = "المحتوى غير موجود";
+      return;
+    }
+
+    const detail = document.createElement("div");
+    detail.className = "cinema-detail";
+
+    const poster = document.createElement("img");
+    poster.className = "cinema-detail-poster";
+    poster.src = item.poster || "";
+    poster.alt = item.title || "";
+    poster.loading = "eager";
+
+    const info = document.createElement("div");
+    info.className = "cinema-detail-info";
+
+    const title = document.createElement("h1");
+    title.textContent = item.title || "بدون عنوان";
+
+    const category = document.createElement("p");
+    category.textContent =
+      item.kind === "series" ? "مسلسل" : "فيلم";
+
+    const description = document.createElement("p");
+    description.textContent =
+      item.description || "لا يوجد وصف حاليًا";
+
+    const download = document.createElement("span");
+    download.className = "cinema-download";
+    download.textContent = "تطبيق المشاهدة قريبًا على Google Play";
+
+    info.append(title, category, description, download);
+    detail.append(poster, info);
+    container.replaceChildren(detail);
+  } catch (error) {
+    container.textContent = "تعذر تحميل التفاصيل حاليًا";
+    console.error(error);
+  }
+})();
+</script>
