@@ -381,6 +381,155 @@ src="{{ site.hero_image | optimizedImage | escape }}"
 
 {% endif %}
 
+{# ========================================== #}
+{# أحدث الأفلام والمسلسلات                    #}
+{# ========================================== #}
+
+<section class="section home-library-section" id="movies">
+  <div class="home-library-heading">
+    <div>
+      <span class="home-library-label">تطبيق مشاهدة الأفلام</span>
+      <h2>أحدث الأفلام</h2>
+    </div>
+    <a class="home-library-all" href="/movies/">
+      عرض الكل ←
+    </a>
+  </div>
+
+  <div class="home-library-slider">
+    <button class="home-library-arrow home-library-prev"
+      type="button" data-slider-target="homeMoviesTrack"
+      data-direction="prev" aria-label="الأفلام السابقة">‹</button>
+
+    <div class="home-library-track" id="homeMoviesTrack">
+      <p class="home-library-loading">جاري تحميل الأفلام...</p>
+    </div>
+
+    <button class="home-library-arrow home-library-next"
+      type="button" data-slider-target="homeMoviesTrack"
+      data-direction="next" aria-label="الأفلام التالية">›</button>
+  </div>
+</section>
+
+<section class="section home-library-section" id="series">
+  <div class="home-library-heading">
+    <div>
+      <span class="home-library-label">تطبيق مشاهدة الأفلام</span>
+      <h2>أحدث المسلسلات</h2>
+    </div>
+    <a class="home-library-all" href="/series/">
+      عرض الكل ←
+    </a>
+  </div>
+
+  <div class="home-library-slider">
+    <button class="home-library-arrow home-library-prev"
+      type="button" data-slider-target="homeSeriesTrack"
+      data-direction="prev" aria-label="المسلسلات السابقة">‹</button>
+
+    <div class="home-library-track" id="homeSeriesTrack">
+      <p class="home-library-loading">جاري تحميل المسلسلات...</p>
+    </div>
+
+    <button class="home-library-arrow home-library-next"
+      type="button" data-slider-target="homeSeriesTrack"
+      data-direction="next" aria-label="المسلسلات التالية">›</button>
+  </div>
+</section>
+
+<style>
+.home-cinema-card {
+  display: block;
+  flex: 0 0 155px;
+  width: 155px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.home-cinema-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.home-cinema-card h3 {
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 8px 0 0;
+}
+
+@media (max-width: 600px) {
+  .home-cinema-card {
+    flex-basis: 125px;
+    width: 125px;
+  }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", async function () {
+  const api = "https://cinema-api.alamelhada.workers.dev/content";
+
+  const moviesTrack = document.getElementById("homeMoviesTrack");
+  const seriesTrack = document.getElementById("homeSeriesTrack");
+
+  function renderItems(track, items, type) {
+    track.replaceChildren();
+
+    if (!items.length) {
+      const empty = document.createElement("p");
+      empty.textContent = "لا يوجد محتوى منشور حاليًا";
+      track.appendChild(empty);
+      return;
+    }
+
+    items.slice(0, 15).forEach(function(item) {
+      const link = document.createElement("a");
+      link.className = "home-cinema-card";
+      link.href = "/" + type + "/" +
+        encodeURIComponent(item.id) + "/";
+
+      const img = document.createElement("img");
+      img.src = item.poster || "";
+      img.alt = item.title || "";
+      img.loading = "lazy";
+
+      const title = document.createElement("h3");
+      title.textContent = item.title || "بدون عنوان";
+
+      link.append(img, title);
+      track.appendChild(link);
+    });
+  }
+
+  try {
+    const response = await fetch(api);
+    if (!response.ok) throw new Error("API error");
+
+    const items = await response.json();
+    if (!Array.isArray(items)) throw new Error("Invalid data");
+
+    renderItems(
+      moviesTrack,
+      items.filter(item => item.kind === "movie"),
+      "movies"
+    );
+
+    renderItems(
+      seriesTrack,
+      items.filter(item => item.kind === "series"),
+      "series"
+    );
+  } catch (error) {
+    moviesTrack.textContent = "تعذر تحميل الأفلام";
+    seriesTrack.textContent = "تعذر تحميل المسلسلات";
+    console.error(error);
+  }
+});
+</script>
+
 {# ========================================================= #}
 {# الروايات                                                  #}
 {# ========================================================= #}
