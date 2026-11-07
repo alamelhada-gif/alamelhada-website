@@ -516,9 +516,19 @@ export default {
     const url = new URL(request.url);
 
     // صفحات تفاصيل الأفلام والمسلسلات
-    const cinemaMatch = url.pathname.match(
-      /^\/(movies|series)\/([a-zA-Z0-9_-]+)\/?$/
-    );
+    
+let cinemaPath;
+
+try {
+  cinemaPath = decodeURIComponent(url.pathname);
+} catch {
+  return new Response("رابط غير صالح", { status: 400 });
+}
+
+const cinemaMatch = cinemaPath.match(
+  /^\/(movies|series)\/([^/]+)\/?$/
+);
+
 
     if (cinemaMatch) {
       return handleCinemaDetail(
