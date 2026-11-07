@@ -1294,6 +1294,78 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
     });
+ 
+ 
+  /* ==========================================
+     الحركة التلقائية للأفلام والمسلسلات
+     ========================================== */
+
+  function startCinemaAutoSlider(trackId) {
+    const track = document.getElementById(trackId);
+
+    if (!track) return;
+
+    let timer;
+
+    function moveSlider() {
+      const cards = track.querySelectorAll(".home-cinema-card");
+
+      if (cards.length < 2) return;
+
+      const cardWidth = cards[0].getBoundingClientRect().width;
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      const step = cardWidth + gap;
+
+      const maxScroll = track.scrollWidth - track.clientWidth;
+
+      if (maxScroll <= 1) return;
+
+      const direction = getComputedStyle(track).direction;
+
+      if (direction === "rtl") {
+        if (Math.abs(track.scrollLeft) >= maxScroll - step / 2) {
+          track.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          track.scrollBy({ left: -step, behavior: "smooth" });
+        }
+      } else {
+        if (track.scrollLeft >= maxScroll - step / 2) {
+          track.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          track.scrollBy({ left: step, behavior: "smooth" });
+        }
+      }
+    }
+
+    function start() {
+      clearInterval(timer);
+      timer = setInterval(moveSlider, 3000);
+    }
+
+    function stop() {
+      clearInterval(timer);
+    }
+
+    track.addEventListener("mouseenter", stop);
+    track.addEventListener("mouseleave", start);
+
+    track.addEventListener("touchstart", stop, { passive: true });
+    track.addEventListener("touchend", start, { passive: true });
+    track.addEventListener("touchcancel", start, { passive: true });
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        stop();
+      } else {
+        start();
+      }
+    });
+
+    start();
+  }
+
+  startCinemaAutoSlider("homeMoviesTrack");
+  startCinemaAutoSlider("homeSeriesTrack");
 
 
   /* =======================================================
