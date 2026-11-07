@@ -70,9 +70,15 @@ function cinemaSlugForItem(item, items) {
 }
 
 async function handleCinemaDetail(request, env, url, type, id) {
-  if (!/^[a-zA-Z0-9_-]+$/.test(id)) {
-    return new Response("رابط غير صالح", { status: 404 });
-  }
+  
+if (
+  !id ||
+  id.length > 250 ||
+  !/^[\p{L}\p{N}_-]+$/u.test(id)
+) {
+  return new Response("رابط غير صالح", { status: 404 });
+}
+
 
   try {
     const apiResponse = await fetch(`${CINEMA_API}/content`);
