@@ -54,7 +54,20 @@ permalink: /cinema-detail/index.html
 <script>
 (async function () {
   const container = document.getElementById("cinemaDetail");
-  const params = new URLSearchParams(location.search);
+
+const params = new URLSearchParams(location.search);
+
+const pathParts = window.location.pathname
+  .split("/")
+  .filter(Boolean);
+
+const id = params.get("id") ||
+  (
+    ["movies", "series"].includes(pathParts[0])
+      ? pathParts[1]
+      : null
+  );
+
   const id = params.get("id");
 
   if (!id) {
