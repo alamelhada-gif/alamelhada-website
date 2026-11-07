@@ -112,7 +112,10 @@ const friendlySlug = cinemaSlugForItem(item, items);
 const friendlyPath = `/${type}/${encodeURIComponent(friendlySlug)}/`;
 
 // تحويل الروابط القديمة إلى الروابط الجديدة
-if (url.pathname !== friendlyPath) {
+
+if (decodeURIComponent(url.pathname) !==
+    decodeURIComponent(friendlyPath)) {
+
   return Response.redirect(
     `${url.origin}${friendlyPath}`,
     301
