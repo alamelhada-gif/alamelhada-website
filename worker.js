@@ -702,6 +702,7 @@ async function getPublishedUrls(type) {
   return [...urls];
 }
 
+
 async function getCinemaSitemapUrls() {
   const response = await fetch(`${CINEMA_API}/content`);
 
@@ -715,22 +716,74 @@ async function getCinemaSitemapUrls() {
     throw new Error("Invalid cinema content");
   }
 
-  return items
-    .filter(item =>
-      item &&
-      item.id &&
-      (item.kind === "movie" || item.kind === "series")
-    )
-    .map(item => {
-      const type = item.kind === "movie"
-        ? "movies"
-        : "series";
+  const urls = new Set();
 
-      const slug = cinemaSlugForItem(item, items);
+  const validItems = items.filter(item =>
+    item &&
+    item.id &&
+    (item.kind === "movie" || item.kind === "series")
+  );
 
-      return `${SITE}/${type}/${encodeURIComponent(slug)}/`;
-    });
+  for (const item of validItems) {
+    const type = item.kind === "movie"
+      ? "movies"
+      : "series";
+
+    const slug = cinemaSlugForItem(item, items);
+
+    const itemUrl =
+      `${SITE}/${type}/${encodeURIComponent(slug)}/`;
+
+    // إضافة رابط الفيلم أو المسلسل
+    urls.add(itemUrl);
+
+    // إضافة صفحات المواسم للمسلسلات فقط
+    if (item.kind === "series") {
+      try {
+        const seasonsResponse = await fetch(
+          `${CINEMA_API}/seasons?seriesId=${encodeURIComponent(item.id)}`
+        );
+
+        if (!seasonsResponse.ok) {
+          throw new Error(
+            `Seasons API: ${seasonsResponse.status}`
+          );
+        }
+
+        const seasons = await seasonsResponse.json();
+
+        if (!Array.isArray(seasons)) {
+          throw new Error("Invalid seasons response");
+        }
+
+        for (const season of seasons) {
+          const seasonNumber = Number(season.season_number);
+
+          if (
+            !Number.isSafeInteger(seasonNumber) ||
+            seasonNumber < 1
+          ) {
+            continue;
+          }
+
+          // رابط مستقل لكل موسم
+          urls.add(
+            `${itemUrl}season-${seasonNumber}/`
+          );
+        }
+
+      } catch (error) {
+        console.error(
+          `Sitemap seasons error for ${item.id}:`,
+          error
+        );
+      }
+    }
+  }
+
+  return [...urls];
 }
+
 
 // إنشاء خريطة موقع متجددة من Firebase
 async function generateSitemap(request, env) {
