@@ -625,6 +625,20 @@ try {
   return new Response("رابط غير صالح", { status: 400 });
 }
 
+const cinemaSeasonMatch = cinemaPath.match(
+  /^\/series\/([^/]+)\/season-(\d+)\/?$/
+);
+
+if (cinemaSeasonMatch) {
+  return handleCinemaSeasonDetail(
+    request,
+    env,
+    url,
+    cinemaSeasonMatch[1],
+    Number(cinemaSeasonMatch[2])
+  );
+}
+
 const cinemaMatch = cinemaPath.match(
   /^\/(movies|series)\/([^/]+)\/?$/
 );
