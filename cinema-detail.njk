@@ -241,6 +241,82 @@ permalink: /cinema-detail/index.html
     font-size: 25px;
   }
 }
+
+/* بوسترات مواسم المسلسلات */
+
+.cinema-seasons-list {
+  width: 100%;
+  margin-top: 28px;
+  clear: both;
+}
+
+.cinema-seasons-list h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  text-align: right;
+}
+
+.cinema-seasons-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding: 10px 2px 18px;
+  scrollbar-width: none;
+}
+
+.cinema-seasons-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.cinema-seasons-grid .cinema-season-card {
+  display: block;
+  flex: 0 0 125px;
+  width: 125px;
+  min-width: 125px;
+  max-width: 125px;
+  text-decoration: none;
+  color: inherit;
+  scroll-snap-align: start;
+}
+
+.cinema-seasons-grid .cinema-season-card img {
+  display: block;
+  width: 125px;
+  height: 185px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.12);
+}
+
+.cinema-seasons-grid .cinema-season-card h3 {
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+  margin: 8px 0;
+}
+
+@media (max-width: 650px) {
+  .cinema-seasons-grid {
+    gap: 10px;
+  }
+
+  .cinema-seasons-grid .cinema-season-card {
+    flex: 0 0 105px;
+    width: 105px;
+    min-width: 105px;
+    max-width: 105px;
+  }
+
+  .cinema-seasons-grid .cinema-season-card img {
+    width: 105px;
+    height: 155px;
+  }
+}
+
 </style>
 
 
