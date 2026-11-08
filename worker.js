@@ -69,6 +69,37 @@ function cinemaSlugForItem(item, items) {
   return `${base}-${String(item.id).slice(0, 8)}`;
 }
 
+function renderCinemaSeasonCards(seasons, seriesPath, currentSeasonId = "") {
+  return seasons.map(({ season }) => {
+    const seasonNumber = Number(season.season_number || 1);
+    const seasonTitle = String(
+      season.title || `الموسم ${seasonNumber}`
+    );
+
+    const seasonPoster = String(season.poster || "").trim();
+
+    const seasonUrl =
+      `${seriesPath}season-${seasonNumber}/`;
+
+    const isCurrent = String(season.id) === String(currentSeasonId);
+
+    return `
+      <a class="cinema-season-card${isCurrent ? " is-current" : ""}"
+         href="${escapeHtml(seasonUrl)}">
+
+        ${/^https:\/\//i.test(seasonPoster)
+          ? `<img
+               src="${escapeHtml(seasonPoster)}"
+               alt="${escapeHtml(seasonTitle)}"
+               loading="lazy">`
+          : ""}
+
+        <h3>${escapeHtml(seasonTitle)}</h3>
+      </a>
+    `;
+  }).join("");
+}
+
 async function handleCinemaDetail(request, env, url, type, id) {
   
 if (
