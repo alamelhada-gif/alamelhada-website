@@ -240,9 +240,10 @@ if (decodeURIComponent(url.pathname) !==
     // جلب المواسم والحلقات للمسلسلات
     let seasonsHtml = "";
     let seasonsSchema = [];
+    let seasonGroups = [];
 
     if (item.kind === "series") {
-      const seasonGroups = await getCinemaSeasons(item.id);
+  seasonGroups = await getCinemaSeasons(item.id);
 
       for (const { season, episodes } of seasonGroups) {
         const seasonNumber = Number(season.season_number || 1);
@@ -287,6 +288,21 @@ if (decodeURIComponent(url.pathname) !==
           }))
         });
       }
+    
+      // عرض بطاقات المواسم بدل قائمة الحلقات
+      seasonsHtml = seasonGroups.length
+        ? `
+          <section class="cinema-seasons-list">
+            <h2>مواسم المسلسل</h2>
+            <div class="cinema-seasons-grid">
+              ${renderCinemaSeasonCards(
+                seasonGroups,
+                friendlyPath
+              )}
+            </div>
+          </section>
+        `
+        : "";
 
       const seriesSchema = {
         "@context": "https://schema.org",
