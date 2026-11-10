@@ -493,9 +493,28 @@ async function handleCinemaSeasonDetail(
                      alt="${escapeHtml(seasonTitle)}">`
             : ""}
 
-          ${description
-            ? `<p>${escapeHtml(description)}</p>`
-            : ""}
+          
+${description ? `
+  <div class="episode-description">
+    <p class="episode-description-text" id="episodeDescription">
+      ${escapeHtml(description)}
+    </p>
+    <button
+      type="button"
+      class="episode-read-more"
+      id="episodeReadMore"
+      aria-expanded="false"
+      aria-controls="episodeDescription"
+      onclick="
+        const p = document.getElementById('episodeDescription');
+        const expanded = p.classList.toggle('expanded');
+        this.textContent = expanded ? 'عرض أقل' : '...المزيد';
+        this.setAttribute('aria-expanded', String(expanded));
+      "
+    >...المزيد</button>
+  </div>
+` : ""}
+
 
           <h2>حلقات ${escapeHtml(seasonTitle)}</h2>
 
