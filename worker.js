@@ -335,9 +335,16 @@ if (decodeURIComponent(url.pathname) !==
           <h1>${escapeHtml(title)}</h1>
           <p>${type === "movies" ? "فيلم" : "مسلسل"}</p>
           <p>${escapeHtml(String(item.description || "لا يوجد وصف حاليًا"))}</p>
-          <span class="cinema-download">
-            تطبيق المشاهدة قريبًا على Google Play
-          </span>
+          
+<a
+  class="cinema-download"
+  href="https://apkpure.com/p/alam.movie"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  للمشاهدة نزّل التطبيق من هنا
+</a>
+
           ${seasonsHtml}
         </div>
       </article>`;
