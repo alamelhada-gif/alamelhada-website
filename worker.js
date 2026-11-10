@@ -338,7 +338,7 @@ if (decodeURIComponent(url.pathname) !==
           
 <a
   class="cinema-download"
-  href="https://apkpure.com/p/alam.movie"
+  href="https://apkpure.com/apkpure/com.apkpure.aegon/download/3.20.8201?utm_content=1015&icn=aegon&ici=how_to_install&from=how_to_install"
   target="_blank"
   rel="noopener noreferrer"
 >
