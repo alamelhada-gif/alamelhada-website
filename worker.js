@@ -740,7 +740,15 @@ async function handleCinemaEpisodeDetail(
             : ""}
 
           <h2>تفاصيل الحلقة</h2>
-          <p><strong>المسلسل:</strong> ${escapeHtml(series.title)}</p>
+         
+<p>
+  <strong>المسلسل:</strong>
+  <a href="${escapeHtml(seriesPath)}"
+     style="color:#2563eb;font-weight:700;text-decoration:none;">
+    ${escapeHtml(series.title)}
+  </a>
+</p>
+
           <p><strong>الموسم:</strong> ${escapeHtml(seasonTitle)}</p>
           <p><strong>الحلقة:</strong> ${escapeHtml(episodeTitle)}</p>
 
