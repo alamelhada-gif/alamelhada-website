@@ -744,9 +744,27 @@ async function handleCinemaEpisodeDetail(
           <p><strong>الموسم:</strong> ${escapeHtml(seasonTitle)}</p>
           <p><strong>الحلقة:</strong> ${escapeHtml(episodeTitle)}</p>
 
-          ${description
-            ? `<p>${escapeHtml(description)}</p>`
-            : ""}
+          
+${description ? `
+  <div class="episode-description">
+    <p class="episode-description-text" id="episodeDescription">
+      ${escapeHtml(description)}
+    </p>
+    <button
+      type="button"
+      class="episode-read-more"
+      aria-expanded="false"
+      aria-controls="episodeDescription"
+      onclick="
+        const p = document.getElementById('episodeDescription');
+        const expanded = p.classList.toggle('expanded');
+        this.textContent = expanded ? 'عرض أقل' : '...المزيد';
+        this.setAttribute('aria-expanded', String(expanded));
+      "
+    >...المزيد</button>
+  </div>
+` : ""}
+
 
           <a class="cinema-download"
              href="https://apkpure.com/p/alam.movie"
