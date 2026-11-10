@@ -317,6 +317,59 @@ permalink: /cinema-detail/index.html
   }
 }
 
+/* زر تحميل تطبيق مشاهدة الأفلام */
+.cinema-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 15px 25px;
+  margin: 22px 0;
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #ffffff !important;
+  border: 1px solid #22c55e;
+  border-radius: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none !important;
+  box-shadow: 0 6px 18px rgba(22, 163, 74, 0.25);
+  transition: transform .2s, box-shadow .2s;
+  cursor: pointer;
+}
+
+.cinema-download::before {
+  content: "↓";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: rgba(255,255,255,.18);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.cinema-download:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(22, 163, 74, .35);
+}
+
+.cinema-download:active {
+  transform: scale(.97);
+}
+
+@media (max-width: 650px) {
+  .cinema-download {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px 12px;
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
 </style>
 
 
