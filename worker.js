@@ -567,6 +567,230 @@ async function handleCinemaSeasonDetail(
   }
 }
 
+async function handleCinemaEpisodeDetail(
+  request, env, url, seriesSlug, seasonNumber, episodeNumber
+) {
+  try {
+    const response = await fetch(`${CINEMA_API}/content`);
+    if (!response.ok) throw new Error("Cinema API error");
+
+    const items = await response.json();
+    if (!Array.isArray(items)) throw new Error("Invalid content");
+
+    const series = items.find(item =>
+      item.kind === "series" &&
+      cinemaSlugForItem(item, items) === seriesSlug
+    );
+
+    if (!series) {
+      return new Response("المسلسل غير موجود", { status: 404 });
+    }
+
+    const groups = await getCinemaSeasons(series.id);
+    const current = groups.find(({ season }) =>
+      Number(season.season_number) === seasonNumber
+    );
+
+    if (!current) {
+      return new Response("الموسم غير موجود", { status: 404 });
+    }
+
+    const { season, episodes } = current;
+
+    const episode = episodes.find(item =>
+      Number(item.episodeNumber) === episodeNumber
+    );
+
+    if (!episode) {
+      return new Response("الحلقة غير موجودة", { status: 404 });
+    }
+
+    const seriesPath =
+      `/series/${encodeURIComponent(cinemaSlugForItem(series, items))}/`;
+    const seasonPath = `${seriesPath}season-${seasonNumber}/`;
+    const episodePath = `${seasonPath}episode-${episodeNumber}/`;
+    const canonical = `${SITE}${episodePath}`;
+
+    const seasonTitle = String(
+      season.title || `الموسم ${seasonNumber}`
+    );
+    const episodeTitle = String(
+      episode.title || `الحلقة ${episodeNumber}`
+    );
+    const poster = String(season.poster || "").trim();
+    const description = String(
+      episode.description || season.description || ""
+    ).trim();
+
+    const fullTitle =
+      `${series.title} - ${seasonTitle} - ${episodeTitle} | علم الهدى`;
+
+    const metaDescription = (
+      description ||
+      `تعرف على تفاصيل ${episodeTitle} من ${seasonTitle} لمسلسل ${series.title} وحمّل تطبيق مشاهدة الأفلام للمشاهدة.`
+    ).replace(/\s+/g, " ").slice(0, 160);
+
+    const templateUrl = new URL("/cinema-detail/", url.origin);
+    const templateResponse = await env.ASSETS.fetch(
+      new Request(templateUrl, request)
+    );
+
+    if (!templateResponse.ok) return templateResponse;
+
+    let html = await templateResponse.text();
+
+    html = html.replace(
+      /<title>[\s\S]*?<\/title>/i,
+      `<title>${escapeHtml(fullTitle)}</title>`
+    );
+
+    html = html.replace(
+      /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/i,
+      `<meta name="description" content="${escapeHtml(metaDescription)}">`
+    );
+
+    html = html.replace(
+      /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/i,
+      `<link rel="canonical" href="${escapeHtml(canonical)}">`
+    );
+
+    const socialTags = [
+      ["property", "og:type", "article"],
+      ["property", "og:title", fullTitle],
+      ["property", "og:description", metaDescription],
+      ["property", "og:url", canonical],
+      ["name", "twitter:title", fullTitle],
+      ["name", "twitter:description", metaDescription]
+    ];
+
+    for (const [attr, name, value] of socialTags) {
+      const pattern = new RegExp(
+        `<meta\\s+${attr}="${name}"\\s+content="[^"]*"\\s*\\/?>`,
+        "i"
+      );
+      html = html.replace(
+        pattern,
+        `<meta ${attr}="${name}" content="${escapeHtml(value)}">`
+      );
+    }
+
+    if (/^https:\/\//i.test(poster)) {
+      html = html.replace(
+        "</head>",
+        `<meta property="og:image" content="${escapeHtml(poster)}">
+         <meta name="twitter:image" content="${escapeHtml(poster)}">
+         </head>`
+      );
+    }
+
+    const sortedEpisodes = [...episodes].sort(
+      (a, b) => Number(a.episodeNumber || 0) -
+        Number(b.episodeNumber || 0)
+    );
+
+    const otherEpisodesHtml = sortedEpisodes
+      .filter(item => Number(item.episodeNumber) !== episodeNumber)
+      .map(item => {
+        const number = Number(item.episodeNumber || 0);
+        const title = item.title || `الحلقة ${number}`;
+        return `
+          <a class="cinema-episode"
+             href="${escapeHtml(`${seasonPath}episode-${number}/`)}"
+             style="display:block;text-decoration:none;color:inherit">
+            <h3>${escapeHtml(title)} ←</h3>
+          </a>`;
+      }).join("");
+
+    const detailHtml = `
+      <article class="cinema-detail cinema-season-detail">
+        <div class="cinema-detail-info">
+          <nav aria-label="مسار الصفحة">
+            <a href="${escapeHtml(seriesPath)}">${escapeHtml(series.title)}</a>
+            /
+            <a href="${escapeHtml(seasonPath)}">${escapeHtml(seasonTitle)}</a>
+            /
+            <span>${escapeHtml(episodeTitle)}</span>
+          </nav>
+
+          <h1>${escapeHtml(series.title)} - ${escapeHtml(seasonTitle)} - ${escapeHtml(episodeTitle)}</h1>
+
+          ${/^https:\/\//i.test(poster)
+            ? `<img class="cinema-detail-poster"
+                     src="${escapeHtml(poster)}"
+                     alt="${escapeHtml(`${series.title} - ${seasonTitle}`)}">`
+            : ""}
+
+          <h2>تفاصيل الحلقة</h2>
+          <p><strong>المسلسل:</strong> ${escapeHtml(series.title)}</p>
+          <p><strong>الموسم:</strong> ${escapeHtml(seasonTitle)}</p>
+          <p><strong>الحلقة:</strong> ${escapeHtml(episodeTitle)}</p>
+
+          ${description
+            ? `<p>${escapeHtml(description)}</p>`
+            : ""}
+
+          <a class="cinema-download"
+             href="https://apkpure.com/p/alam.movie"
+             target="_blank"
+             rel="noopener noreferrer">
+            للمشاهدة نزّل التطبيق من هنا
+          </a>
+
+          ${otherEpisodesHtml
+            ? `<section class="cinema-seasons-list">
+                 <h2>باقي حلقات الموسم</h2>
+                 <div class="cinema-episodes">${otherEpisodesHtml}</div>
+               </section>`
+            : ""}
+        </div>
+      </article>
+    `;
+
+    html = html.replace(
+      /<div id="cinemaDetail">[\s\S]*?<\/div>/i,
+      `<div id="cinemaDetail">${detailHtml}</div>`
+    );
+
+    const schema = {
+      "@context": "https://schema.org",
+      "@type": "TVEpisode",
+      name: episodeTitle,
+      episodeNumber,
+      description: metaDescription,
+      url: canonical,
+      partOfSeason: {
+        "@type": "TVSeason",
+        name: seasonTitle,
+        seasonNumber,
+        url: `${SITE}${seasonPath}`,
+        partOfSeries: {
+          "@type": "TVSeries",
+          name: series.title,
+          url: `${SITE}${seriesPath}`
+        }
+      }
+    };
+
+    if (/^https:\/\//i.test(poster)) {
+      schema.image = poster;
+    }
+
+    html = html.replace(
+      "</head>",
+      `<script type="application/ld+json">${safeJson(schema)}</script></head>`
+    );
+
+    return htmlResponse(html);
+
+  } catch (error) {
+    console.error("Cinema episode detail error:", error);
+    return new Response(
+      "تعذر تحميل تفاصيل الحلقة حاليًا",
+      { status: 503 }
+    );
+  }
+}
+
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, c => ({
     "&": "&amp;",
