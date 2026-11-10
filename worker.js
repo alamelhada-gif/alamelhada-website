@@ -452,19 +452,26 @@ async function handleCinemaSeasonDetail(
         Number(b.episodeNumber || 0)
     );
 
-    const episodesHtml = sortedEpisodes.length
-      ? sortedEpisodes.map(episode => `
-          <article class="cinema-episode">
-            <h3>${escapeHtml(
-              episode.title ||
-              `الحلقة ${episode.episodeNumber}`
-            )}</h3>
-            ${episode.description
-              ? `<p>${escapeHtml(episode.description)}</p>`
-              : ""}
-          </article>
-        `).join("")
-      : "<p>لا توجد حلقات منشورة حاليًا.</p>";
+  
+  const episodesHtml = sortedEpisodes.length
+  ? sortedEpisodes.map(episode => {
+      const episodeNumber = Number(episode.episodeNumber || 0);
+      const episodeUrl = `${seasonPath}episode-${episodeNumber}/`;
+      const episodeTitle = episode.title || `الحلقة ${episodeNumber}`;
+
+      return `
+        <a class="cinema-episode"
+           href="${escapeHtml(episodeUrl)}"
+           style="display:block;text-decoration:none;color:inherit;cursor:pointer;">
+          <h3>${escapeHtml(episodeTitle)} ←</h3>
+          ${episode.description
+            ? `<p>${escapeHtml(episode.description)}</p>`
+            : ""}
+        </a>
+      `;
+    }).join("")
+  : "<p>لا توجد حلقات منشورة حاليًا.</p>";
+
 
     const otherSeasons = groups.filter(
       ({ season: other }) =>
