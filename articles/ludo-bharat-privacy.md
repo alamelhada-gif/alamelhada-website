@@ -6,7 +6,7 @@ summary: Ludo Bharat उपयोगकर्ताओं की गोपनी
   नीति बताती है कि ऐप का उपयोग करते समय जानकारी कैसे एकत्र, उपयोग और सुरक्षित की
   जा सकती है।
 date: 2026-09-27T00:00:00.000+03:00
-image: /assets/images/uploads/تصمرم-بدون-عنوان.png
+image: /assets/images/uploads/app_icon.pتng.png
 tags: article
 ---
 ## गोपनीयता नीति – Ludo Bharat
