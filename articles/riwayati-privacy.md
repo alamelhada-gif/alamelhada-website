@@ -5,7 +5,7 @@ slug: riwayati-privacy
 summary: نحن نحترم خصوصية مستخدمي تطبيق "رواياتي"، ونلتزم بحماية بيانات
   المستخدمين واستخدامها بطريقة آمنة وشفافة.
 date: 2026-09-15T00:00:00.000+03:00
-image: /assets/images/uploads/chatgpt-image-14-سبتمبر-2026،-10_31_12-م.png
+image: /assets/images/uploads/app_icon.pلng.png
 tags: article
 ---
 سياسة الخصوصية لتطبيق رواياتي
