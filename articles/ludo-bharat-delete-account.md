@@ -7,7 +7,7 @@ summary: >-
 
   यदि आपने Ludo Bharat ऐप में ईमेल और पासवर्ड का उपयोग करके खाता बनाया है और आप अपना खाता हटाना चाहते हैं, तो आप खाता और उससे संबंधित डेटा हटाने का अनुरोध कर सकते हैं।
 date: 2026-09-27T00:00:00.000+03:00
-image: /assets/images/uploads/تصمرم-بدون-عنوان.png
+image: /assets/images/uploads/app_icon.pتng.png
 tags: article
 ---
 Ludo Bharat – खाता और डेटा हटाना
