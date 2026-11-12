@@ -15,8 +15,9 @@
     {
       "name": "Falcon VPN",
       "description": "تجربة VPN بسيطة وسريعة لأجهزة Android.",
-      "icon": "/assets/images/uploads/falconvpn_icon.png",
-      "url": "https://play.google.com/store/apps/details?id=com.falcon1.vpn"
+      "icon": "/assets/images/uploads/تصشميم-بدون-عنوان.png",
+      "url": "https://play.google.com/store/apps/details?id=com.alam.vpn",
+      "visible": true
     },
     {
       "visible": true,
