@@ -10,7 +10,7 @@ summary: >+
   باستخدامك لتطبيق عبقري العرب، فإنك توافق على سياسة الخصوصية هذه.
 
 date: 2026-09-16T00:00:00.000+03:00
-image: /assets/images/uploads/بتصميم-بدون-عنوان.png
+image: /assets/images/uploads/app_icon.png.fpng.png
 tags: article
 ---
 # **سياسة الخصوصية لتطبيق عبقري العرب**
