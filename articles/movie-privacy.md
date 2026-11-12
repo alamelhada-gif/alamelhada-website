@@ -5,7 +5,7 @@ slug: movie-privacy
 summary: نحن نحترم خصوصية مستخدمي تطبيق أفلام ومسلسلات، ونلتزم بتوضيح كيفية
   التعامل مع المعلومات والبيانات أثناء استخدام التطبيق.
 date: 2026-11-07T00:00:00.000+03:00
-image: /assets/images/uploads/شعار-بث-أحمر-بأفلام-ومسلسلات.png
+image: /assets/images/uploads/app_icon.png.pفng.png
 tags: article
 ---
  سياسة الخصوصية – تطبيق أفلام ومسلسلات
