@@ -17,7 +17,7 @@ summary: >
 
   باستخدام التطبيق أو إنشاء حساب فيه، فإنك تقر باطلاعك على هذه السياسة.
 date: 2026-10-11T00:00:00.000+03:00
-image: /assets/images/uploads/اللوغو_waifu2x_noise0_scale2x.png
+image: /assets/images/uploads/app_iconh.png.png
 tags: article
 ---
 # سياسة الخصوصية – دفرنت كار (Diffrent Car)
