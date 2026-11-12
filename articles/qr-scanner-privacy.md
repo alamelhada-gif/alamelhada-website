@@ -8,7 +8,7 @@ summary: >-
 
   By using QR Scanner, you agree to the practices described in this Privacy Policy.
 date: 2026-10-02T00:00:00.000+03:00
-image: /assets/images/uploads/صورة-chatgpt-30-سبتمبر-2026،-11_41_17-ص.png
+image: /assets/images/uploads/app_icdon.png.png
 tags: article
 ---
 Privacy Policy – QR Scanner
