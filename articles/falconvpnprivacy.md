@@ -131,8 +131,7 @@ The updated policy will be made available through the application or its officia
 
 **Developer:** Alam elhada  
 **Application:** ALAM VPN  
-**Support Email:** [Insert your official support email]
-
+**Support Email:** alamelhada@gmail.com
 For privacy questions, requests, or concerns, please contact the developer using the email address above.
 
 ## 14. Privacy Notice Acceptance
