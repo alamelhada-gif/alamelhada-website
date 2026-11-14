@@ -10,12 +10,21 @@ tags: article
 ---
 # ALAM VPN Privacy Policy
 
-**App Name:** ALAM VPN  
+
+
+**App Name:** ALAM VPN
+
+\
 **Developer:** Alam elhada  
+
+
+
 **Platforms:**
-- **iOS (iPhone)** – Apple App Store
-- **Android** – Google Play Store
-- **Android (Huawei)** – Huawei AppGallery
+
+* **iOS (iPhone)** – Apple App Store
+* **Android** – Google Play Store
+* **Android (Huawei)** – Huawei AppGallery
+
 
 
 ## 1. Introduction
@@ -30,12 +39,12 @@ Please read this policy carefully before using the application.
 
 Depending on the features you use, ALAM VPN may process the following information:
 
-- IP address and network connection information necessary to establish and maintain VPN connections.
-- Operating system version, device model, and basic application information.
-- VPN server selection and technical connection status.
-- Subscription status and purchase verification information.
-- Technical diagnostic information necessary for application security and troubleshooting.
-- Advertising-related information, where advertising services are enabled.
+* IP address and network connection information necessary to establish and maintain VPN connections.
+* Operating system version, device model, and basic application information.
+* VPN server selection and technical connection status.
+* Subscription status and purchase verification information.
+* Technical diagnostic information necessary for application security and troubleshooting.
+* Advertising-related information, where advertising services are enabled.
 
 We aim to limit information processing to what is necessary to operate and maintain the service.
 
@@ -75,21 +84,21 @@ Users can manage or cancel subscriptions through their Apple account settings.
 
 Information may be processed to:
 
-- Establish and maintain VPN connections.
-- Provide access to VPN servers.
-- Verify subscriptions and enable purchased services.
-- Maintain application functionality and security.
-- Diagnose technical problems.
-- Display advertising where enabled and permitted.
-- Comply with applicable legal obligations.
+* Establish and maintain VPN connections.
+* Provide access to VPN servers.
+* Verify subscriptions and enable purchased services.
+* Maintain application functionality and security.
+* Diagnose technical problems.
+* Display advertising where enabled and permitted.
+* Comply with applicable legal obligations.
 
 ## 7. Third-Party Services
 
 Depending on the functionality enabled, ALAM VPN may integrate with third-party services, including:
 
-- Apple App Store and StoreKit for subscriptions and purchases.
-- Yandex Mobile Ads for advertising, if enabled.
-- VPN hosting and infrastructure providers for operating VPN connections.
+* Apple App Store and StoreKit for subscriptions and purchases.
+* Yandex Mobile Ads for advertising, if enabled.
+* VPN hosting and infrastructure providers for operating VPN connections.
 
 These services may process information under their applicable privacy policies and contractual arrangements.
 
@@ -131,8 +140,8 @@ The updated policy will be made available through the application or its officia
 
 ## 13. Contact
 
-**Developer:** Alam elhada  
-**Application:** ALAM VPN  
+**Developer:** Alam elhada\
+**Application:** ALAM VPN\
 **Support Email:** alamelhada@gmail.com
 For privacy questions, requests, or concerns, please contact the developer using the email address above.
 
