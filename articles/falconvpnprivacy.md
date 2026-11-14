@@ -2,9 +2,8 @@
 title: "Privacy Policy for ALAM VPN "
 lang: en
 slug: alamvpnprivacy
-summary: ALAM VPN (“we”, “our”, or “the app”) respects your privacy. This
-  Privacy Policy explains how ALAM VPN handles information when you use our
-  Android VPN application.
+summary: ALAM VPN respects your privacy. This Privacy Policy explains how ALAM
+  VPN handles information when you use our Android VPN application.
 date: 2026-09-22T00:00:00.000+03:00
 image: /assets/images/uploads/app_iconق.png.png
 tags: article
