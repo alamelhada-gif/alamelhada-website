@@ -16,7 +16,7 @@ tags: article
 - **iOS (iPhone)** – Apple App Store
 - **Android** – Google Play Store
 - **Android (Huawei)** – Huawei AppGallery
-**Last Updated:** October 19, 2026
+
 
 ## 1. Introduction
 
