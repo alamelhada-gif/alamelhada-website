@@ -1,7 +1,7 @@
 ---
 title: "Privacy Policy for ALAM VPN "
 lang: en
-slug: falconvpnprivacy
+slug: alamvpnprivacy
 summary: ALAM VPN (“we”, “our”, or “the app”) respects your privacy. This
   Privacy Policy explains how ALAM VPN handles information when you use our
   Android VPN application.
