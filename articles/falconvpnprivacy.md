@@ -12,7 +12,10 @@ tags: article
 
 **App Name:** ALAM VPN  
 **Developer:** Alam elhada  
-**Platform:** iOS (iPhone)  
+**Platforms:**
+- **iOS (iPhone)** – Apple App Store
+- **Android** – Google Play Store
+- **Android (Huawei)** – Huawei AppGallery
 **Last Updated:** October 19, 2026
 
 ## 1. Introduction
