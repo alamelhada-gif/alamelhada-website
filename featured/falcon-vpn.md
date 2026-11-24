@@ -1,8 +1,8 @@
 ---
-title: Falcon VPN
-slug: falcon-vpn
-image: /assets/images/uploads/falconvpn_icon.png
-app_url: https://play.google.com/store/apps/details?id=com.falcon1.vpn
+title: Alam VPN
+slug: Alam-VPN
+image: /assets/images/uploads/app_iconق.png.png
+app_url: https://play.google.com/store/apps/details?id=com.alam.vpn
 tags: featured
 layout: featured.njk
 ---
