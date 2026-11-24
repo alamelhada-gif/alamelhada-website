@@ -1,6 +1,6 @@
 ---
 title: Alam VPN
-slug: Alam-VPN
+slug: alam-vpn
 image: /assets/images/uploads/app_iconق.png.png
 app_url: https://play.google.com/store/apps/details?id=com.alam.vpn
 tags: featured
